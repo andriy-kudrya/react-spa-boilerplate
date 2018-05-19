@@ -1,0 +1,22 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "jsx": true
+    },
+    "rules": {
+        "strict": "error",
+        "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+        "no-console": "warn",
+        "react/prop-types": "off"
+    },
+    "plugins": ["react"],
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "env": {
+    	"browser": true,
+        "es6": true
+    },
+    "globals": {
+        "DEBUG": true
+    }
+}
