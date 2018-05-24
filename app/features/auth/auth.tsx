@@ -1,20 +1,26 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
 
-import { Auth } from '#/entities/state'
+import State from '#/entities/state'
+import { Auth } from '#/entities/auth'
 import AuthData from '#/entities/auth-data'
+import { noop } from '#/utils/function'
 
 import { logIn } from './redux/actions'
 import AuthForm from './auth-form'
 
-interface Props {
-    logIn: (_: AuthData) => any
+interface StateProps {
     auth: Auth
 }
 
-const Auth: React.SFC<Props> = ({ auth, logIn }) =>
+interface DispatchProps {
+    logIn: (_: AuthData) => Promise<Auth>
+}
+
+const Auth: React.SFC<StateProps & DispatchProps> = ({ auth, logIn }) =>
     <div>
-        <AuthForm onSubmit={_ => logIn(_).then((_: any) => undefined)} />
+        <AuthForm onSubmit={_ => logIn(_ as AuthData).then(noop)} />
         {auth.token &&
             <div>
                  Token = {auth.token}
@@ -26,10 +32,16 @@ const Auth: React.SFC<Props> = ({ auth, logIn }) =>
         }
     </div>
 
-const mapStateToProps = (state: { auth: Auth }) => ({
-    auth: state.auth
-})
+function mapStateToProps(state: State): StateProps {
+    return {
+        auth: state.auth
+    }
+}
 
-const mapDispatchToProps = { logIn }
+function mapDispatchToProps(dispatch: any): DispatchProps {
+    return { 
+        logIn: compose(dispatch, logIn)
+    }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth)

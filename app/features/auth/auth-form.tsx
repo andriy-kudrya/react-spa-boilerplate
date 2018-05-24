@@ -2,17 +2,15 @@ import * as React from 'react'
 import { Form } from 'react-final-form'
 
 import { TextField, PasswordField, Submit, submitDisabled } from '#/utils/form'
-
 import validate from './auth-form-validate'
-import { logIn } from './redux/actions'
 
-interface AuthFormProps { 
-    onSubmit: typeof logIn
+interface OwnProps { 
+    onSubmit: (_: object) => Promise<void>
 }
 
-const AuthForm: React.SFC<AuthFormProps> = props =>
+const AuthForm: React.SFC<OwnProps> = props =>
     <Form
-        onSubmit={props.onSubmit as any}
+        onSubmit={props.onSubmit}
         validate={validate}
         render={form =>
             <form onSubmit={form.handleSubmit}>
