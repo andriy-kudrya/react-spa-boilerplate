@@ -37,25 +37,23 @@ interface CardListProps {
 }
 
 interface CardListState {
-    cardCount: string
+    cardCount: number | undefined
 }
 
 class CardList extends React.Component<CardListProps, CardListState> {
     constructor(props: CardListProps) {
         super(props)
 
-        this.state = { cardCount: '' }
+        this.state = { cardCount: undefined }
 
         this.handleNumberChange = this.handleNumberChange.bind(this)
 
         props.loadCardList()
     }
 
-    handleNumberChange(event: React.ChangeEvent<HTMLInputElement>) {
-        this.setState({
-            cardCount: event.target.value
-        })
-        console.log(event.target.value)
+    handleNumberChange(cardCount: number) {
+        this.setState({ cardCount })
+        console.log(cardCount)
     }
 
     render() {
