@@ -7,14 +7,6 @@ const routes: Route[] = [
         path: '/log-in',
     },
     {
-        name: 'packages',
-        path: '/packages',
-    },
-    {
-        name: 'packages.create',
-        path: '/packages/create',
-    },
-    {
         name: 'cards',
         path: '/cards',
     },
