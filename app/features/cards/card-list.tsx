@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 
 import State, { Cards } from '#/entities/state'
 import { dateFormatter } from '#/utils/format/date'
-import Number from '#/utils/input/number'
+import { bindComponent } from '#/utils/react'
+
+import Number from '#/utils/input/number-input'
 
 import { loadCardList } from './actions'
 
@@ -43,10 +45,8 @@ interface CardListState {
 class CardList extends React.Component<CardListProps, CardListState> {
     constructor(props: CardListProps) {
         super(props)
-
         this.state = { cardCount: undefined }
-
-        this.handleNumberChange = this.handleNumberChange.bind(this)
+        bindComponent(this)
 
         props.loadCardList()
     }
@@ -61,7 +61,7 @@ class CardList extends React.Component<CardListProps, CardListState> {
 
         return (
             <div>
-                <Number value={this.state.cardCount} onChange={this.handleNumberChange} />
+                <Number value={this.state.cardCount} onChange={this.handleNumberChange} placeholder='Min cards...'/>
                 <table>
                     <thead>
                         <tr>
