@@ -16,7 +16,7 @@ const NumberField: StatelessComponent<InputFieldProps> = ({name, id, children}) 
         _ =>
             <div>
                 <label htmlFor={id}>{children}</label>
-                <NumberInput id={id} emptyValue='' {..._.input} />
+                <NumberInput id={id} emptyValue='' {..._.input}/>
                 {showFieldError(_.meta) && <span>{_.meta.error}</span>}
             </div>
     }/>

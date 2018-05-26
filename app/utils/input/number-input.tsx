@@ -16,7 +16,7 @@ function numberToString<Empty>(props: Readonly<NumberProps<Empty>>) {
     return props.value === props.emptyValue ? '' : props.value.toString()
 }
 
-class NumberInput<Empty> extends React.Component<NumberProps<Empty>> {
+class NumberInput<Empty> extends React.PureComponent<NumberProps<Empty>> {
     private _lastInputValue: string
     private _lastValue?: Value<Empty>
 
