@@ -12,6 +12,10 @@ interface NewNumberProps<Empty> {
 
 type NumberProps<Empty> = Redefine<React.InputHTMLAttributes<HTMLInputElement>, NewNumberProps<Empty>, 'type'>
 
+function numberToString<Empty>(props: Readonly<NumberProps<Empty>>) {
+    return props.value === props.emptyValue ? '' : props.value.toString()
+}
+
 class NumberInput<Empty> extends React.Component<NumberProps<Empty>> {
     private _lastInputValue: string
     private _lastValue?: Value<Empty>
@@ -21,11 +25,7 @@ class NumberInput<Empty> extends React.Component<NumberProps<Empty>> {
         bindComponent(this)
 
         this._lastValue = props.value
-        this._lastInputValue = this.numberToString(props)
-    }
-
-    numberToString(props: NumberProps<Empty>) {
-        return props.value === props.emptyValue ? '' : props.value.toString()
+        this._lastInputValue = numberToString(props)
     }
 
     handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -42,7 +42,7 @@ class NumberInput<Empty> extends React.Component<NumberProps<Empty>> {
         const props = this.props
             , forwardedProps = dropFields(props, 'value', 'onChange', 'emptyValue')
             , number = props.value
-            , inputValue = number === this._lastValue ? this._lastInputValue : this.numberToString(props)
+            , inputValue = number === this._lastValue ? this._lastInputValue : numberToString(props)
 
         return (
             <input {...forwardedProps} value={inputValue} onChange={this.handleChange} type='number'/>
