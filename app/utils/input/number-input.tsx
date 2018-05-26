@@ -2,46 +2,47 @@ import * as React from 'react'
 import { bindComponent } from '#/utils/react'
 import { dropFields, Redefine } from '#/utils/object'
 
-type Value = number | undefined
+type Value<Empty> = number | Empty
 
-interface NewNumberProps {
-    value: Value
-    onChange(_: Value): void
+interface NewNumberProps<Empty> {
+    value: Value<Empty>
+    emptyValue?: Empty
+    onChange(_: Value<Empty>): void
 }
 
-type NumberProps = Redefine<React.InputHTMLAttributes<HTMLInputElement>, NewNumberProps, 'type'>
+type NumberProps<Empty> = Redefine<React.InputHTMLAttributes<HTMLInputElement>, NewNumberProps<Empty>, 'type'>
 
-function numberToString(number: Value) {
-    return number === undefined ? '' : number.toString()
-}
-
-class NumberInput extends React.Component<NumberProps> {
+class NumberInput<Empty> extends React.Component<NumberProps<Empty>> {
     private _lastInputValue: string
-    private _lastValue: Value
+    private _lastValue?: Value<Empty>
 
-    constructor(props: NumberProps) {
+    constructor(props: NumberProps<Empty>) {
         super(props)
         bindComponent(this)
 
         this._lastValue = props.value
-        this._lastInputValue = numberToString(props.value)
+        this._lastInputValue = this.numberToString(props)
+    }
+
+    numberToString(props: NumberProps<Empty>) {
+        return props.value === props.emptyValue ? '' : props.value.toString()
     }
 
     handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
         const inputValue = event.target.value
-            , number = inputValue === '' ? undefined : parseFloat(inputValue)
+            , number = inputValue === '' ? this.props.emptyValue : parseFloat(inputValue)
 
         this._lastInputValue = inputValue
         this._lastValue = number
 
-        this.props.onChange(number)
+        this.props.onChange(number!)
     }
 
     render() {
         const props = this.props
-            , forwardedProps = dropFields(props, 'value', 'onChange')
+            , forwardedProps = dropFields(props, 'value', 'onChange', 'emptyValue')
             , number = props.value
-            , inputValue = number === this._lastValue ? this._lastInputValue : numberToString(number)
+            , inputValue = number === this._lastValue ? this._lastInputValue : this.numberToString(props)
 
         return (
             <input {...forwardedProps} value={inputValue} onChange={this.handleChange} type='number'/>
