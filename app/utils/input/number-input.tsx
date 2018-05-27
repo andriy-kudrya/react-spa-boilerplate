@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { bindComponent } from '#/utils/react'
-import { dropFields, Redefine } from '#/utils/object'
+import { bindComponent } from '../react'
+import { dropFields, Redefine } from '../object'
 
 type Value<Empty> = number | Empty
 

@@ -1,16 +1,17 @@
-import { action } from '#/utils/redux'
+import { action, ActionType } from '#/utils/redux'
 import AuthData from '#/entities/auth-data'
 import { Auth } from '#/entities/state'
 
-const LOG_IN = 'app.auth.LOG_IN'
-    , LOGGED_IN = 'app.auth.LOGGED_IN'
+const LOG_IN: ActionType<AuthData> = 'app.auth.LOG_IN'
+    , LOGGED_IN: ActionType<Auth> = 'app.auth.LOGGED_IN'
 
-const logIn = action<AuthData>(LOG_IN)
-    , loggedIn = action<Auth>(LOGGED_IN)
+const logIn = action(LOG_IN)
+    , loggedIn = action(LOGGED_IN)
 
-export { 
+export {
     LOG_IN,
     LOGGED_IN,
+
     logIn,
     loggedIn,
 }

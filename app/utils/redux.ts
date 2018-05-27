@@ -1,7 +1,19 @@
 import { Action, Reducer } from 'redux'
 
+type ActionType<P = void> = string & { attachPayloadTypeHack?: P }
+
 interface PayloadAction<P> extends Action {
     payload: P
+}
+
+type ActionFactory<P> = [P] extends [void]
+    ? () => Action
+    : (payload: P) => PayloadAction<P>
+
+function action<P>(type: ActionType<P>): ActionFactory<P> {
+    return function (payload) {
+        return arguments.length ? { type, payload } : { type }
+    } as ActionFactory<P>
 }
 
 interface Handler<S, P> {
@@ -11,16 +23,6 @@ interface Handler<S, P> {
 interface ActionHandler<S, P> {
     actionType: string
     handler: Handler<S, P>
-}
-
-type ActionFactory<P> = [P] extends [undefined]
-    ? () => Action
-    : (payload: P) => PayloadAction<P>
-
-function action<P = undefined>(type: string): ActionFactory<P> {
-    return function (payload) { 
-        return arguments.length ? { type, payload } : { type }
-    } as ActionFactory<P>
 }
 
 // TODO: handler, as well as action, might not have payload at all
@@ -44,4 +46,4 @@ function reducer<S>(defaultState: S, ...payloadHandlers: ActionHandler<S, any>[]
 
 const squash = (...objects: any[]) => Object.assign({}, ...objects)
 
-export { action, reducer, handler, squash, PayloadAction }
+export { action, ActionType, reducer, handler, squash, PayloadAction }

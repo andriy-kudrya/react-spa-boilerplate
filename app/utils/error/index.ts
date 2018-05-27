@@ -1,7 +1,7 @@
-import { action } from '#/utils/redux'
+import { action, ActionType } from '#/utils/redux'
 import Error from '#/entities/error'
 
-const ERROR = 'app.error'
-    , error = action<Error>(ERROR)
+const ERROR: ActionType<Error> = 'app.error'
+    , error = action(ERROR)
 
 export { ERROR, error }
