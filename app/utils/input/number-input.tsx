@@ -29,13 +29,14 @@ class NumberInput<Empty> extends React.PureComponent<NumberProps<Empty>> {
     }
 
     handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
-        const inputValue = event.target.value
-            , number = inputValue === '' ? this.props.emptyValue : parseFloat(inputValue)
+        const props = this.props
+            , inputValue = event.target.value
+            , number = inputValue === '' ? props.emptyValue : parseFloat(inputValue)
 
         this._lastInputValue = inputValue
         this._lastValue = number
 
-        this.props.onChange(number!)
+        props.onChange(number!)
     }
 
     render() {
