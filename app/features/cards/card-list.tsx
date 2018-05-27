@@ -5,7 +5,8 @@ import State, { Cards } from '#/entities/state'
 import { dateFormatter } from '#/utils/format/date'
 import { bindComponent } from '#/utils/react'
 
-import Number from '#/utils/input/number-input'
+import NumberInput from '#/utils/input/number-input'
+import DateInput from '#/utils/input/date-input'
 
 import { loadCardList } from './actions'
 
@@ -40,12 +41,13 @@ interface CardListProps {
 
 interface CardListState {
     cardCount: number | undefined
+    dateAdded: number | undefined
 }
 
 class CardList extends React.Component<CardListProps, CardListState> {
     constructor(props: CardListProps) {
         super(props)
-        this.state = { cardCount: undefined }
+        this.state = { cardCount: undefined, dateAdded: undefined }
         bindComponent(this)
 
         props.loadCardList()
@@ -56,12 +58,18 @@ class CardList extends React.Component<CardListProps, CardListState> {
         console.log(cardCount)
     }
 
+    handleDateChange(dateAdded: number) {
+        this.setState({ dateAdded })
+        console.log(dateAdded)
+    }
+
     render() {
         const { cards } = this.props
 
         return (
             <div>
-                <Number value={this.state.cardCount} onChange={this.handleNumberChange} placeholder='Min cards...'/>
+                <NumberInput value={this.state.cardCount} onChange={this.handleNumberChange} placeholder='Min cards...'/>
+                <DateInput value={this.state.dateAdded} onChange={this.handleDateChange} placeholder='Min date added...'/>
                 <table>
                     <thead>
                         <tr>
