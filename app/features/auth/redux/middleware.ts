@@ -1,6 +1,5 @@
 import { actions } from 'redux-router5'
 
-import { Action } from '#/utils/redux'
 import { Credentials } from '#/entities/auth'
 import AuthService from '#/services/auth-service'
 import ifMw, { actionHasType } from '#/utils/middleware/if'
@@ -12,8 +11,8 @@ function factory(authService: AuthService) {
     const logInMw =
         ifMw(
             actionHasType(LOG_IN),
-            asyncMw(
-                api => _next => (action: Action<Credentials>) =>
+            asyncMw<Credentials>(
+                api => _next => action =>
                     authService.logIn(action.payload).then(data => {
                         api.dispatch(loggedIn(data))
                         api.dispatch(actions.navigateTo('cards'))

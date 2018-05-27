@@ -1,8 +1,12 @@
-import { Middleware, AnyAction } from 'redux'
-import State from '#/entities/state'
+import { Middleware } from '#/entities/redux'
+import { ActionType, Action } from '../redux'
 
-function ifMiddlewareFactory(predicate: (action: AnyAction) => boolean, mw: Middleware<{}, State>) {
-    const result: Middleware<{}, State> = 
+interface ActionPredicate<P> {
+    (action: Action<P>): boolean
+}
+
+function ifMiddlewareFactory<P>(predicate: ActionPredicate<P>, mw: Middleware<P>) {
+    const result: Middleware<P> =
         api => {
             const apiMw = mw(api)
             return next => {
@@ -14,9 +18,8 @@ function ifMiddlewareFactory(predicate: (action: AnyAction) => boolean, mw: Midd
     return result
 }
 
-function actionHasType(type: string) {
-    return (action: AnyAction) => action.type === type
+function actionHasType<P>(type: ActionType<P>): ActionPredicate<P> {
+    return action => action.type === type
 }
 
-export default ifMiddlewareFactory
-export { actionHasType }
+export { ifMiddlewareFactory as default, actionHasType }

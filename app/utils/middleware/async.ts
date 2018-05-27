@@ -1,13 +1,13 @@
-import { MiddlewareAPI, Dispatch, AnyAction } from 'redux'
-import State from '#/entities/state'
+import { Dispatch, MiddlewareAPI } from '#/entities/redux'
+import { ActionType, Action } from '../redux'
 import { error } from '#/utils/error'
 
-interface AsyncMiddleware<_DispatchExt = {}, S = any, D extends Dispatch = Dispatch> {
-  (api: MiddlewareAPI<D, S>): (next: Dispatch<AnyAction>) => (action: any) => Promise<any>
+interface AsyncMiddleware<P> {
+    (api: MiddlewareAPI): (next: Dispatch) => (action: Action<P>) => Promise<any>
 }
 
-function asyncMiddlewareFactory(mw: AsyncMiddleware<{}, State>) {
-    const result: AsyncMiddleware<{}, State> = 
+function asyncMiddlewareFactory<P>(mw: AsyncMiddleware<P>) {
+    const result: AsyncMiddleware<P> =
         api => {
             const apiMw = mw(api)
             return next => {
@@ -27,8 +27,8 @@ function asyncMiddlewareFactory(mw: AsyncMiddleware<{}, State>) {
     return result
 }
 
-function actionHasType(type: string) {
-    return (action: AnyAction) => action.type === type
+function actionHasType<P>(type: ActionType<P>) {
+    return (action: Action<P>) => action.type === type
 }
 
 export default asyncMiddlewareFactory

@@ -1,10 +1,10 @@
 import { required, ValidationResult } from '#/utils/form/validate'
-import AuthData from '#/entities/auth-data'
+import { Credentials } from '#/entities/auth'
 
-export default function validate(entity: Partial<AuthData>) {
+export default function validate(entity: Partial<Credentials>) {
     const login = required('Name')(entity.login)
         , password = required('Password')(entity.password)
-        , result: ValidationResult<AuthData> = {}
+        , result: ValidationResult<Credentials> = {}
 
     if (login)
         result.login = login

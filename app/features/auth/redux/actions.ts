@@ -1,8 +1,8 @@
 import { action, ActionType } from '#/utils/redux'
-import AuthData from '#/entities/auth-data'
+import { Credentials } from '#/entities/auth'
 import { Auth } from '#/entities/state'
 
-const LOG_IN: ActionType<AuthData> = 'app.auth.LOG_IN'
+const LOG_IN: ActionType<Credentials> = 'app.auth.LOG_IN'
     , LOGGED_IN: ActionType<Auth> = 'app.auth.LOGGED_IN'
 
 const logIn = action(LOG_IN)
