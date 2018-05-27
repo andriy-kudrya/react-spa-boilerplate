@@ -1,44 +1,47 @@
-import { Action, Reducer } from 'redux'
+import { Reducer } from 'redux'
 
 type ActionType<P = void> = string & { attachPayloadTypeHack?: P }
 
-interface PayloadAction<P> extends Action {
-    payload: P
-}
+type Action<P> = P extends void
+    ? { type: ActionType<P> }
+    : { type: ActionType<P>, payload: P }
 
-type ActionFactory<P> = [P] extends [void]
-    ? () => Action
-    : (payload: P) => PayloadAction<P>
+type ActionCreatorFactory<P> = P extends void
+    ? () => Action<P>
+    : (payload: P) => Action<P>
 
-function action<P>(type: ActionType<P>): ActionFactory<P> {
+function action<P>(type: ActionType<P>): ActionCreatorFactory<P> {
     return function (payload) {
         return arguments.length ? { type, payload } : { type }
-    } as ActionFactory<P>
+    } as ActionCreatorFactory<P>
 }
 
-interface Handler<S, P> {
-    (state: S, payload: P): S
-}
+type Handler<S, P> = P extends void
+    ? (state: S) => S
+    : (state: S, payload: P) => S
 
 interface ActionHandler<S, P> {
-    actionType: string
+    actionType: ActionType<P>
     handler: Handler<S, P>
 }
 
-// TODO: handler, as well as action, might not have payload at all
-function handler<S, P>(actionType: string, handler: Handler<S, P>): ActionHandler<S, P> {
+function handler<S, P>(actionType: ActionType<P>, handler: Handler<S, P>): ActionHandler<S, P> {
     return { actionType, handler }
+}
+
+function isPayloadAction(action: Action<any>): action is { type: ActionType<any>, payload: any } {
+    return 'payload' in action
 }
 
 function reducer<S>(defaultState: S, ...payloadHandlers: ActionHandler<S, any>[]): Reducer<S> {
     const handlerMap = new Map<string, Handler<S, any>>()
     payloadHandlers.forEach(_ => handlerMap.set(_.actionType, _.handler))
 
-    return (state = defaultState, action: PayloadAction<any> | Action) => {
-        const reduce = handlerMap.get(action.type)
+    return (state = defaultState, action: Action<any> | Action<void>) => {
+        const handler = handlerMap.get(action.type) as any
 
-        if (reduce)
-            return reduce(state, (<any>action).payload)
+        if (handler)
+            return isPayloadAction(action) ? handler(state, action.payload) : handler(state)
 
         return state
     }
@@ -46,4 +49,4 @@ function reducer<S>(defaultState: S, ...payloadHandlers: ActionHandler<S, any>[]
 
 const squash = (...objects: any[]) => Object.assign({}, ...objects)
 
-export { action, ActionType, reducer, handler, squash, PayloadAction }
+export { action, ActionType, reducer, handler, squash, Action }
