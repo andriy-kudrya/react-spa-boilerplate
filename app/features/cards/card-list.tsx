@@ -6,7 +6,7 @@ import { dateFormatter } from '#/utils/format/date'
 import { bindComponent } from '#/utils/react'
 
 import NumberInput from '#/utils/input/number-input'
-import DateInput from '#/utils/input/date-input'
+import DateInput from '#/utils/input/utc-date-input'
 
 import { loadCardList } from './actions'
 
