@@ -47,6 +47,4 @@ function reducer<S>(defaultState: S, ...payloadHandlers: ActionHandler<S, any>[]
     }
 }
 
-const squash = (...objects: any[]) => Object.assign({}, ...objects)
-
-export { action, ActionType, reducer, handler, squash, Action }
+export { action, ActionType, reducer, handler, Action }

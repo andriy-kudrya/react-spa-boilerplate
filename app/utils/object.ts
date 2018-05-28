@@ -13,9 +13,8 @@ function dropFields<T extends {}, F extends keyof T>(target: T, ...fields: F[]):
     return result
 }
 
-function squash<A, B, C, D, E, F, G>(a?: A, b?: B, c?: C, d?: D, e?: E, f?: F, g?: G): A & B & C & D & E & F & G
-function squash(...objects: any[]): any {
-    return Object.assign({}, ...objects)
+function shallowUpdate<T extends U, U extends {}>(object: T, update: U): T {
+    return Object.assign({}, object, update)
 }
 
-export { squash, dropFields, Redefine }
+export { shallowUpdate, dropFields, Redefine }

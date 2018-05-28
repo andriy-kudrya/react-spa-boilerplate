@@ -1,3 +1,7 @@
 function noop(): void {}
 
-export { noop }
+function id<T>(value: T): T {
+    return value
+}
+
+export { noop, id }
