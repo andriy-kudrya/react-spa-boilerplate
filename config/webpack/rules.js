@@ -15,10 +15,11 @@ const babelLoader = {
             ].filter(_ => _),
             plugins: [
                 'syntax-dynamic-import',
-                !params.debug && 'transform-react-constant-elements',
-                !params.debug && 'transform-react-inline-elements',
                 params.debug && 'transform-react-jsx-self',
                 params.debug && 'transform-react-jsx-source',
+                !params.debug && 'transform-react-inline-elements',
+                // note: must be a last plugin, otherwise compilation might break
+                !params.debug && 'transform-react-constant-elements',
             ].filter(_ => _)
         }
     }
