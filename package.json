@@ -28,26 +28,26 @@
     "raw-loader": "^0.5.1",
     "style-loader": "^0.21.0",
     "ts-loader": "^4.3.0",
-    "typescript": "^2.8.3",
-    "webpack": "^4.8.3",
+    "typescript": "^2.9.1",
+    "webpack": "^4.10.2",
     "webpack-bundle-analyzer": "^2.13.1",
-    "webpack-cli": "^2.1.4",
+    "webpack-cli": "^2.1.5",
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
-    "@types/react": "^16.3.14",
+    "@types/react": "^16.3.15",
     "@types/react-dom": "^16.0.5",
-    "@types/react-redux": "^6.0.0",
-    "@types/react-router-dom": "^4.2.6",
+    "@types/react-redux": "^6.0.1",
+    "@types/react-router-dom": "^4.2.7",
     "classnames": "^2.2.5",
-    "final-form": "^4.6.1",
+    "final-form": "^4.7.3",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
-    "react-final-form": "^3.4.2",
+    "react-final-form": "^3.5.0",
     "react-redux": "^5.0.7",
-    "react-router5": "^6.0.1",
+    "react-router5": "^6.0.2",
     "redux": "^4.0.0",
-    "redux-router5": "^6.0.0",
-    "router5": "^6.2.2"
+    "redux-router5": "^6.0.1",
+    "router5": "^6.2.3"
   }
 }
