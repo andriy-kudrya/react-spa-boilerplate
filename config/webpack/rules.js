@@ -35,7 +35,10 @@ const rules = [
         include: paths.app,
         use: [
             babelLoader,
-            { loader: 'ts-loader' }
+            {
+                loader: 'ts-loader',
+                options: { transpileOnly: true }
+            }
         ],
     },
     {
