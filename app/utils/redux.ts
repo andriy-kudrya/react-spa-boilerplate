@@ -50,4 +50,4 @@ function reducer<S>(defaultState: S, ...payloadHandlers: ActionHandler<S, any>[]
     }
 }
 
-export { action, ActionType, reducer, handler, Action }
+export { action, ActionType, isPayloadAction, reducer, handler, Action }
