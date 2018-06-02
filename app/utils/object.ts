@@ -13,8 +13,8 @@ function dropFields<T extends {}, F extends keyof T>(target: T, ...fields: F[]):
     return result
 }
 
-function shallowUpdate<T extends U, U extends {}>(object: T, update: U): T {
-    return Object.assign({}, object, update)
+function shallowUpdate<T>(object: T, ...update: Partial<T>[]): T {
+    return Object.assign({}, object, ...update)
 }
 
 export { shallowUpdate, dropFields, Redefine }
