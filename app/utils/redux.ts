@@ -16,9 +16,12 @@ function action<P>(type: ActionType<P>): ActionCreatorFactory<P> {
     } as ActionCreatorFactory<P>
 }
 
-type Handler<S, P> = P extends void
-    ? (state: S) => S
-    : (state: S, payload: P) => S
+// TODO: type inference doesn't work for ActionType<void> when creating reducer with *reducer* factory below
+// type Handler<S, P> = P extends void
+//     ? (state: S) => S
+//     : (state: S, payload: P) => S
+
+type Handler<S, P> = (state: S, payload: P) => S
 
 interface ActionHandler<S, P> {
     actionType: ActionType<P>
