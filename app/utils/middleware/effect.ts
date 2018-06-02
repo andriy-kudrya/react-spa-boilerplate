@@ -12,7 +12,7 @@ function handler<P, R>(actionType: ActionType<P>, handler: Handler<P, R>): Effec
     return { actionType, handler }
 }
 
-function effectMiddlewareFactory(...effects: EffectHandler<any, any>[]) {
+function effectMiddlewareFactory(effects: EffectHandler<any, any>[]) {
     const map = new Map<ActionType<any>, Handler<any, any>>()
 
     effects.forEach(registerEffect)
@@ -38,4 +38,6 @@ function effectMiddlewareFactory(...effects: EffectHandler<any, any>[]) {
     }
 }
 
-export { effectMiddlewareFactory as default, handler }
+const emptyEffects: EffectHandler<any, any>[] = []
+
+export { effectMiddlewareFactory as default, handler, emptyEffects }
