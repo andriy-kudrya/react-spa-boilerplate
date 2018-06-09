@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import State, { Cards } from '#/entities/state'
 import { dateFormatter } from '#/utils/format/date'
 import { bindComponent } from '#/utils/react'
-import { SortState, SortTarget } from '#/utils/sort'
+import { SortContainer, SortTarget } from '#/utils/sort'
 
 import NumberInput from '#/utils/input/number-input'
 import DateInput from '#/utils/input/utc-date-input'
 
-import { loadCardList } from './actions'
+import { loadCardList, sortCardList } from './actions'
 
 interface CardListRowProps {
     game: Cards['sets'][number]
@@ -45,6 +45,7 @@ const Header: React.SFC<{ name: string}> = ({ name, children }) =>
 
 interface CardListProps {
     loadCardList: typeof loadCardList,
+    sortCardList: typeof sortCardList,
     cards: Cards,
 }
 
@@ -73,7 +74,7 @@ class CardList extends React.Component<CardListProps, CardListState> {
     }
 
     render() {
-        const { cards } = this.props
+        const { cards, sortCardList } = this.props
 
         return (
             <div>
@@ -82,11 +83,11 @@ class CardList extends React.Component<CardListProps, CardListState> {
                 <table>
                     <thead>
                         <tr>
-                            <SortState>
+                            <SortContainer onChange={sortCardList}>
                                 <Header name='game'>Game</Header>
                                 <Header name='count'>Card Count</Header>
-                                <Header name='date-added'>Date Added</Header>
-                            </SortState>
+                                <Header name='added'>Date Added</Header>
+                            </SortContainer>
                         </tr>
                     </thead>
                     <tbody>
@@ -101,6 +102,6 @@ class CardList extends React.Component<CardListProps, CardListState> {
 }
 
 const mapStateToProps = (state: State) => ({ cards: state.cards })
-    , mapDispatchToProps = { loadCardList }
+    , mapDispatchToProps = { loadCardList, sortCardList }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardList)

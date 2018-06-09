@@ -1,11 +1,22 @@
 import * as React from 'react'
 
+import SortState from '#/entities/sort-state'
+
 import { mediatorFactory, SortMediator, SortSubject } from './sort'
 
 const { Provider, Consumer } = React.createContext<SortMediator>(undefined as any)
 
-class SortState extends React.Component {
-    readonly _mediator = mediatorFactory()
+interface SortContainerProps {
+    onChange: (state: SortState) => void
+}
+
+class SortContainer extends React.Component<SortContainerProps> {
+    readonly _mediator: SortMediator
+
+    constructor(props: SortContainerProps) {
+        super(props)
+        this._mediator = mediatorFactory(props.onChange)
+    }
 
     render() {
         return <Provider value={this._mediator} children={this.props.children}/>
@@ -64,4 +75,4 @@ const SortTarget: React.SFC<SortTargetProps> = props =>
         {_ => <SortTargetInternal mediator={_} name={props.name}>{props.children}</SortTargetInternal>}
     </Consumer>
 
-export { SortState, SortTarget }
+export { SortContainer, SortTarget }

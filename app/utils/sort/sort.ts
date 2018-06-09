@@ -1,3 +1,5 @@
+import SortState from '#/entities/sort-state'
+
 const enum Order { None, Asc, Desc }
 
 interface SortMediator {
@@ -23,8 +25,8 @@ interface OnOrderChanged {
     (sorted: boolean, ascending: boolean): void
 }
 
-function mediatorFactory(): SortMediator {
-    const subjects = new Set<SortSubjectInternal>()
+function mediatorFactory(onChange: (state: SortState) => void): SortMediator {
+    let subjects: SortSubjectInternal[] = []
 
     return {
         createSubject,
@@ -38,20 +40,38 @@ function mediatorFactory(): SortMediator {
                 onOrderChanged,
             )
 
-        subjects.add(subject)
+        subjects = subjects.concat(subject)
         subject.setOrder(Order.None)
 
         return subject
     }
 
     function removeSubject(subject: SortSubject) {
-        subjects.delete(subject as any as SortSubjectInternal)
+        subjects = subjects.filter(_ => _ !== subject as any)
     }
 
     function handleChangeOrder(eventSubject: SortSubjectInternal, order: Order) {
         subjects.forEach(subject =>
             subject.setOrder(subject === eventSubject ? order : Order.None)
         )
+
+        fireState()
+    }
+
+    function fireState() {
+        const subject = subjects.find(_ => _.getOrder() !== Order.None)
+
+        if (!subject) {
+            onChange([])
+            return
+        }
+
+        const state: SortState = [{
+            name: subject.name,
+            order: subject.getOrder() === Order.Asc ? 'asc' : 'desc'
+        }]
+
+        onChange(state)
     }
 }
 
@@ -77,7 +97,7 @@ function subjectFactory(name: string, onRequestOrder: OnRequestOrder, onOrderCha
         return lastOrder
     }
 
-    function flipOrder(): void {
+    function flipOrder() {
         onRequestOrder(lastOrder === Order.Asc ? Order.Desc : Order.Asc)
     }
 }
