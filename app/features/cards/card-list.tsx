@@ -95,7 +95,6 @@ class CardList extends React.Component<CardListProps, CardListState> {
                         )}
                     </tbody>
                 </table>
-                Cards List
             </div>
         )
     }
