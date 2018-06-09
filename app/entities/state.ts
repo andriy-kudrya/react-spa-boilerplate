@@ -1,9 +1,9 @@
 import { RouterState } from 'redux-router5'
-import { CardSets } from '#/entities/card'
+import { Game } from '#/entities/card'
 import { Auth } from '#/entities/auth'
 
 interface Cards {
-    sets: CardSets[]
+    games: Game[]
 }
 
 interface State {

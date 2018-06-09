@@ -1,6 +1,6 @@
 interface Cards {
     game_count: number
-    sets: CardSets[]
+    sets: Game[]
     time: number
     totals: Totals
     bg_count: number
@@ -8,7 +8,7 @@ interface Cards {
     card_count: number
 }
 
-interface CardSets {
+interface Game {
     added: number
     normal: Card
     appid: string
@@ -38,4 +38,4 @@ interface Totals {
     normal: string
 }
 
-export { Cards, CardSets, Card, Totals }
+export { Cards, Game, Card, Totals }

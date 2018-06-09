@@ -1,20 +1,20 @@
 import { Cards as State } from '#/entities/state'
-import { CardSets } from '#/entities/card'
+import { Game } from '#/entities/card'
 import SortState from '#/entities/sort-state'
 import { reducer, handler } from '#/utils/redux'
 import { shallowUpdate } from '#/utils/object'
 import { CARD_LIST_LOADED, SORT_CARD_LIST } from './actions'
 
 const defaultState: State = {
-    sets: []
+    games: []
 }
 
 export default reducer<State>(defaultState,
-    handler(CARD_LIST_LOADED, (state, sets) => shallowUpdate(state, { sets })),
-    handler(SORT_CARD_LIST, (state, sortState) => shallowUpdate(state, { sets: sortGames(state.sets, sortState) })),
+    handler(CARD_LIST_LOADED, (state, games) => shallowUpdate(state, { games })),
+    handler(SORT_CARD_LIST, (state, sortState) => shallowUpdate(state, { games: sortGames(state.games, sortState) })),
 )
 
-function sortGames(games: CardSets[], sortState: SortState): CardSets[] {
+function sortGames(games: Game[], sortState: SortState): Game[] {
     if (sortState.length === 0)
         return games
 
@@ -33,7 +33,7 @@ function sortGames(games: CardSets[], sortState: SortState): CardSets[] {
     return result
 }
 
-function gameFieldSelector(name: string): (game: CardSets) => any {
+function gameFieldSelector(name: string): (game: Game) => any {
     switch (name) {
         case 'game':
             return _ => _.game

@@ -1,7 +1,7 @@
-import { CardSets } from '#/entities/card'
+import { Game } from '#/entities/card'
 
 interface CardService {
-    getAll(): Promise<CardSets[]>
+    getAll(): Promise<Game[]>
 }
 
 export default CardService

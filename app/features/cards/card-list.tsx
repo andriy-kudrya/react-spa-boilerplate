@@ -12,7 +12,7 @@ import DateInput from '#/utils/input/utc-date-input'
 import { loadCardList, sortCardList } from './actions'
 
 interface CardListRowProps {
-    game: Cards['sets'][number]
+    game: Cards['games'][number]
 }
 
 class CardListRow extends React.PureComponent<CardListRowProps> {
@@ -91,7 +91,7 @@ class CardList extends React.Component<CardListProps, CardListState> {
                         </tr>
                     </thead>
                     <tbody>
-                        {cards.sets.map(
+                        {cards.games.map(
                             _ => <CardListRow key={_.game} game={_}/>
                         )}
                     </tbody>
