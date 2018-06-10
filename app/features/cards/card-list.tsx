@@ -8,6 +8,7 @@ import { SortContainer, SortTarget } from '#/utils/sort'
 
 import NumberInput from '#/utils/input/number-input'
 import DateInput from '#/utils/input/utc-date-input'
+import Pagination from '#/utils/pagination'
 
 import { loadCardList, sortCardList } from './actions'
 
@@ -78,6 +79,11 @@ class CardList extends React.Component<CardListProps, CardListState> {
 
         return (
             <div>
+                <Pagination
+                    totalCount={121}
+                    state={{ start: 30, count: 10 }}
+                    onChange={_ => console.log(_.start)}
+                />
                 <NumberInput value={this.state.cardCount} onChange={this.handleNumberChange} placeholder='Min cards...'/>
                 <DateInput value={this.state.dateAdded} onChange={this.handleDateChange} placeholder='Min date added...'/>
                 <table>

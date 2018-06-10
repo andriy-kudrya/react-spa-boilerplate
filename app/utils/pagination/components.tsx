@@ -9,8 +9,12 @@ interface PageProps {
 }
 
 const Page: React.SFC<PageProps> = ({ page, disabled, active, onClick, children }) =>
-    <li className={classnames('page-item', { disabled: disabled && !active, active })} style={{display: 'inline-block'}}>
+    <li
+        style={{ display: 'inline-block' }}
+        className={classnames('page-item', { disabled: disabled && !active, active })}
+    >
         <a
+            style={{ color: active ? 'red' : 'black' }}
             className='page-link'
             href='#'
             tabIndex={disabled && !active ? -1 : undefined}
@@ -22,6 +26,7 @@ const Page: React.SFC<PageProps> = ({ page, disabled, active, onClick, children 
         >
             {children}
         </a>
+        &nbsp;
     </li>
 
 export { Page }

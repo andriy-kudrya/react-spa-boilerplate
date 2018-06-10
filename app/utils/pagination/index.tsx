@@ -1,16 +1,15 @@
 import * as React from 'react'
+
+import PaginationState from '#/entities/pagination-state'
+import { bindComponent } from '#/utils/react'
+import { shallowUpdate } from '#/utils/object'
+
 import { Page } from './components'
-
-import { bindComponent } from '../react'
-
-interface PaginationState {
-    start: number // should be multiple of count
-    count: number // equals to items per page
-}
 
 interface Props {
     totalCount: number
     state: PaginationState
+    onChange: (state: PaginationState) => void
 }
 
 class Pagination extends React.Component<Props> {
@@ -20,28 +19,33 @@ class Pagination extends React.Component<Props> {
     }
 
     handlePageClick(page: number) {
-        console.log(page)
+        this.notifyPageChange(page)
     }
 
     handlePrevClick() {
-        console.log()
+        this.notifyPageChange(calcCurrentPage(this.props.state) - 1)
     }
 
     handleNextClick() {
-        console.log()
+        this.notifyPageChange(calcCurrentPage(this.props.state) + 1)
+    }
+
+    notifyPageChange(page: number) {
+        const { state, onChange } = this.props
+            , start = page * state.count
+            , nextState = shallowUpdate(state, { start })
+
+        onChange(nextState)
     }
 
     render() {
         const { state, totalCount } = this.props
-            , count = state.count
-            , start = state.start % count === 0 ? state.start : 0 // normalize start
-            , currentPage = start / count
-            , maxPage = totalCount > 0 ? Math.ceil(totalCount / count) - 1 : 0
+            , currentPage = calcCurrentPage(state)
+            , maxPage = totalCount > 0 ? Math.ceil(totalCount / state.count) - 1 : 0
             , pages = calcSuggestedPages(currentPage, maxPage)
 
         return (
             <nav>
-                Pagination {currentPage + 1} of {maxPage + 1}
                 <ul className='pagination'>
                     <Page
                         page={NaN}
@@ -69,6 +73,14 @@ class Pagination extends React.Component<Props> {
 }
 
 export default Pagination
+
+function calcCurrentPage(state: PaginationState): number {
+    const count = state.count
+        , start = state.start % count === 0 ? state.start : 0 // normalize start
+        , currentPage = start / count
+
+    return currentPage
+}
 
 function calcSuggestedPages(page: number, maxPage: number): number[]  {
     const MAX_LENGTH = 6
