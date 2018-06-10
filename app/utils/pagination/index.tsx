@@ -1,4 +1,7 @@
 import * as React from 'react'
+import { Page } from './components'
+
+import { bindComponent } from '../react'
 
 interface PaginationState {
     start: number // should be multiple of count
@@ -11,6 +14,23 @@ interface Props {
 }
 
 class Pagination extends React.Component<Props> {
+    constructor(props: Props) {
+        super(props)
+        bindComponent(this)
+    }
+
+    handlePageClick(page: number) {
+        console.log(page)
+    }
+
+    handlePrevClick() {
+        console.log()
+    }
+
+    handleNextClick() {
+        console.log()
+    }
+
     render() {
         const { state, totalCount } = this.props
             , count = state.count
@@ -20,11 +40,30 @@ class Pagination extends React.Component<Props> {
             , pages = calcSuggestedPages(currentPage, maxPage)
 
         return (
-            <div>
+            <nav>
                 Pagination {currentPage + 1} of {maxPage + 1}
-                <br/>
-                {pages.map(_ => '.' + (_ + 1) + '.')}
-            </div>
+                <ul className='pagination'>
+                    <Page
+                        page={NaN}
+                        disabled={currentPage === 0}
+                        onClick={this.handlePrevClick}
+                    >&laquo;</Page>
+                    {pages.map(_ =>
+                        <Page
+                            key={_}
+                            page={_}
+                            disabled={_ === currentPage}
+                            active={_ === currentPage}
+                            onClick={this.handlePageClick}
+                        >{_ + 1}</Page>
+                    )}
+                    <Page
+                        page={NaN}
+                        disabled={currentPage === maxPage}
+                        onClick={this.handleNextClick}
+                    >&raquo;</Page>
+                </ul>
+            </nav>
         )
     }
 }
