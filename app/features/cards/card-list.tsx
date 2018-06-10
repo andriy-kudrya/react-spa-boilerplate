@@ -10,7 +10,7 @@ import NumberInput from '#/utils/input/number-input'
 import DateInput from '#/utils/input/utc-date-input'
 import Pagination from '#/utils/pagination'
 
-import { loadCardList, sortCardList } from './actions'
+import { loadCardList, sortCardList, cardListPageChange } from './actions'
 
 interface CardListRowProps {
     game: Cards['games'][number]
@@ -43,10 +43,10 @@ const Header: React.SFC<{ name: string}> = ({ name, children }) =>
             </td>
         }</SortTarget>
 
-
 interface CardListProps {
     loadCardList: typeof loadCardList,
     sortCardList: typeof sortCardList,
+    cardListPageChange: typeof cardListPageChange,
     cards: Cards,
 }
 
@@ -75,15 +75,12 @@ class CardList extends React.Component<CardListProps, CardListState> {
     }
 
     render() {
-        const { cards, sortCardList } = this.props
+        const { cards, sortCardList, cardListPageChange } = this.props
+            , { start, count } = cards.pagination
+            , games = cards.games.slice(start, start + count)
 
         return (
             <div>
-                <Pagination
-                    totalCount={121}
-                    state={{ start: 30, count: 10 }}
-                    onChange={_ => console.log(_.start)}
-                />
                 <NumberInput value={this.state.cardCount} onChange={this.handleNumberChange} placeholder='Min cards...'/>
                 <DateInput value={this.state.dateAdded} onChange={this.handleDateChange} placeholder='Min date added...'/>
                 <table>
@@ -97,10 +94,21 @@ class CardList extends React.Component<CardListProps, CardListState> {
                         </tr>
                     </thead>
                     <tbody>
-                        {cards.games.map(
+                        {games.map(
                             _ => <CardListRow key={_.game} game={_}/>
                         )}
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colSpan={3}>
+                                <Pagination
+                                    totalCount={cards.games.length}
+                                    state={cards.pagination}
+                                    onChange={cardListPageChange}
+                                />
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         )
@@ -108,6 +116,6 @@ class CardList extends React.Component<CardListProps, CardListState> {
 }
 
 const mapStateToProps = (state: State) => ({ cards: state.cards })
-    , mapDispatchToProps = { loadCardList, sortCardList }
+    , mapDispatchToProps = { loadCardList, sortCardList, cardListPageChange }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardList)
