@@ -20,8 +20,18 @@ function ajax<T>(options: AjaxOptions): Promise<T> {
         xhr.send()
 
         function handleLoad(this: XMLHttpRequest) {
+            const status = this.status
+
+            if (status < 200 || status >= 300) {
+                reject({
+                    status,
+                    statusText: this.statusText,
+                })
+                return
+            }
+
             try {
-                const object: T = JSON.parse(this.response)
+                const object: T = this.response ? JSON.parse(this.response) : undefined
                 resolve(object)
             }
             catch (err) {
@@ -36,4 +46,23 @@ function ajax<T>(options: AjaxOptions): Promise<T> {
     })
 }
 
-export { ajax, Ajax }
+function buildUrl(params: { api: string, segments: string[], query?: object }): string {
+    const path = '/' + params.segments.map(encodeURIComponent).join('/')
+        , api = params.api.replace(/[/]*$/g, '')
+        , url = api + path
+        , query = params.query as any
+
+    if (query == null)
+        return url
+
+    const queryStr = Object.keys(query)
+        .map(_ => encodeURIComponent(_)
+            + '='
+            + encodeURIComponent(query[_] == null ? 'null' : query[_])
+        )
+        .join('&')
+
+    return `${url}?${queryStr}`
+}
+
+export { ajax, Ajax, buildUrl }
