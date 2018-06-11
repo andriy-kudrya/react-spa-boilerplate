@@ -56,13 +56,25 @@ function buildUrl(params: { api: string, segments: string[], query?: object }): 
         return url
 
     const queryStr = Object.keys(query)
-        .map(_ => encodeURIComponent(_)
-            + '='
-            + encodeURIComponent(query[_] == null ? 'null' : query[_])
-        )
+        .reduce((acc, key) => {
+            const value = query[key]
+                , pairs = Array.isArray(value)
+                    ? value.map(_ => makeQueryPair(key, _, true))
+                    : [makeQueryPair(key, value, false)]
+
+            return acc.concat(pairs)
+        }, [] as string[])
         .join('&')
 
     return `${url}?${queryStr}`
+
+}
+
+function makeQueryPair(key: string, value: any, isArray: boolean): string {
+    return encodeURIComponent(key)
+        + (isArray ? '[]' : '')
+        + '='
+        + encodeURIComponent(value == null ? 'null' : value)
 }
 
 export { ajax, Ajax, buildUrl }
