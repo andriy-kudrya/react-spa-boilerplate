@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 
+import { UP_POINTING_TRIANGLE, DOWN_POINTING_TRIANGLE } from '#/constants/characters'
+
 import State, { Cards } from '#/entities/state'
 import { dateFormatter } from '#/utils/format/date'
 import { bindComponent } from '#/utils/react'
@@ -39,7 +41,7 @@ class CardListRow extends React.PureComponent<CardListRowProps> {
 const Header: React.SFC<{ name: string}> = ({ name, children }) =>
         <SortTarget name={name}>{_ =>
             <td onClick={_.onClick}>
-                {children} {_.sorted && (_.ascending ? 'Asc' : 'Desc')}
+                {children} {_.sorted && (_.ascending ? UP_POINTING_TRIANGLE : DOWN_POINTING_TRIANGLE)}
             </td>
         }</SortTarget>
 
