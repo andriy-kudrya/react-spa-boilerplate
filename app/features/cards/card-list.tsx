@@ -39,11 +39,11 @@ class CardListRow extends React.PureComponent<CardListRowProps> {
 }
 
 const Header: React.SFC<{ name: string}> = ({ name, children }) =>
-        <SortTarget name={name}>{_ =>
+        <SortTarget name={name} children={_ =>
             <td onClick={_.onClick}>
                 {children} {_.sorted && (_.ascending ? UP_POINTING_TRIANGLE : DOWN_POINTING_TRIANGLE)}
             </td>
-        }</SortTarget>
+        }/>
 
 interface CardListProps {
     loadCardList: typeof loadCardList,
