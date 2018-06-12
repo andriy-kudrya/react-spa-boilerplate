@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config ./config/webpack --bail",
-    "dev": "webpack-dev-server --config ./config/webpack --env.debug"
+    "dev": "webpack-dev-server --config ./config/webpack --env.debug",
+    "tslint": "tslint -c ./config/tslint/tslint.json -t codeFrame 'app/**/*.{ts,tsx}'",
+    "tslint-fix": "tslint -c ./config/tslint/tslint.json -t codeFrame --fix 'app/**/*.{ts,tsx}'"
   },
   "author": "andriy.kudrya",
   "devDependencies": {
@@ -34,6 +36,7 @@
     "raw-loader": "^0.5.1",
     "style-loader": "^0.21.0",
     "ts-loader": "^4.3.1",
+    "tslint": "^5.10.0",
     "typescript": "^2.9.1",
     "webpack": "^4.11.1",
     "webpack-bundle-analyzer": "^2.13.1",
