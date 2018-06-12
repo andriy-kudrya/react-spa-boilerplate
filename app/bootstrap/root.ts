@@ -16,7 +16,7 @@ import cardServiceFakeFactory from '#/services/fake/card-service-fake'
 const rootReducer = combineReducers<State>({
     auth,
     cards,
-    router: router5Reducer
+    router: router5Reducer,
 })
 
 const effects = emptyEffects.concat(

@@ -18,9 +18,9 @@ function effectMiddlewareFactory(effects: EffectHandler<any, any>[]) {
     effects.forEach(registerEffect)
 
     const result: Middleware<any> =
-        api => {
-            return next => {
-                return action => {
+        api =>
+            next =>
+                action => {
                     const handler = map.get(action.type) as any
 
                     if (!handler)
@@ -28,8 +28,6 @@ function effectMiddlewareFactory(effects: EffectHandler<any, any>[]) {
 
                     return isPayloadAction(action) ? handler(api, action.payload) : handler(api)
                 }
-            }
-        }
 
     return result
 

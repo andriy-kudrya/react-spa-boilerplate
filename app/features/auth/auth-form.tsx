@@ -4,7 +4,7 @@ import { Form } from 'react-final-form'
 import { TextField, PasswordField, Submit, submitDisabled } from '#/utils/form'
 import validate from './auth-form-validate'
 
-interface OwnProps { 
+interface OwnProps {
     onSubmit: (_: object) => Promise<void>
 }
 

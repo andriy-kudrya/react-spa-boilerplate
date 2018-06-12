@@ -68,7 +68,7 @@ function mediatorFactory(onChange: (state: SortState) => void): SortMediator {
 
         const state: SortState = [{
             name: subject.name,
-            order: subject.getOrder() === Order.Asc ? 'asc' : 'desc'
+            order: subject.getOrder() === Order.Asc ? 'asc' : 'desc',
         }]
 
         onChange(state)

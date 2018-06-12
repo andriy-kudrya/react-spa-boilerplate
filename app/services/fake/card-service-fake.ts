@@ -3,7 +3,7 @@ import { delay } from './utils'
 
 function factory(): CardService {
     return {
-        getAll
+        getAll,
     }
 
     function getAll() {

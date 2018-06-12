@@ -33,13 +33,13 @@ const Auth: React.SFC<StateProps & DispatchProps> = ({ auth, logIn }) =>
 
 function mapStateToProps(state: State): StateProps {
     return {
-        auth: state.auth
+        auth: state.auth,
     }
 }
 
 function mapDispatchToProps(dispatch: any): DispatchProps {
     return {
-        logIn: compose(dispatch, logIn)
+        logIn: compose(dispatch, logIn),
     }
 }
 

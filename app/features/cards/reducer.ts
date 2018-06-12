@@ -10,10 +10,11 @@ const defaultState: State = {
     pagination: {
         start: 0,
         count: 20,
-    }
+    },
 }
 
-export default reducer<State>(defaultState,
+export default reducer<State>(
+    defaultState,
     handler(CARD_LIST_LOADED, (state, games) => shallowUpdate(state, { games })),
     handler(SORT_CARD_LIST, (state, sortState) => shallowUpdate(state, { games: sortGames(state.games, sortState) })),
     handler(CARD_LIST_PAGE_CHANGE, (state, pagination) => shallowUpdate(state, { pagination })),
@@ -24,7 +25,7 @@ function sortGames(games: Game[], sortState: SortState): Game[] {
         return games
 
     const collator = new Intl.Collator(undefined, {
-            numeric: true
+            numeric: true,
         })
         , result = games.slice()
         , [{ name, order }] = sortState

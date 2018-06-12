@@ -4,7 +4,7 @@ import { delay } from './utils'
 
 function factory(): AuthService {
     return {
-        logIn
+        logIn,
     }
 
     function logIn(credentials: Credentials): Promise<Auth> {
@@ -13,7 +13,7 @@ function factory(): AuthService {
             .then(_ => ({
                 id: credentials.login,
                 login: credentials.login,
-                token: 'TODO: ababagalamaga'
+                token: 'TODO: ababagalamaga',
             }))
     }
 }

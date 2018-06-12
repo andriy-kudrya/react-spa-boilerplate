@@ -56,14 +56,17 @@ function buildUrl(params: { api: string, segments: string[], query?: object }): 
         return url
 
     const queryStr = Object.keys(query)
-        .reduce((acc, key) => {
-            const value = query[key]
-                , pairs = Array.isArray(value)
-                    ? value.map(_ => makeQueryPair(key, _, true))
-                    : [makeQueryPair(key, value, false)]
+        .reduce(
+            (acc, key) => {
+                const value = query[key]
+                    , pairs = Array.isArray(value)
+                        ? value.map(_ => makeQueryPair(key, _, true))
+                        : [makeQueryPair(key, value, false)]
 
-            return acc.concat(pairs)
-        }, [] as string[])
+                return acc.concat(pairs)
+            },
+            [] as string[]
+        )
         .join('&')
 
     return `${url}?${queryStr}`
