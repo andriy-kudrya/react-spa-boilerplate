@@ -72,7 +72,7 @@ interface SortTargetProps {
 
 const SortTarget: React.SFC<SortTargetProps> = props =>
     <Consumer>
-        {_ => <SortTargetInternal mediator={_} name={props.name}>{props.children}</SortTargetInternal>}
+        {_ => <SortTargetInternal mediator={_} name={props.name} children={props.children}/>}
     </Consumer>
 
 export { SortContainer, SortTarget }

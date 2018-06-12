@@ -15,7 +15,7 @@ const UtcDateField: StatelessComponent<InputFieldProps> = ({name, id, children})
     <Field name={name} render={
         _ =>
             <div>
-                <label htmlFor={id}>{children}</label>
+                <label htmlFor={id} children={children}/>
                 <DateInput id={id} emptyValue='' {..._.input}/>
                 {showFieldError(_.meta) && <span>{_.meta.error}</span>}
             </div>

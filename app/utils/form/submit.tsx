@@ -5,6 +5,6 @@ interface SubmitProps {
 }
 
 const Submit: React.SFC<SubmitProps> = ({children, disabled}) =>
-    <button type='submit' disabled={disabled}>{children}</button>
+    <button type='submit' disabled={disabled} children={children}/>
 
 export default Submit

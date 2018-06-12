@@ -1,12 +1,12 @@
 import * as React from 'react'
 
 import { withRoute, Link } from 'react-router5'
-import { Route } from 'router5'
+import { State } from 'router5'
 
 import Auth from '#/features/auth/auth'
 import SteamCards from '#/features/cards/card-list'
 
-const Shell: React.SFC<{ route: Route }> =
+const Shell: React.SFC<{ route: State}> =
     props =>
         <div>
             <ul>
@@ -17,7 +17,7 @@ const Shell: React.SFC<{ route: Route }> =
             {renderRoute(props.route)}
         </div>
 
-function renderRoute(route: Route): React.ReactNode {
+function renderRoute(route: State): React.ReactNode {
     switch (route.name) {
         case 'log-in':
             return <Auth/>
@@ -30,5 +30,4 @@ function renderRoute(route: Route): React.ReactNode {
     }
 }
 
-// todo: fix typings
-export default withRoute(Shell as any)
+export default withRoute(Shell)

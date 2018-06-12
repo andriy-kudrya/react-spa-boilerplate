@@ -14,7 +14,7 @@ const InputField: React.SFC<InputFieldProps> = ({name, id, type, children}) =>
     <Field name={name} render={
         _ =>
             <div>
-                <label htmlFor={id}>{children}</label>
+                <label htmlFor={id} children={children}/>
                 <input id={id} type={type} {..._.input} />
                 {showFieldError(_.meta) && <span>{_.meta.error}</span>}
             </div>
