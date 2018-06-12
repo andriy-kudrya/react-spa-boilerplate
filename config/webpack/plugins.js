@@ -10,6 +10,8 @@ import paths from './paths'
 const plugins = [
     new ForkTsCheckerWebpackPlugin({
         tsconfig: paths.tsconfigFile,
+        tslint: paths.tslintConfigFile,
+        formatter: 'codeframe',
     }),
     new webpack.DefinePlugin({
         DEBUG: JSON.stringify(params.debug),
