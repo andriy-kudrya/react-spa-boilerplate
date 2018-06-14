@@ -1,5 +1,29 @@
+import autoprefixer from 'autoprefixer'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+
 import params from './params'
 import paths from './paths'
+
+const scssRule = {
+        test: /\.(scss)$/,
+        use: [
+            params.debug ? { loader: 'style-loader' } : MiniCssExtractPlugin.loader,
+            {
+                loader: 'css-loader',
+                options: {
+                    minimize: !params.debug,
+                    sourceMap: !params.debug,
+                }
+            },
+            {
+                loader: 'postcss-loader',
+                options: {
+                    plugins: () => [autoprefixer]
+                }
+            },
+            { loader: 'sass-loader' },
+        ]
+    }
 
 const babelLoader = {
         loader: 'babel-loader',
@@ -55,7 +79,8 @@ const rules = [
                 failOnWarning: false
             }
         }]
-    }
+    },
+    scssRule,
 ].filter(_ => _)
 
 export default rules
