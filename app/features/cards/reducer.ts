@@ -9,7 +9,7 @@ const defaultState: State = {
     games: [],
     pagination: {
         start: 0,
-        count: 20,
+        count: 10,
     },
 }
 
