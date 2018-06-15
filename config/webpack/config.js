@@ -6,7 +6,16 @@ import rules from './rules'
 const config = {
     context: paths.app,
     entry: {
-        app: './bootstrap/main'
+        app: [
+            'core-js/es/array',
+            'core-js/es/object',
+            'core-js/es/promise',
+            'core-js/es/string',
+            'core-js/es/map',
+            'core-js/es/set',
+
+            './bootstrap/main'
+        ]
     },
     output: {
         path: paths.output,

@@ -7,6 +7,7 @@
     "helpers": "node ./config/babel/babel-helpers-generator",
     "build": "webpack --config ./config/webpack --bail",
     "dev": "webpack-dev-server --config ./config/webpack --env.debug",
+    "serve": "webpack-dev-server --config ./config/webpack --inline=false",
     "tslint": "tslint -c ./config/tslint/tslint.json -t codeFrame 'app/**/*.{ts,tsx}'",
     "tslint-fix": "tslint -c ./config/tslint/tslint.json -t codeFrame --fix 'app/**/*.{ts,tsx}'"
   },
@@ -53,6 +54,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.6",
+    "core-js": "3.0.0-beta.3",
     "final-form": "^4.8.2",
     "foundation-sites": "^6.4.4-rc1",
     "react": "^16.4.1",
