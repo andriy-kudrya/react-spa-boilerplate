@@ -38,6 +38,12 @@ const babelLoader = {
                 'react',
             ].filter(_ => _),
             plugins: [
+                ['transform-runtime', {
+                    helpers: true,
+                    polyfill: false,
+                    regenerator: false,
+                    moduleName: paths.babelHelpers
+                }],
                 'syntax-dynamic-import',
                 params.debug && 'transform-react-jsx-self',
                 params.debug && 'transform-react-jsx-source',

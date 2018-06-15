@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "helpers": "node ./config/babel/babel-helpers-generator",
     "build": "webpack --config ./config/webpack --bail",
     "dev": "webpack-dev-server --config ./config/webpack --env.debug",
     "tslint": "tslint -c ./config/tslint/tslint.json -t codeFrame 'app/**/*.{ts,tsx}'",
@@ -25,6 +26,7 @@
     "babel-plugin-transform-react-inline-elements": "^6.22.0",
     "babel-plugin-transform-react-jsx-self": "^6.22.0",
     "babel-plugin-transform-react-jsx-source": "^6.22.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
