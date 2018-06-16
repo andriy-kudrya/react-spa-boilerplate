@@ -1,32 +1,29 @@
-import * as React from 'react'
-import * as classnames from 'classnames'
+import { React, classnames } from '#/utils/react'
 
 interface PageProps {
     page: number
     onClick: (page: number) => void
     disabled: boolean
     active?: boolean
+    className?: string
 }
 
-const Page: React.SFC<PageProps> = ({ page, disabled, active, onClick, children }) =>
-    <li
-        style={{ display: 'inline-block' }}
-        className={classnames('page-item', { disabled: disabled && !active, active })}
-    >
-        <a
-            style={{ color: active ? 'red' : 'black' }}
-            className='page-link'
-            href='#'
-            tabIndex={disabled && !active ? -1 : undefined}
-            onClick={e => {
-                e.preventDefault()
-                if (!disabled)
-                    onClick(page)
-            }}
-        >
-            {children}
-        </a>
-        &nbsp;
+const Page: React.SFC<PageProps> = ({ page, disabled, active, onClick, className, children }) =>
+    <li className={classnames(className, { disabled: disabled && !active, current: active })}>
+        {isNaN(page) && disabled
+            ? children
+            : <a
+                href='#'
+                tabIndex={disabled && !active ? -1 : undefined}
+                onClick={e => {
+                    e.preventDefault()
+                    if (!disabled)
+                        onClick(page)
+                }}
+            >
+                {children}
+            </a>
+        }
     </li>
 
 export { Page }

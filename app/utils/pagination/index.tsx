@@ -1,7 +1,5 @@
-import * as React from 'react'
-
+import { React, Component, bindComponent } from '#/utils/react'
 import PaginationState from '#/entities/pagination-state'
-import { bindComponent } from '#/utils/react'
 import { shallowUpdate } from '#/utils/object'
 
 import { Page } from './components'
@@ -12,7 +10,7 @@ interface Props {
     onChange: (state: PaginationState) => void
 }
 
-class Pagination extends React.Component<Props> {
+class Pagination extends Component<Props> {
     constructor(props: Props) {
         super(props)
         bindComponent(this)
@@ -49,9 +47,10 @@ class Pagination extends React.Component<Props> {
                 <ul className='pagination'>
                     <Page
                         page={NaN}
+                        className='pagination-previous'
                         disabled={currentPage === 0}
                         onClick={this.handlePrevClick}
-                    >&laquo;</Page>
+                    >Previous</Page>
                     {pages.map(_ =>
                         <Page
                             key={_}
@@ -63,9 +62,10 @@ class Pagination extends React.Component<Props> {
                     )}
                     <Page
                         page={NaN}
+                        className='pagination-next'
                         disabled={currentPage === maxPage}
                         onClick={this.handleNextClick}
-                    >&raquo;</Page>
+                    >Next</Page>
                 </ul>
             </nav>
         )
