@@ -7,7 +7,8 @@ import paths from './paths'
 const scssRule = {
         test: /\.(scss)$/,
         use: [
-            params.debug ? { loader: 'style-loader' } : MiniCssExtractPlugin.loader,
+            // params.debug ? { loader: 'style-loader' } : MiniCssExtractPlugin.loader,
+            MiniCssExtractPlugin.loader,
             {
                 loader: 'css-loader',
                 options: {
