@@ -1,5 +1,9 @@
 @import '~foundation-sites/scss/foundation';
 
+$menu-state-back-compat: false;
+$menu-centered-back-compat: false;
+$menu-icons-back-compat: false;
+
 @include foundation-global-styles;
 @include foundation-xy-grid-classes;
 //@include foundation-grid;

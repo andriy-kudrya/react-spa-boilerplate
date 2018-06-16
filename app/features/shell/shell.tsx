@@ -1,19 +1,16 @@
-import { withRoute, Link } from 'react-router5'
+import { withRoute } from 'react-router5'
 import { State } from 'router5'
 
 import { React } from '#/utils/react'
-import { LOG_IN, CARDS } from '#/constants/routes'
 import Auth from '#/features/auth/auth'
 import SteamCards from '#/features/cards/card-list'
+
+import Nav from './nav'
 
 const Shell: React.SFC<{ route: State}> =
     props =>
         <div>
-            <ul>
-                <li><Link routeName={LOG_IN}>Log In</Link></li>
-                <li><Link routeName={CARDS}>Cards</Link></li>
-            </ul>
-            <hr/>
+            <Nav />
             {renderRoute(props.route)}
         </div>
 
