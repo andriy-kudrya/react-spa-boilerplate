@@ -1,13 +1,14 @@
 import createRouter, { Route } from 'router5'
 import browserPlugin from 'router5/plugins/browser'
+import { LOG_IN, CARDS } from '#/constants/routes'
 
 const routes: Route[] = [
     {
-        name: 'log-in',
+        name: LOG_IN,
         path: '/log-in',
     },
     {
-        name: 'cards',
+        name: CARDS,
         path: '/cards',
     },
 ]
