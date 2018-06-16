@@ -1,11 +1,8 @@
-import * as React from 'react'
-import { connect } from 'react-redux'
-
+import { React, PureComponent, Component, connect, bindComponent } from '#/utils/react'
 import { UP_POINTING_TRIANGLE, DOWN_POINTING_TRIANGLE } from '#/constants/characters'
 
 import State, { Cards } from '#/entities/state'
 import { dateFormatter } from '#/utils/format/date'
-import { bindComponent } from '#/utils/react'
 import { SortContainer, SortTarget } from '#/utils/sort'
 
 import NumberInput from '#/utils/input/number-input'
@@ -18,7 +15,7 @@ interface CardListRowProps {
     game: Cards['games'][number]
 }
 
-class CardListRow extends React.PureComponent<CardListRowProps> {
+class CardListRow extends PureComponent<CardListRowProps> {
     formatDate: (_: number) => string
 
     constructor(props: CardListRowProps) {
@@ -57,7 +54,7 @@ interface CardListState {
     dateAdded: number | undefined
 }
 
-class CardList extends React.Component<CardListProps, CardListState> {
+class CardList extends Component<CardListProps, CardListState> {
     constructor(props: CardListProps) {
         super(props)
         this.state = { cardCount: undefined, dateAdded: undefined }

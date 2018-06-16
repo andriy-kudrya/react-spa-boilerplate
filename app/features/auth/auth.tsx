@@ -1,6 +1,4 @@
-import * as React from 'react'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
+import { React, connect, compose } from '#/utils/react'
 
 import State from '#/entities/state'
 import { Auth, Credentials } from '#/entities/auth'

@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 const bindComponentBlackList = new Set<string | number | symbol>([
     'constructor',
 
@@ -34,4 +36,15 @@ function bindComponent<C extends React.Component<any, any, any>>(instance: C): v
     })
 }
 
-export { bindComponent }
+const Component = React.Component
+    , PureComponent = React.PureComponent
+
+export {
+    bindComponent,
+    React,
+    Component,
+    PureComponent,
+}
+
+export { connect } from 'react-redux'
+export { compose } from 'redux'

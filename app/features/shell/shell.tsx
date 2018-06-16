@@ -1,8 +1,7 @@
-import * as React from 'react'
-
 import { withRoute, Link } from 'react-router5'
 import { State } from 'router5'
 
+import { React } from '#/utils/react'
 import { LOG_IN, CARDS } from '#/constants/routes'
 import Auth from '#/features/auth/auth'
 import SteamCards from '#/features/cards/card-list'
