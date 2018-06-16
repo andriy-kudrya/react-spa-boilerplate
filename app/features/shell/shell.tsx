@@ -1,20 +1,23 @@
-import { withRoute } from 'react-router5'
-import { State } from 'router5'
+import { State as RouterState } from 'router5'
 
-import { React } from '#/utils/react'
+import { React, connect } from '#/utils/react'
+import State from '#/entities/state'
 import Auth from '#/features/auth/auth'
 import SteamCards from '#/features/cards/card-list'
 
 import Nav from './nav'
 
-const Shell: React.SFC<{ route: State}> =
-    props =>
+interface StateProps {
+    route: RouterState
+}
+
+const Shell: React.SFC<StateProps> = props =>
         <div>
             <Nav />
             {renderRoute(props.route)}
         </div>
 
-function renderRoute(route: State): React.ReactNode {
+function renderRoute(route: RouterState): React.ReactNode {
     switch (route.name) {
         case 'log-in':
             return <Auth/>
@@ -27,4 +30,10 @@ function renderRoute(route: State): React.ReactNode {
     }
 }
 
-export default withRoute(Shell)
+function mapStateToProps(state: State): StateProps {
+    return {
+        route: state.router.route!,
+    }
+}
+
+export default connect(mapStateToProps)(Shell)

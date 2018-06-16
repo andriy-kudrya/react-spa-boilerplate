@@ -1,16 +1,14 @@
-import { withRoute, Link } from 'react-router5'
-import { State } from 'router5'
-import { startsWithSegment } from 'router5-helpers'
-
 import { React, classnames } from '#/utils/react'
 import { LOG_IN, CARDS } from '#/constants/routes'
 
-const NavLink = withRoute<{ route: State, routeName: string }>(
-    ({ route, routeName, children }) =>
-        <li className={classnames({ 'is-active': startsWithSegment(route, routeName) })}>
-            <Link routeName={routeName} children={children}/>
+import { Link, RouterConsumer } from '#/utils/router'
+
+const NavLink: React.SFC<{ routeName: string }> = props =>
+    <RouterConsumer children={_ =>
+        <li className={classnames({ 'is-active': _.isActive(props.routeName) })}>
+            <Link routeName={props.routeName} children={props.children}/>
         </li>
-)
+    }/>
 
 const Nav: React.SFC = () =>
     <div className='top-bar'>
