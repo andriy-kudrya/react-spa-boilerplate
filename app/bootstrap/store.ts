@@ -6,6 +6,6 @@ import logMiddleware from '#/utils/middleware/log'
 
 import { rootReducer, middlewares } from './root'
 
-const store = createStore(rootReducer, applyMiddleware(...middlewares, logMiddleware, router5Middleware(router)))
+const store = createStore(rootReducer, applyMiddleware(logMiddleware, ...middlewares, router5Middleware(router)))
 
 export default store

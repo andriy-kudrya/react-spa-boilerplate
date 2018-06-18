@@ -4,7 +4,7 @@ const log: Middleware = _api => next => action => {
     const result = next(action)
 
     // eslint-disable-next-line
-    // console.log('store', _api.getState())
+    // console.log('store', action)
 
     return result
 }

@@ -1,7 +1,7 @@
 import { Middleware, MiddlewareAPI } from '#/entities/redux'
 import { ActionType, isPayloadAction } from '../redux'
 
-type Handler<P, R> = (api: MiddlewareAPI, payload: P) => R
+type Handler<P, R> = (payload: P) => R
 
 interface EffectHandler<P, R> {
     actionType: ActionType<P>
@@ -12,30 +12,31 @@ function handler<P, R>(actionType: ActionType<P>, handler: Handler<P, R>): Effec
     return { actionType, handler }
 }
 
-function effectMiddlewareFactory(effects: EffectHandler<any, any>[]) {
+function effectMiddlewareFactory(effectsFactories: EffectsFactory[]): Middleware<any> {
     const map = new Map<ActionType<any>, Handler<any, any>>()
 
-    effects.forEach(registerEffect)
+    return api => {
+        effectsFactories.forEach(
+            factory => factory(api.dispatch, api.getState).forEach(registerEffect)
+        )
 
-    const result: Middleware<any> =
-        api =>
-            next =>
-                action => {
-                    const handler = map.get(action.type) as any
+        return next => action => {
+            const handler = map.get(action.type) as any
 
-                    if (!handler)
-                        return next(action)
+            if (!handler)
+                return next(action)
 
-                    return isPayloadAction(action) ? handler(api, action.payload) : handler(api)
-                }
-
-    return result
+            return isPayloadAction(action) ? handler(action.payload) : handler()
+        }
+    }
 
     function registerEffect(e: EffectHandler<any, any>) {
         map.set(e.actionType, e.handler)
     }
 }
 
-const emptyEffects: EffectHandler<any, any>[] = []
+interface EffectsFactory {
+    (dispatch: MiddlewareAPI['dispatch'], getState: MiddlewareAPI['getState']): EffectHandler<any, any>[]
+}
 
-export { effectMiddlewareFactory as default, handler, emptyEffects }
+export { effectMiddlewareFactory as default, handler, EffectsFactory }

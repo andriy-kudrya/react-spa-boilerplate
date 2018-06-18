@@ -3,7 +3,7 @@ import { router5Reducer } from 'redux-router5'
 
 import State from '#/entities/state'
 
-import effectMwFactory, { emptyEffects } from '#/utils/middleware/effect'
+import effectMwFactory, { EffectsFactory } from '#/utils/middleware/effect'
 
 import auth from '#/features/auth/reducer'
 import authEffectFactory from '#/features/auth/effects'
@@ -19,7 +19,7 @@ const rootReducer = combineReducers<State>({
     router: router5Reducer,
 })
 
-const effects = emptyEffects.concat(
+const effects = ([] as EffectsFactory[]).concat(
         cardsEffectFactory(cardServiceFakeFactory()),
         authEffectFactory(authServiceFakeFactory()),
     )
