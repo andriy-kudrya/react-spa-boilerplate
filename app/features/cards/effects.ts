@@ -3,13 +3,11 @@ import { handler } from '#/utils/middleware/effect'
 
 import { LOAD_CARD_LIST, cardListLoaded } from './actions'
 
-function factory(cardService: CardService) {
-    const loadCardListHandler = handler(
-            LOAD_CARD_LIST,
-            api => cardService.getAll().then(_ => api.dispatch(cardListLoaded(_)))
-        )
-
-    return [loadCardListHandler]
-}
+const factory = (cardService: CardService) => [
+    handler(
+        LOAD_CARD_LIST,
+        api => cardService.getAll().then(_ => api.dispatch(cardListLoaded(_)))
+    ),
+]
 
 export default factory
