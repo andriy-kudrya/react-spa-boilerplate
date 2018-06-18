@@ -5,8 +5,8 @@ import State from '#/entities/state'
 
 import effectMwFactory, { emptyEffects } from '#/utils/middleware/effect'
 
-import auth from '#/features/auth/redux/reducer'
-import authEffectFactory from '#/features/auth/redux/effects'
+import auth from '#/features/auth/reducer'
+import authEffectFactory from '#/features/auth/effects'
 import authServiceFakeFactory from '#/services/fake/auth-service-fake'
 
 import cards from '#/features/cards/reducer'

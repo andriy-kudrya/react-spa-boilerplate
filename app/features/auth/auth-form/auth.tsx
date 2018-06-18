@@ -4,7 +4,7 @@ import State from '#/entities/state'
 import { Auth, Credentials } from '#/entities/auth'
 import { noop } from '#/utils/function'
 
-import { logIn } from './redux/actions'
+import { logIn } from '../actions'
 import AuthForm from './auth-form'
 
 interface StateProps {

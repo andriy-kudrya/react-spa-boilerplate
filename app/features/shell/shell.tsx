@@ -2,7 +2,7 @@ import { State as RouterState } from 'router5'
 
 import { React, connect } from '#/utils/react'
 import State from '#/entities/state'
-import Auth from '#/features/auth/auth'
+import Auth from '#/features/auth/auth-form/auth'
 import SteamCards from '#/features/cards/card-list'
 
 import Nav from './nav'
