@@ -1,52 +1,25 @@
 import { React, connect, bindComponent } from '#/facade/react'
-import { UP_POINTING_TRIANGLE, DOWN_POINTING_TRIANGLE } from '#/constants/characters'
 
 import State, { Cards } from '#/entities/state'
-import { dateFormatter } from '#/utils/format/date'
-import { SortContainer, SortTarget } from '#/utils/sort'
+import { SortContainer } from '#/utils/sort'
 
 import NumberInput from '#/utils/input/number-input'
 import DateInput from '#/utils/input/utc-date-input'
 import Pagination from '#/utils/pagination'
 
-import { loadCardList, sortCardList, cardListPageChange } from './actions'
+import { loadCardList, sortCardList, cardListPageChange } from '../actions'
 
-interface CardListRowProps {
-    game: Cards['games'][number]
+import Header from './header'
+import CardListRow from './card-row'
+
+interface StateProps {
+    cards: Cards,
 }
 
-class CardListRow extends React.PureComponent<CardListRowProps> {
-    formatDate: (_: number) => string
-
-    constructor(props: CardListRowProps) {
-        super(props)
-        this.formatDate = dateFormatter()
-    }
-
-    render() {
-        const { game } = this.props
-        return (
-            <tr>
-                <td>{game.game}</td>
-                <td>{game.normal.count}</td>
-                <td>{this.formatDate(game.added)}</td>
-            </tr>
-        )
-    }
-}
-
-const Header: React.SFC<{ name: string}> = ({ name, children }) =>
-        <SortTarget name={name} children={_ =>
-            <td onClick={_.onClick}>
-                {children} {_.sorted && (_.ascending ? UP_POINTING_TRIANGLE : DOWN_POINTING_TRIANGLE)}
-            </td>
-        }/>
-
-interface CardListProps {
+interface DispatchProps {
     loadCardList: typeof loadCardList,
     sortCardList: typeof sortCardList,
     cardListPageChange: typeof cardListPageChange,
-    cards: Cards,
 }
 
 interface CardListState {
@@ -54,8 +27,8 @@ interface CardListState {
     dateAdded: number | undefined
 }
 
-class CardList extends React.Component<CardListProps, CardListState> {
-    constructor(props: CardListProps) {
+class CardList extends React.Component<StateProps & DispatchProps, CardListState> {
+    constructor(props: StateProps & DispatchProps) {
         super(props)
         this.state = { cardCount: undefined, dateAdded: undefined }
         bindComponent(this)

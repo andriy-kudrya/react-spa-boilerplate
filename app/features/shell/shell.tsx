@@ -4,7 +4,7 @@ import { React, connect } from '#/facade/react'
 import State from '#/entities/state'
 import Auth from '#/features/auth/auth-form/auth'
 import { LOG_IN, CARDS } from '#/constants/routes'
-import SteamCards from '#/features/cards/card-list'
+import SteamCards from '#/features/cards/list/card-list'
 
 import Nav from './nav'
 
