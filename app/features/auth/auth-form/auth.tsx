@@ -1,4 +1,4 @@
-import { React, connect, compose } from '#/utils/react'
+import { React, connect, compose } from '#/facade/react'
 
 import State from '#/entities/state'
 import { Auth, Credentials } from '#/entities/auth'

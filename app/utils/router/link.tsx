@@ -1,6 +1,6 @@
+import * as React from 'react'
 import { Router } from 'router5'
 
-import { React } from '../react'
 import { dropFields } from '../object'
 
 import { RouterConsumer } from './context'

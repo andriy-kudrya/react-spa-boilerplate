@@ -1,9 +1,9 @@
 import { Router } from 'router5'
-import { React, Component } from '../react'
+import * as React from 'react'
 
 const { Provider: RouterProvider, Consumer } = React.createContext<Router>(undefined as any)
 
-class RouterListener extends Component<React.ConsumerProps<Router> & { router: Router }> {
+class RouterListener extends React.Component<React.ConsumerProps<Router> & { router: Router }> {
     componentDidMount() {
         this.componentWillUnmount = this.props.router.subscribe(
             _ => this.forceUpdate()

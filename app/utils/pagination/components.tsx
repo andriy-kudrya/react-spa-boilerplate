@@ -1,4 +1,5 @@
-import { React, classnames } from '#/utils/react'
+import * as React from 'react'
+import * as classnames from 'classnames'
 
 interface PageProps {
     page: number

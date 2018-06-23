@@ -1,5 +1,7 @@
-import { React, Component, bindComponent } from '#/utils/react'
+import * as React from 'react'
+
 import PaginationState from '#/entities/pagination-state'
+import { bindComponent } from '#/utils/react'
 import { shallowUpdate } from '#/utils/object'
 
 import { Page } from './components'
@@ -10,7 +12,7 @@ interface Props {
     onChange: (state: PaginationState) => void
 }
 
-class Pagination extends Component<Props> {
+class Pagination extends React.Component<Props> {
     constructor(props: Props) {
         super(props)
         bindComponent(this)

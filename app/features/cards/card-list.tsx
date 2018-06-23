@@ -1,4 +1,4 @@
-import { React, PureComponent, Component, connect, bindComponent } from '#/utils/react'
+import { React, connect, bindComponent } from '#/facade/react'
 import { UP_POINTING_TRIANGLE, DOWN_POINTING_TRIANGLE } from '#/constants/characters'
 
 import State, { Cards } from '#/entities/state'
@@ -15,7 +15,7 @@ interface CardListRowProps {
     game: Cards['games'][number]
 }
 
-class CardListRow extends PureComponent<CardListRowProps> {
+class CardListRow extends React.PureComponent<CardListRowProps> {
     formatDate: (_: number) => string
 
     constructor(props: CardListRowProps) {
@@ -54,7 +54,7 @@ interface CardListState {
     dateAdded: number | undefined
 }
 
-class CardList extends Component<CardListProps, CardListState> {
+class CardList extends React.Component<CardListProps, CardListState> {
     constructor(props: CardListProps) {
         super(props)
         this.state = { cardCount: undefined, dateAdded: undefined }

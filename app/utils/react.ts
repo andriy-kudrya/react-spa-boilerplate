@@ -36,18 +36,4 @@ function bindComponent<C extends React.Component<any, any, any>>(instance: C): v
     })
 }
 
-const Component = React.Component
-    , PureComponent = React.PureComponent
-
-export {
-    bindComponent,
-    React,
-    Component,
-    PureComponent,
-}
-
-export { connect } from 'react-redux'
-export { compose } from 'redux'
-
-import * as classnames from 'classnames'
-export { classnames }
+export { bindComponent }

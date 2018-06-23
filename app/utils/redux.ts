@@ -51,4 +51,3 @@ function reducer<S>(defaultState: S, ...payloadHandlers: ActionHandler<S, any>[]
 }
 
 export { action, ActionType, isPayloadAction, reducer, handler, Action }
-export { shallowUpdate } from '#/utils/object'

@@ -1,6 +1,6 @@
 import { Form } from 'react-final-form'
 
-import { React } from '#/utils/react'
+import { React } from '#/facade/react'
 import { TextField, PasswordField, Submit, submitDisabled } from '#/utils/form'
 import validate from './auth-form-validate'
 
