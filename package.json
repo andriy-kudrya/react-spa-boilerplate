@@ -54,9 +54,9 @@
   },
   "dependencies": {
     "classnames": "^2.2.6",
-    "core-js": "^2.5.7",
     "final-form": "^4.8.2",
     "foundation-sites": "^6.4.4-rc1",
+    "promise-polyfill": "^8.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-final-form": "^3.6.0",

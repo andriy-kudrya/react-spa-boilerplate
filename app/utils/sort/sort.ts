@@ -59,7 +59,7 @@ function mediatorFactory(onChange: (state: SortState) => void): SortMediator {
     }
 
     function fireState() {
-        const subject = subjects.find(_ => _.getOrder() !== Order.None)
+        const subject = subjects.filter(_ => _.getOrder() !== Order.None)[0]
 
         if (!subject) {
             onChange([])

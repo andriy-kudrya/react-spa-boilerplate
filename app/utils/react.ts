@@ -1,23 +1,23 @@
 import * as React from 'react'
 
-const bindComponentBlackList = new Set<string | number | symbol>([
-    'constructor',
+const bindComponentBlackList = {
+    constructor: 0,
 
-    'componentDidMount',
-    'shouldComponentUpdate',
-    'componentWillUnmount',
-    'componentDidCatch',
+    componentDidMount: 0,
+    shouldComponentUpdate: 0,
+    componentWillUnmount: 0,
+    componentDidCatch: 0,
 
-    'getSnapshotBeforeUpdate',
-    'componentDidUpdate',
+    getSnapshotBeforeUpdate: 0,
+    componentDidUpdate: 0,
 
-    'componentWillMount',
-    'UNSAFE_componentWillMount',
-    'componentWillReceiveProps',
-    'UNSAFE_componentWillReceiveProps',
-    'componentWillUpdate',
-    'UNSAFE_componentWillUpdate',
-])
+    componentWillMount: 0,
+    UNSAFE_componentWillMount: 0,
+    componentWillReceiveProps: 0,
+    UNSAFE_componentWillReceiveProps: 0,
+    componentWillUpdate: 0,
+    UNSAFE_componentWillUpdate: 0,
+}
 
 /**
  * Binds methods in DIRECT prototype of component to instance
@@ -28,7 +28,7 @@ function bindComponent<C extends React.Component<any, any, any>>(instance: C): v
     const keys = Object.getOwnPropertyNames(Object.getPrototypeOf(instance)) as Array<keyof C>
 
     keys.forEach(key => {
-        const shouldBind = !bindComponentBlackList.has(key) && typeof instance[key] === 'function'
+        const shouldBind = !(key in bindComponentBlackList) && typeof instance[key] === 'function'
 
         if (shouldBind)
             // todo: fails to compile with ts 2.9.1 without cast to any

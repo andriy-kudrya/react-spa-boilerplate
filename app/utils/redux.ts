@@ -1,4 +1,5 @@
 import { Reducer } from 'redux'
+import createHash from './hash'
 
 type ActionType<P = void> = string & { attachPayloadTypeHack?: P }
 
@@ -37,7 +38,7 @@ function isPayloadAction(action: Action<any>): action is { type: ActionType<any>
 }
 
 function reducer<S>(defaultState: S, ...payloadHandlers: ActionHandler<S, any>[]): Reducer<S> {
-    const handlerMap = new Map<string, Handler<S, any>>()
+    const handlerMap = createHash<Handler<S, any>>()
     payloadHandlers.forEach(_ => handlerMap.set(_.actionType, _.handler))
 
     return (state = defaultState, action: Action<any> | Action<void>) => {

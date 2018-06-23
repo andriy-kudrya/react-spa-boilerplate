@@ -104,5 +104,10 @@ function calcSuggestedPages(page: number, maxPage: number): number[]  {
 }
 
 function sequence(start: number, count: number): number[] {
-    return Array.from({ length: count }, (_, i) => i + start)
+    const result: number[] = []
+
+    for (let i = 0; i < count; i++)
+        result.push(start + i)
+
+    return result
 }

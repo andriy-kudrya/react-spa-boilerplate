@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import SortState from '#/entities/sort-state'
 
+import { assign } from '../object'
 import { mediatorFactory, SortMediator, SortSubject } from './sort'
 
 const { Provider, Consumer } = React.createContext<SortMediator>(undefined as any)
@@ -61,7 +62,7 @@ class SortTargetInternal extends React.Component<TargetProps, TargetState> {
     }
 
     render() {
-        return this.props.children(Object.assign({ onClick: this.handleClick }, this.state))
+        return this.props.children(assign({ onClick: this.handleClick }, this.state))
     }
 }
 

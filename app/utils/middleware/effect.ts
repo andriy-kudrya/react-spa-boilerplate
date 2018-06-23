@@ -1,5 +1,6 @@
 import { Middleware, MiddlewareAPI } from '#/entities/redux'
 import { ActionType, isPayloadAction } from '../redux'
+import createHash from '../hash'
 
 type Handler<P, R> = (payload: P) => R
 
@@ -13,7 +14,7 @@ function handler<P, R>(actionType: ActionType<P>, handler: Handler<P, R>): Effec
 }
 
 function effectMiddlewareFactory(effectsFactories: EffectsFactory[]): Middleware<any> {
-    const map = new Map<ActionType<any>, Handler<any, any>>()
+    const map = createHash<Handler<any, any>>()
 
     return api => {
         effectsFactories.forEach(
