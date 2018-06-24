@@ -14,7 +14,8 @@ const config = {
     output: {
         path: paths.output,
         publicPath: '/',
-        filename: params.debug ? '[name].js' : '[name].[chunkhash].js',
+        filename: '[name].js',
+        // filename: params.debug ? '[name].js' : '[name].[chunkhash].js',
         pathinfo: params.debug
     },
     resolve: {
@@ -35,8 +36,8 @@ const config = {
         noEmitOnErrors: true,
         runtimeChunk: { name: 'manifest' },
         splitChunks: {
+            name: 'vendor',
             chunks: 'all',
-            name: true,
             cacheGroups: {
                 vendor(module) {
                     return module.context && module.context.includes('node_modules');
