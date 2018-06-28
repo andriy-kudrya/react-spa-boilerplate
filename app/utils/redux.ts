@@ -51,4 +51,16 @@ function reducer<S>(defaultState: S, ...payloadHandlers: ActionHandler<S, any>[]
     }
 }
 
-export { action, ActionType, isPayloadAction, reducer, handler, Action }
+function actionHasType<P>(action: any, type: ActionType<P>): action is Action<P> {
+    return action.type === type
+}
+
+export {
+    action,
+    actionHasType,
+    isPayloadAction,
+    reducer,
+    handler,
+    ActionType,
+    Action,
+}
