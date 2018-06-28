@@ -12,8 +12,8 @@ interface MiddlewareAPI {
     getState(): State
 }
 
-interface Middleware<P> {
-    (api: MiddlewareAPI): (next: Dispatch) => (action: Action<P>) => ReturnType<Dispatch>
+interface Middleware {
+    (api: MiddlewareAPI): (next: Dispatch) => (action: Action<any>) => ReturnType<Dispatch>
 }
 
 export { Dispatch, MiddlewareAPI, Middleware }

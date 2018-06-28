@@ -13,7 +13,7 @@ function handler<P, R>(actionType: ActionType<P>, handler: Handler<P, R>): Effec
     return { actionType, handler }
 }
 
-function effectMiddlewareFactory(effectsFactories: EffectsFactory[]): Middleware<any> {
+function effectMiddlewareFactory(effectsFactories: EffectsFactory[]): Middleware {
     const map = createHash<Handler<any, any>>()
 
     return api => {
