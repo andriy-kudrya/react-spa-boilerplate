@@ -5,7 +5,10 @@ import { LOAD_CARD_LIST, cardListLoaded } from './actions'
 
 const factory = (cardService: CardService): EffectsFactory => (dispatch) => [
     handler(LOAD_CARD_LIST, () =>
-        cardService.getAll().then(_ => dispatch(cardListLoaded(_)))
+        cardService.getAll().then(games => {
+            dispatch(cardListLoaded(games))
+            return games
+        })
     ),
 ]
 

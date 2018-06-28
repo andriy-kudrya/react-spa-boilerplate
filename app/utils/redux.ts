@@ -1,20 +1,48 @@
 import { Reducer } from 'redux'
 import createHash from './hash'
 
-type ActionType<P = void> = string & { attachPayloadTypeHack?: P }
+interface Default {
+    ['!@#$']: '!@#$'
+}
 
-type Action<P> = P extends void
-    ? { type: ActionType<P> }
-    : { type: ActionType<P>, payload: P }
+/**
+ * @param P Payload type
+ * @param R Result type of "dispatch" function when action of this type is dispatched.
+ * By default it should be action itself but I see no way to declare such recursive type:
+ * ActionType<P, R =
+ *    ActionType<P, R =
+ *        ...
+ *    >
+ * >
+ * So 'Default' terminator is used
+ */
+type ActionType<P, R = Default> = string & {
+    attachPayloadTypeHack?: P & never
+    attachDispatchResultTypeHack?: R & never
+}
 
-type ActionCreatorFactory<P> = P extends void
-    ? () => Action<P>
-    : (payload: P) => Action<P>
+type Action<P, R> = P extends void
+    ? { type: ActionType<P, R> }
+    : { type: ActionType<P, R>, payload: P }
 
-function action<P>(type: ActionType<P>): ActionCreatorFactory<P> {
+type DispatchResult<P, R> = R extends Default ? Action<P, Default> : R
+
+type VoidAction<R> = { type: ActionType<void, R> }
+type NonVoidAction<P, R> = { type: ActionType<P, R>, payload: P }
+
+interface Dispatch {
+    <R>(action: VoidAction<R>): DispatchResult<void, R>
+    <P, R>(action: NonVoidAction<P, R>): DispatchResult<P, R>
+}
+
+type ActionCreatorFactory<P, R> = P extends void
+    ? () => Action<P, R>
+    : (payload: P) => Action<P, R>
+
+function action<P, R>(type: ActionType<P, R>): ActionCreatorFactory<P, R> {
     return function (payload) {
         return arguments.length ? { type, payload } : { type }
-    } as ActionCreatorFactory<P>
+    } as ActionCreatorFactory<P, R>
 }
 
 // TODO: type inference doesn't work for ActionType<void> when creating reducer with *reducer* factory below
@@ -24,24 +52,24 @@ function action<P>(type: ActionType<P>): ActionCreatorFactory<P> {
 
 type Handler<S, P> = (state: S, payload: P) => S
 
-interface ActionHandler<S, P> {
-    actionType: ActionType<P>
+interface ActionHandler<S, P, R> {
+    actionType: ActionType<P, R>
     handler: Handler<S, P>
 }
 
-function handler<S, P>(actionType: ActionType<P>, handler: Handler<S, P>): ActionHandler<S, P> {
+function handler<S, P, R>(actionType: ActionType<P, R>, handler: Handler<S, P>): ActionHandler<S, P, R> {
     return { actionType, handler }
 }
 
-function isPayloadAction(action: Action<any>): action is { type: ActionType<any>, payload: any } {
+function isPayloadAction(action: Action<any, any>): action is { type: ActionType<any, any>, payload: any } {
     return 'payload' in action
 }
 
-function reducer<S>(defaultState: S, ...payloadHandlers: ActionHandler<S, any>[]): Reducer<S> {
+function reducer<S>(defaultState: S, ...payloadHandlers: ActionHandler<S, any, any>[]): Reducer<S> {
     const handlerMap = createHash<Handler<S, any>>()
     payloadHandlers.forEach(_ => handlerMap.set(_.actionType, _.handler))
 
-    return (state = defaultState, action: Action<any> | Action<void>) => {
+    return (state = defaultState, action: Action<any, any> | Action<void, any>) => {
         const handler = handlerMap.get(action.type) as any
 
         if (handler)
@@ -51,7 +79,7 @@ function reducer<S>(defaultState: S, ...payloadHandlers: ActionHandler<S, any>[]
     }
 }
 
-function actionHasType<P>(action: any, type: ActionType<P>): action is Action<P> {
+function actionHasType<P, R>(action: any, type: ActionType<P, R>): action is Action<P, R> {
     return action.type === type
 }
 
@@ -63,4 +91,7 @@ export {
     handler,
     ActionType,
     Action,
+    Dispatch,
+    DispatchResult,
+    Default,
 }
