@@ -27,9 +27,11 @@ type Action<P, R> = P extends void
 
 type DispatchResult<P, R> = R extends Default ? Action<P, Default> : R
 
+// Type inference does not work with conditional types
+// so overloaded dispatch is used instead of single parameter Action<P, R>
+// https://github.com/Microsoft/TypeScript/issues/25301
 type VoidAction<R> = { type: ActionType<void, R> }
 type NonVoidAction<P, R> = { type: ActionType<P, R>, payload: P }
-
 interface Dispatch {
     <R>(action: VoidAction<R>): DispatchResult<void, R>
     <P, R>(action: NonVoidAction<P, R>): DispatchResult<P, R>
@@ -49,7 +51,6 @@ function action<P, R>(type: ActionType<P, R>): ActionCreatorFactory<P, R> {
 // type Handler<S, P> = P extends void
 //     ? (state: S) => S
 //     : (state: S, payload: P) => S
-
 type Handler<S, P> = (state: S, payload: P) => S
 
 interface ActionHandler<S, P, R> {
