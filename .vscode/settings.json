@@ -2,6 +2,8 @@
     "files.exclude": {
         "package-lock.json": true,
         "*.sublime-workspace": true,
+        ".vscode": true,
+        "node_modules": true,
     },
     "tslint.configFile": "./config/tslint/tslint.json",
     "tslint.autoFixOnSave": true,
