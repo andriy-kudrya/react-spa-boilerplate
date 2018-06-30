@@ -8,10 +8,10 @@ interface Cards {
     pagination: PaginationState
 }
 
-interface State {
+interface AppState {
     auth: Auth
     cards: Cards
     router: RouterState
 }
 
-export { State as default, Auth, Cards }
+export { AppState as default, Auth, Cards }

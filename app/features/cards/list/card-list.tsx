@@ -1,6 +1,6 @@
 import { React, connect, bindComponent } from '#/facade/react'
 
-import State, { Cards } from '#/entities/state'
+import AppState, { Cards } from '#/entities/app-state'
 import { SortContainer } from '#/utils/sort'
 
 import NumberInput from '#/utils/input/number-input'
@@ -22,12 +22,12 @@ interface DispatchProps {
     cardListPageChange: typeof cardListPageChange,
 }
 
-interface CardListState {
+interface State {
     cardCount: number | undefined
     dateAdded: number | undefined
 }
 
-class CardList extends React.Component<StateProps & DispatchProps, CardListState> {
+class CardList extends React.Component<StateProps & DispatchProps, State> {
     constructor(props: StateProps & DispatchProps) {
         super(props)
         this.state = { cardCount: undefined, dateAdded: undefined }
@@ -87,7 +87,7 @@ class CardList extends React.Component<StateProps & DispatchProps, CardListState
     }
 }
 
-const mapStateToProps = (state: State) => ({ cards: state.cards })
+const mapStateToProps = (state: AppState) => ({ cards: state.cards })
     , mapDispatchToProps = { loadCardList, sortCardList, cardListPageChange }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardList)

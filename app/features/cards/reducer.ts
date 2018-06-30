@@ -1,4 +1,4 @@
-import { Cards as State } from '#/entities/state'
+import { Cards as State } from '#/entities/app-state'
 import { Game } from '#/entities/card'
 import SortState from '#/entities/sort-state'
 import { reducer, handler } from '#/utils/redux/reducer'

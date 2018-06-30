@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import { router5Reducer } from 'redux-router5'
 
-import State from '#/entities/state'
+import AppState from '#/entities/app-state'
 
 import effectMwFactory, { EffectsFactory } from '#/utils/redux/effect'
 
@@ -13,13 +13,13 @@ import cards from '#/features/cards/reducer'
 import cardsEffectFactory from '#/features/cards/effects'
 import cardServiceFakeFactory from '#/services/fake/card-service-fake'
 
-const rootReducer = combineReducers<State>({
+const rootReducer = combineReducers<AppState>({
     auth,
     cards,
     router: router5Reducer,
 })
 
-const effects = ([] as EffectsFactory<State>[]).concat(
+const effects = ([] as EffectsFactory<AppState>[]).concat(
         cardsEffectFactory(cardServiceFakeFactory()),
         authEffectFactory(authServiceFakeFactory()),
     )

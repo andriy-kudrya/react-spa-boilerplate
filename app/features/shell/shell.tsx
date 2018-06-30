@@ -1,7 +1,7 @@
 import { State as RouterState } from 'router5'
 
 import { React, connect } from '#/facade/react'
-import State from '#/entities/state'
+import AppState from '#/entities/app-state'
 import Auth from '#/features/auth/auth-form/auth'
 import { LOG_IN, CARDS } from '#/constants/routes'
 import SteamCards from '#/features/cards/list/card-list'
@@ -31,7 +31,7 @@ function renderRoute(route: RouterState): React.ReactNode {
     }
 }
 
-function mapStateToProps(state: State): StateProps {
+function mapStateToProps(state: AppState): StateProps {
     return {
         route: state.router.route!,
     }

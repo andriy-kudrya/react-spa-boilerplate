@@ -1,6 +1,6 @@
 import { action, ActionType } from '#/utils/redux'
 import { Credentials } from '#/entities/auth'
-import { Auth } from '#/entities/state'
+import { Auth } from '#/entities/app-state'
 
 const LOG_IN: ActionType<Credentials, Promise<void>> = 'app.auth.LOG_IN'
     , LOGGED_IN: ActionType<Auth> = 'app.auth.LOGGED_IN'

@@ -1,6 +1,6 @@
 import { React, connect, compose } from '#/facade/react'
 
-import State from '#/entities/state'
+import AppState from '#/entities/app-state'
 import { Auth, Credentials } from '#/entities/auth'
 import { noop } from '#/utils/function'
 
@@ -29,7 +29,7 @@ const Auth: React.SFC<StateProps & DispatchProps> = ({ auth, logIn }) =>
         }
     </div>
 
-function mapStateToProps(state: State): StateProps {
+function mapStateToProps(state: AppState): StateProps {
     return {
         auth: state.auth,
     }
