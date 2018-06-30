@@ -1,5 +1,5 @@
 import CardService from '#/services/card-service'
-import { handler, EffectsFactory } from '#/utils/middleware/effect'
+import { handler, EffectsFactory } from '#/facade/effect'
 
 import { LOAD_CARD_LIST, cardListLoaded } from './actions'
 

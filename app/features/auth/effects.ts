@@ -1,7 +1,7 @@
 import { actions } from 'redux-router5'
 
 import AuthService from '#/services/auth-service'
-import { handler, EffectsFactory } from '#/utils/middleware/effect'
+import { handler, EffectsFactory } from '#/facade/effect'
 
 import { LOG_IN, loggedIn } from './actions'
 

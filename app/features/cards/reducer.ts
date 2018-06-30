@@ -1,7 +1,7 @@
 import { Cards as State } from '#/entities/state'
 import { Game } from '#/entities/card'
 import SortState from '#/entities/sort-state'
-import { reducer, handler } from '#/utils/redux'
+import { reducer, handler } from '#/utils/redux/reducer'
 import { shallowUpdate } from '#/utils/object'
 import { CARD_LIST_LOADED, SORT_CARD_LIST, CARD_LIST_PAGE_CHANGE } from './actions'
 
