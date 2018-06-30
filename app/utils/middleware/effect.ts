@@ -1,5 +1,5 @@
-import { Middleware, MiddlewareAPI } from '#/entities/redux'
-import { ActionType, DispatchResult, Dispatch, isPayloadAction } from '../redux'
+import State from '#/entities/state'
+import { ActionType, DispatchResult, Dispatch, Middleware, isPayloadAction } from '../redux'
 import createHash from '../hash'
 
 type Handler<P, R> = (payload: P) => DispatchResult<P, R>
@@ -13,7 +13,7 @@ function handler<P, R>(actionType: ActionType<P, R>, handler: Handler<P, R>): Ef
     return { actionType, handler }
 }
 
-function effectMiddlewareFactory(effectsFactories: EffectsFactory[]): Middleware {
+function effectMiddlewareFactory(effectsFactories: EffectsFactory[]): Middleware<State> {
     return api => {
         const map = createHash<Handler<any, any>>()
 
@@ -34,7 +34,7 @@ function effectMiddlewareFactory(effectsFactories: EffectsFactory[]): Middleware
 }
 
 interface EffectsFactory {
-    (dispatch: Dispatch, getState: MiddlewareAPI['getState']): EffectHandler<any, any>[]
+    (dispatch: Dispatch, getState: () => State): EffectHandler<any, any>[]
 }
 
 export { effectMiddlewareFactory as default, handler, EffectsFactory }

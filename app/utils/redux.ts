@@ -37,6 +37,17 @@ interface Dispatch {
     <P, R>(action: NonVoidAction<P, R>): DispatchResult<P, R>
 }
 
+interface MiddlewareAPI<S> {
+    dispatch: Dispatch
+    getState(): S
+}
+
+interface Middleware<S> {
+    (api: MiddlewareAPI<S>): (next: Dispatch) => (action: any) => any
+    // (api: MiddlewareAPI<S>): (next: Dispatch) => <P, R>(action: Action<P, R>) => DispatchResult<P, R>
+    // (api: MiddlewareAPI<S>): (next: Dispatch) => Dispatch
+}
+
 type ActionCreatorFactory<P, R> = P extends void
     ? () => Action<P, R>
     : (payload: P) => Action<P, R>
@@ -95,4 +106,6 @@ export {
     Dispatch,
     DispatchResult,
     Default,
+    MiddlewareAPI,
+    Middleware,
 }
