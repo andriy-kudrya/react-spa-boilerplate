@@ -14,25 +14,22 @@ function handler<P, R>(actionType: ActionType<P, R>, handler: Handler<P, R>): Ef
 }
 
 function effectMiddlewareFactory(effectsFactories: EffectsFactory[]): Middleware {
-    const map = createHash<Handler<any, any>>()
-
     return api => {
+        const map = createHash<Handler<any, any>>()
+
         effectsFactories.forEach(
-            factory => factory(api.dispatch as any, api.getState).forEach(registerEffect)
+            factory => factory(api.dispatch, api.getState)
+                .forEach(_ => map.set(_.actionType, _.handler))
         )
 
         return next => action => {
             const handler = map.get(action.type) as any
 
             if (!handler)
-                return next(action as any)
+                return next(action)
 
             return isPayloadAction(action) ? handler(action.payload) : handler()
         }
-    }
-
-    function registerEffect(e: EffectHandler<any, any>) {
-        map.set(e.actionType, e.handler)
     }
 }
 

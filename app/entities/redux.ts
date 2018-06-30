@@ -1,11 +1,7 @@
-import { Action } from '#/utils/redux'
+import { Action, Dispatch, DispatchResult } from '#/utils/redux'
 import State from './state'
 
 // app specific middleware types
-
-interface Dispatch {
-    (action: Action<any, any>): Action<any, any> | Promise<any>
-}
 
 interface MiddlewareAPI {
     dispatch: Dispatch
@@ -13,7 +9,7 @@ interface MiddlewareAPI {
 }
 
 interface Middleware {
-    (api: MiddlewareAPI): (next: Dispatch) => (action: Action<any, any>) => ReturnType<Dispatch>
+    (api: MiddlewareAPI): (next: Dispatch) => <P, R>(action: Action<P, R>) => DispatchResult<P, R>
 }
 
 export { Dispatch, MiddlewareAPI, Middleware }
