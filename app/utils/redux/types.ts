@@ -14,8 +14,8 @@ interface Default {
  * So 'Default' terminator is used
  */
 type ActionType<P, R = Default> = string & {
-    attachPayloadTypeHack?: P & never
-    attachDispatchResultTypeHack?: R & never
+    attachPayloadTypeHack?: P
+    attachDispatchResultTypeHack?: R
 }
 
 type Action<P, R> = P extends void
