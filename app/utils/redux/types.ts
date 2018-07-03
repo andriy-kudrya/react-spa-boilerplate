@@ -18,17 +18,15 @@ type ActionType<P, R = Default> = string & {
     attachDispatchResultTypeHack?: R
 }
 
-type Action<P, R> = P extends void
-    ? { type: ActionType<P, R> }
-    : { type: ActionType<P, R>, payload: P }
+type VoidAction<R> = { type: ActionType<void, R> }
+type NonVoidAction<P, R> = { type: ActionType<P, R>, payload: P }
+type Action<P, R> = P extends void ? VoidAction<R> : NonVoidAction<P, R>
 
 type DispatchResult<P, R> = R extends Default ? Action<P, Default> : R
 
 // Type inference does not work with conditional types
 // so overloaded dispatch is used instead of single parameter Action<P, R>
 // https://github.com/Microsoft/TypeScript/issues/25301
-type VoidAction<R> = { type: ActionType<void, R> }
-type NonVoidAction<P, R> = { type: ActionType<P, R>, payload: P }
 interface Dispatch {
     <R>(action: VoidAction<R>): DispatchResult<void, R>
     <P, R>(action: NonVoidAction<P, R>): DispatchResult<P, R>
@@ -48,6 +46,8 @@ interface Middleware<S> {
 export {
     ActionType,
     Action,
+    VoidAction,
+    NonVoidAction,
     Dispatch,
     DispatchResult,
     Default,
