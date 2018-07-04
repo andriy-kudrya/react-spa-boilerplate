@@ -12,7 +12,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-    logIn: (_: Credentials) => Promise<Auth>
+    logIn: (_: Credentials) => Promise<void>
 }
 
 const Auth: React.SFC<StateProps & DispatchProps> = ({ auth, logIn }) =>
