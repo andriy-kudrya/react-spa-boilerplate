@@ -12,8 +12,13 @@ const scssRule = {
             {
                 loader: 'css-loader',
                 options: {
-                    minimize: !params.debug,
                     sourceMap: !params.debug,
+                }
+            },
+            !params.debug && {
+                loader: 'clean-css-loader',
+                options: {
+                    level: 2,
                 }
             },
             {
@@ -23,7 +28,7 @@ const scssRule = {
                 }
             },
             { loader: 'sass-loader' },
-        ]
+        ].filter(_ => _)
     }
 
 const babelLoader = {
