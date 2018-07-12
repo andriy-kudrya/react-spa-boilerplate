@@ -3,6 +3,7 @@ import { assert } from 'chai'
 import * as redux from 'redux'
 
 import { shallowUpdate } from '../object'
+import { noop } from '../function'
 import { action } from './action'
 import { ActionType } from './types'
 import { reducer, handler } from './reducer'
@@ -82,8 +83,8 @@ describe('redux', function () {
 
         it('forbids for same effects factory to have several hanelers for same action', function () {
             const effects: EffectsFactory<{}> = () => [
-                    effectHandler(ACTION_ONE, _ => {}),
-                    effectHandler(ACTION_ONE, _ => {}),
+                    effectHandler(ACTION_ONE, noop),
+                    effectHandler(ACTION_ONE, noop),
                 ]
 
             assert.throws(() => createStore(effects))
@@ -91,10 +92,10 @@ describe('redux', function () {
 
         it('allows for different effects factories to handle same action', function () {
             const effectsOne: EffectsFactory<{}> = () => [
-                    effectHandler(ACTION_ONE, _ => {}),
+                    effectHandler(ACTION_ONE, noop),
                 ]
                 , effectsTwo: EffectsFactory<{}> = () => [
-                    effectHandler(ACTION_ONE, _ => {}),
+                    effectHandler(ACTION_ONE, noop),
                 ]
 
             assert.doesNotThrow(() => createStore(effectsOne, effectsTwo))
@@ -102,8 +103,8 @@ describe('redux', function () {
 
         it('allows for same effects factory to have distinct action hanelers', function () {
             const effects: EffectsFactory<{}> = () => [
-                    effectHandler(ACTION_ONE, _ => {}),
-                    effectHandler(ACTION_TWO, _ => {}),
+                    effectHandler(ACTION_ONE, noop),
+                    effectHandler(ACTION_TWO, noop),
                 ]
 
             assert.doesNotThrow(() => createStore(effects))
