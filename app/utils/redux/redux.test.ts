@@ -100,7 +100,7 @@ describe('redux', function () {
             assert.doesNotThrow(() => createStore(effectsOne, effectsTwo))
         })
 
-        it('forbids for same effects factory to have distinct action hanelers', function () {
+        it('allows for same effects factory to have distinct action hanelers', function () {
             const effects: EffectsFactory<{}> = () => [
                     effectHandler(ACTION_ONE, _ => {}),
                     effectHandler(ACTION_TWO, _ => {}),
