@@ -1,6 +1,6 @@
 import { Reducer } from 'redux'
 
-import createHash from '../hash'
+import createHash from './hash'
 
 import { ActionType, Action } from './types'
 import { isPayloadAction } from './action'
@@ -22,7 +22,12 @@ function handler<S, P, R>(actionType: ActionType<P, R>, handler: Handler<S, P>):
 
 function reducer<S>(defaultState: S, ...payloadHandlers: ActionHandler<S, any, any>[]): Reducer<S> {
     const handlerMap = createHash<Handler<S, any>>()
-    payloadHandlers.forEach(_ => handlerMap.set(_.actionType, _.handler))
+    payloadHandlers.forEach(_ => {
+        if (handlerMap.has(_.actionType))
+            throw Error(`Action ${_.actionType} handler has been registered already`)
+
+        handlerMap.set(_.actionType, _.handler)
+    })
 
     return (state = defaultState, action: Action<any, any> | Action<void, any>) => {
         const handler = handlerMap.get(action.type) as any

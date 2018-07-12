@@ -1,7 +1,7 @@
 import { ActionType, DispatchResult, Dispatch, Middleware } from './types'
 import { isPayloadAction } from './action'
 
-import createHash from '../hash'
+import createHash from './hash'
 
 type Handler<P, R> = (payload: P) => DispatchResult<P, R>
 
@@ -19,8 +19,17 @@ function effectMiddlewareFactory<S>(effectsFactories: EffectsFactory<S>[]): Midd
         const map = createHash<Handler<any, any>>()
 
         effectsFactories.forEach(
-            factory => factory(api.dispatch, api.getState)
-                .forEach(_ => map.set(_.actionType, _.handler))
+            factory => {
+                const duplicateMap = createHash()
+
+                factory(api.dispatch, api.getState).forEach(_ => {
+                    if (duplicateMap.has(_.actionType))
+                        throw Error(`Action ${_.actionType} handler has been registered already`)
+
+                    duplicateMap.set(_.actionType, 0)
+                    map.set(_.actionType, _.handler)
+                })
+            }
         )
 
         return next => action => {

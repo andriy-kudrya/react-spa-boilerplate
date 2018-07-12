@@ -1,8 +1,12 @@
 import { assert } from 'chai'
+
+import * as redux from 'redux'
+
 import { shallowUpdate } from '../object'
 import { action } from './action'
 import { ActionType } from './types'
 import { reducer, handler } from './reducer'
+import effectsMidlewareFactory, { EffectsFactory, handler as effectHandler } from './effect'
 
 describe('redux', function () {
     describe('reducer', function () {
@@ -52,6 +56,81 @@ describe('redux', function () {
             const result = reduce(undefined, actionOne(5))
 
             assert.deepEqual(result, { one: 5, two: 2 })
+        })
+
+        it('should throw when second handler is registered for same action type', function () {
+            const createReducer = () =>
+                reducer(
+                    defaultState,
+                    handler(ACTION_ONE, _ => _),
+                    handler(ACTION_ONE, _ => _)
+                )
+
+            assert.throws(createReducer)
+        })
+    })
+
+    describe('effectsMidlewareFactory', function () {
+        const ACTION_ONE: ActionType<string, void> = 'ACTION_ONE'
+            , ACTION_TWO: ActionType<string, void> = 'ACTION_TWO'
+            , actionOne = action(ACTION_ONE)
+
+        function createStore<S>(...effects: EffectsFactory<S>[]) {
+            const mw = effectsMidlewareFactory(effects)
+            return redux.createStore(_ => _, redux.applyMiddleware(mw))
+        }
+
+        it('forbids for same effects factory to have several hanelers for same action', function () {
+            const effects: EffectsFactory<{}> = () => [
+                    effectHandler(ACTION_ONE, _ => {}),
+                    effectHandler(ACTION_ONE, _ => {}),
+                ]
+
+            assert.throws(() => createStore(effects))
+        })
+
+        it('allows for different effects factories to handle same action', function () {
+            const effectsOne: EffectsFactory<{}> = () => [
+                    effectHandler(ACTION_ONE, _ => {}),
+                ]
+                , effectsTwo: EffectsFactory<{}> = () => [
+                    effectHandler(ACTION_ONE, _ => {}),
+                ]
+
+            assert.doesNotThrow(() => createStore(effectsOne, effectsTwo))
+        })
+
+        it('forbids for same effects factory to have distinct action hanelers', function () {
+            const effects: EffectsFactory<{}> = () => [
+                    effectHandler(ACTION_ONE, _ => {}),
+                    effectHandler(ACTION_TWO, _ => {}),
+                ]
+
+            assert.doesNotThrow(() => createStore(effects))
+        })
+
+        it('produces side effect when action for registered handler is dispatched', function () {
+            let effectTarget = 'initial'
+            const effects: EffectsFactory<{}> = () => [
+                    effectHandler(ACTION_ONE, _ => { effectTarget = _ }),
+                ]
+                , store = createStore(effects)
+
+            store.dispatch(actionOne('modified'))
+
+            assert.equal(effectTarget, 'modified')
+        })
+
+        it('should not produce side effect when action for not registered handler is dispatched', function () {
+            let effectTarget = 'initial'
+            const effects: EffectsFactory<{}> = () => [
+                    effectHandler(ACTION_TWO, _ => { effectTarget = _ }),
+                ]
+                , store = createStore(effects)
+
+            store.dispatch(actionOne('modified'))
+
+            assert.equal(effectTarget, 'initial')
         })
     })
 })
