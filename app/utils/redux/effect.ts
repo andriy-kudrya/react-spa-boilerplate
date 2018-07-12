@@ -18,18 +18,13 @@ function effectMiddlewareFactory<S>(effectsFactories: EffectsFactory<S>[]): Midd
     return api => {
         const map = createHash<Handler<any, any>>()
 
-        effectsFactories.forEach(
-            factory => {
-                const duplicateMap = createHash()
+        effectsFactories.forEach(factory =>
+            factory(api.dispatch, api.getState).forEach(_ => {
+                if (map.has(_.actionType))
+                    throw Error(`Action ${_.actionType} handler has been registered already`)
 
-                factory(api.dispatch, api.getState).forEach(_ => {
-                    if (duplicateMap.has(_.actionType))
-                        throw Error(`Action ${_.actionType} handler has been registered already`)
-
-                    duplicateMap.set(_.actionType, 0)
-                    map.set(_.actionType, _.handler)
-                })
-            }
+                map.set(_.actionType, _.handler)
+            })
         )
 
         return next => action => {

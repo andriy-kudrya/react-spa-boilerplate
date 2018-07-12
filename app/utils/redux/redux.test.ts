@@ -90,17 +90,6 @@ describe('redux', function () {
             assert.throws(() => createStore(effects))
         })
 
-        it('allows for different effects factories to handle same action', function () {
-            const effectsOne: EffectsFactory<{}> = () => [
-                    effectHandler(ACTION_ONE, noop),
-                ]
-                , effectsTwo: EffectsFactory<{}> = () => [
-                    effectHandler(ACTION_ONE, noop),
-                ]
-
-            assert.doesNotThrow(() => createStore(effectsOne, effectsTwo))
-        })
-
         it('allows for same effects factory to have distinct action hanelers', function () {
             const effects: EffectsFactory<{}> = () => [
                     effectHandler(ACTION_ONE, noop),
