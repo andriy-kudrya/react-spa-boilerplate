@@ -36,11 +36,14 @@ const config = {
         noEmitOnErrors: true,
         runtimeChunk: { name: 'manifest' },
         splitChunks: {
-            name: 'vendor',
             chunks: 'all',
             cacheGroups: {
-                vendor(module) {
-                    return module.context && module.context.includes('node_modules');
+                default: false,
+                vendor: {
+                    test: /node_modules/,
+                    name: 'vendor',
+                    // priority: 10,
+                    enforce: true,
                 },
             }
         }
