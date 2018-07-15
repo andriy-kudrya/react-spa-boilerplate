@@ -100,7 +100,24 @@ const factory = (authService: AuthService): EffectsFactory => dispatch => [
 ]
 ...
 ```
-Anything more complex is supposed to use middleware directly.
+Anything more complex is supposed to use middleware directly. Turns out it is a rare case
+compared to simple side effects mentioned above (e.g. error handling, synchronization with sessionStorage)
 
 ## Production bundle size
-To be continued...
+In addition to application logic itself third party libraries greatly cotribute to app bundle in terms of size.
+Actually libraries may easily outweight application logic and end up in megabytes of data transfered over the wire. 
+There various reasons for this:
+- Many libraries use es6+ with babel 6 transpilation where classes (maybe other features) generate non treeshakable code (resolved in babel 7)
+- In the same time they transpile every source file on its own so babel helpers are duplicated for every source file
+- To cope with helper duplication there is babel-plugin-transform-runtime but by default it uses babel-runtime where helpers are prebuilt with own minimal version of core-js in babel 6 (babel 7 has version without core-js)
+- By own version of core-js I mean it is not usable outside helpers itself and have size around 20kb, even if core-js is included in your project
+- So for small libraries it is better to have duplicated helpers (under condition that code must be transpiled from es6+ to es5)
+- Often library code is not treeshakable on its own
+- Often library has way more funtionality than your project probably might need
+
+What is done there to reduce bundle size:
+- Do not use useful libraries that have extreme sizes (e.g. redux-form/minified/120 kB, it is more than react with react-dom, currently used final-form from the same author :) )
+- Do not use useful libraries if extra functionality is not required (e.g. core-js ~60kB substituted with promise-polyfill ~7kB, that said core-js is extremely optimised it terms of size)
+- Do not use useful libraries if it is not hard to implement required functionality on my own (e.g. react-router5 ~10kB was removed in favor of own Link component ~1kB)
+- Have own set of commonly used components that are tricky to implement (component libraries tend to have megabytes of code). They are intended to have minimal markup or not at all if possible to let easy customization for particular project needs (currently there are sort helpers, date/number inputs but without IE11 fallback yet)
+- Deduplicate babel helpers with own compiled babel helpers version that doesn't uses core-js. In one of projects it allowed me to reduce app size from 159 kB to 97 kB (not counting third party libraries, those are not under my control anyway)
