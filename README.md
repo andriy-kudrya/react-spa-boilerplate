@@ -1,5 +1,5 @@
 # React sample application
-This is boilerplate code for sigle page applications based on React, Redux and TypeScript.
+This is boilerplate code for single page applications based on React, Redux and TypeScript.
 There I am resolving common problems that I often have to deal with.
 
 # Warning
