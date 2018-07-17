@@ -1,6 +1,4 @@
-import wrappedInputFactory from './core'
-
-type Value<Empty> = number | Empty
+import wrappedInputFactory, { Value } from './core'
 
 function formatValue<Empty>(value: Value<Empty>, empty: Empty): string {
     if (value === empty)

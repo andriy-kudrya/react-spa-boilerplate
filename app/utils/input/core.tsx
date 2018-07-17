@@ -83,3 +83,4 @@ function wrappedInputFactory(inputType: string, formatValue: Format, formatFallb
 }
 
 export default wrappedInputFactory
+export { Value }
