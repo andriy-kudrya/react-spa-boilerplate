@@ -7,7 +7,7 @@ import { noop } from '../function'
 import { action } from './action'
 import { ActionType } from './types'
 import { reducer, handler } from './reducer'
-import effectsMidlewareFactory, { EffectsFactory, handler as effectHandler } from './effect'
+import effectsMiddlewareFactory, { EffectsFactory, handler as effectHandler } from './effect'
 
 describe('redux', function () {
     describe('reducer', function () {
@@ -71,13 +71,13 @@ describe('redux', function () {
         })
     })
 
-    describe('effectsMidlewareFactory', function () {
+    describe('effectsMiddlewareFactory', function () {
         const ACTION_ONE: ActionType<string, void> = 'ACTION_ONE'
             , ACTION_TWO: ActionType<string, void> = 'ACTION_TWO'
             , actionOne = action(ACTION_ONE)
 
         function createStore<S>(...effects: EffectsFactory<S>[]) {
-            const mw = effectsMidlewareFactory(effects)
+            const mw = effectsMiddlewareFactory(effects)
             return redux.createStore(_ => _, redux.applyMiddleware(mw))
         }
 
