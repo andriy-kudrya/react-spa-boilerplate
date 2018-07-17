@@ -1,59 +1,64 @@
-import * as React from 'react'
-import { bindComponent } from '../react'
-import { dropFields, Redefine } from '../object'
+import wrappedInputFactory from './core'
 
 type Value<Empty> = number | Empty
 
-interface NewUtcDateProps<Empty> {
-    value: Value<Empty>
-    emptyValue?: Empty
-    onChange(_: Value<Empty>): void
-}
-
-type UtcDateProps<Empty> = Redefine<React.InputHTMLAttributes<HTMLInputElement>, NewUtcDateProps<Empty>, 'type'>
-
-function numberToString<Empty>(props: Readonly<UtcDateProps<Empty>>) {
-    if (props.value === props.emptyValue)
+function formatValue<Empty>(value: Value<Empty>, empty: Empty): string {
+    if (value === empty)
         return ''
 
-    const date = new Date(props.value as number)
+    const date = new Date(value as number)
 
     return date.toISOString().substr(0, 10)
 }
 
-class UtcDateInput<Empty> extends React.PureComponent<UtcDateProps<Empty>> {
-    private _lastInputValue: string
-    private _lastValue?: Value<Empty>
+function parseValue<Empty>(value: string, empty: Empty): number | Empty {
+    return value === '' ? empty : Date.parse(value)
+}
 
-    constructor(props: UtcDateProps<Empty>) {
-        super(props)
-        bindComponent(this)
+function formatFallbackValue<Empty>(value: Value<Empty>, empty: Empty): string {
+    if (value === empty)
+        return ''
 
-        this._lastValue = props.value
-        this._lastInputValue = numberToString(props)
-    }
+    const date = new Date(value as number)
+        , day = date.getUTCDate()
+        , month = date.getUTCMonth() + 1
+        , year = date.getUTCFullYear()
 
-    handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
-        const props = this.props
-            , inputValue = event.target.value
-            , number = inputValue === '' ? props.emptyValue : Date.parse(inputValue)
+    return prependZero(day, 2) + '.' + prependZero(month, 2) + '.' + prependZero(year, 4)
 
-        this._lastInputValue = inputValue
-        this._lastValue = number
+    function prependZero(value: number, expectedSize: number): string {
+        let result = value.toString()
 
-        props.onChange(number!)
-    }
+        while (true) {
+            if (result.length >= expectedSize)
+                return result
 
-    render() {
-        const props = this.props
-            , forwardedProps = dropFields(props, 'value', 'onChange', 'emptyValue')
-            , number = props.value
-            , inputValue = number === this._lastValue ? this._lastInputValue : numberToString(props)
-
-        return (
-            <input {...forwardedProps} value={inputValue} onChange={this.handleChange} type='date'/>
-        )
+            result = '0' + result
+        }
     }
 }
+
+function parseFallbackValue<Empty>(value: string, empty: Empty): number | Empty {
+    const dateRegex = /(\d\d)\.(\d\d)\.(\d\d\d\d)/g
+        , execResult = dateRegex.exec(value)
+
+    if (execResult === null)
+        return empty
+
+    const day = parseInt(execResult[1], 10)
+        , month = parseInt(execResult[2], 10)
+        , year = parseInt(execResult[3], 10)
+        , date = Date.UTC(year, month - 1, day)
+
+    return formatFallbackValue(date, empty) !== value ? empty : date
+}
+
+const UtcDateInput = wrappedInputFactory(
+        'date',
+        formatValue,
+        formatFallbackValue,
+        parseValue,
+        parseFallbackValue
+    )
 
 export default UtcDateInput
