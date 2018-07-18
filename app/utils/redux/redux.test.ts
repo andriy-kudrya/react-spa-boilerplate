@@ -81,7 +81,7 @@ describe('redux', function () {
             return redux.createStore(_ => _, redux.applyMiddleware(mw))
         }
 
-        it('forbids for same effects factory to have several hanelers for same action', function () {
+        it('forbids for same effects factory to have several handlers for same action', function () {
             const effects: EffectsFactory<{}> = () => [
                     effectHandler(ACTION_ONE, noop),
                     effectHandler(ACTION_ONE, noop),
@@ -90,7 +90,7 @@ describe('redux', function () {
             assert.throws(() => createStore(effects))
         })
 
-        it('allows for same effects factory to have distinct action hanelers', function () {
+        it('allows for same effects factory to have distinct action handlers', function () {
             const effects: EffectsFactory<{}> = () => [
                     effectHandler(ACTION_ONE, noop),
                     effectHandler(ACTION_TWO, noop),
