@@ -83,10 +83,9 @@ function wrappedInputFactory(inputType: string, formatValue: Format, formatFallb
                         ? formatValue(props.value, props.emptyValue)
                         : formatFallbackValue(props.value, props.emptyValue)
 
-            return (inputTypeSupported
+            return inputTypeSupported
                 ? <input {...forwardedProps} value={inputValue} onChange={this.handleChange} type={inputType}/>
                 : <input {...forwardedProps} value={inputValue} onChange={this.handleChange} type='text'/>
-            )
         }
     }
 
