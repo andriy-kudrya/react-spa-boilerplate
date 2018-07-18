@@ -1,4 +1,4 @@
-import wrappedInputFactory, { Value } from './core'
+import wrappedInputFactory, { Value, prependZero } from './core'
 
 function formatValue<Empty>(value: Value<Empty>, empty: Empty): string {
     if (value === empty)
@@ -18,22 +18,11 @@ function formatFallbackValue<Empty>(value: Value<Empty>, empty: Empty): string {
         return ''
 
     const date = new Date(value as number)
-        , day = date.getUTCDate()
-        , month = date.getUTCMonth() + 1
-        , year = date.getUTCFullYear()
 
-    return prependZero(day, 2) + '.' + prependZero(month, 2) + '.' + prependZero(year, 4)
-
-    function prependZero(value: number, expectedSize: number): string {
-        let result = value.toString()
-
-        while (true) {
-            if (result.length >= expectedSize)
-                return result
-
-            result = '0' + result
-        }
-    }
+    return ''
+        + prependZero(date.getUTCDate(), 2) + '.'
+        + prependZero(date.getUTCMonth() + 1, 2) + '.'
+        + prependZero(date.getUTCFullYear(), 4)
 }
 
 function parseFallbackValue<Empty>(value: string, empty: Empty): number | Empty {
@@ -43,10 +32,11 @@ function parseFallbackValue<Empty>(value: string, empty: Empty): number | Empty 
     if (execResult === null)
         return empty
 
-    const day = parseInt(execResult[1], 10)
-        , month = parseInt(execResult[2], 10)
-        , year = parseInt(execResult[3], 10)
-        , date = Date.UTC(year, month - 1, day)
+    const date = Date.UTC(
+        parseInt(execResult[3], 10),
+        parseInt(execResult[2], 10) - 1,
+        parseInt(execResult[1], 10)
+    )
 
     return formatFallbackValue(date, empty) !== value ? empty : date
 }

@@ -12,6 +12,17 @@ function testInputTypeSupport(type: string): boolean {
     return input.value !== invalidValue
 }
 
+function prependZero(value: number, expectedSize: number): string {
+    let result = value.toString()
+
+    while (true) {
+        if (result.length >= expectedSize)
+            return result
+
+        result = '0' + result
+    }
+}
+
 type Value<Empty> = number | Empty
 
 interface NewInputProps<Empty> {
@@ -83,4 +94,4 @@ function wrappedInputFactory(inputType: string, formatValue: Format, formatFallb
 }
 
 export default wrappedInputFactory
-export { Value }
+export { Value, prependZero }
