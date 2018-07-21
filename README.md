@@ -121,6 +121,10 @@ What is done there to reduce bundle size:
 - Have own set of commonly used components that are tricky to implement (component libraries tend to have megabytes of code). They are supposed to have minimal markup or not at all if possible to let easy customization for particular project needs (currently there are sort helpers, date/number inputs but without IE11 fallback yet)
 - Deduplicate babel helpers with own compiled babel helpers version that doesn't uses core-js. In one of projects it allowed me to reduce app size from 159 kB to 97 kB (not counting third party libraries, those are not under my control anyway)
 
+# Error handling
+There is error middleware that handles synchronous and asynchronous errors. In case of asynchronous it expects that other middlewares in chain,
+including effects, return promise that rejects in case of errors. In a more complex case other middleware might need to handle errors by itself.
+
 # Learning curve
 JavaScript basics:
 - http://learn.javascript.ru/
