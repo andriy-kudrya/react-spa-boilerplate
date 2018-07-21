@@ -7,6 +7,7 @@ import { LOG_IN, CARDS } from '#/constants/routes'
 import SteamCards from '#/features/cards/list/card-list'
 
 import Nav from './nav'
+import Errors from './errors'
 
 interface StateProps {
     route: RouterState
@@ -15,6 +16,7 @@ interface StateProps {
 const Shell: React.SFC<StateProps> = props =>
     <div>
         <Nav />
+        <Errors />
         {renderRoute(props.route)}
     </div>
 
