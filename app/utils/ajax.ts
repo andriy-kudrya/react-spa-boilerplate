@@ -1,6 +1,12 @@
+interface Header {
+    header: string,
+    value: string,
+}
+
 interface AjaxOptions {
     method: string,
     url: string,
+    headers?: Header[]
     body?: object | FormData
 }
 
@@ -17,6 +23,9 @@ function ajax<T>(options: AjaxOptions): Promise<T> {
         xhr.responseType = 'text'
         xhr.addEventListener('load', handleLoad)
         xhr.addEventListener('error', handleError)
+
+        if (options.headers)
+            options.headers.forEach(_ => xhr.setRequestHeader(_.header, _.value))
 
         if (options.body) {
             xhr.send(options.body)
