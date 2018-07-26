@@ -1,6 +1,7 @@
 interface AjaxOptions {
     method: string,
     url: string,
+    body?: object | FormData
 }
 
 interface Ajax {
@@ -17,7 +18,12 @@ function ajax<T>(options: AjaxOptions): Promise<T> {
         xhr.addEventListener('load', handleLoad)
         xhr.addEventListener('error', handleError)
 
-        xhr.send()
+        if (options.body) {
+            xhr.send(options.body)
+        }
+        else {
+            xhr.send()
+        }
 
         function handleLoad(this: XMLHttpRequest) {
             const status = this.status
