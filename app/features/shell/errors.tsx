@@ -14,8 +14,8 @@ interface DispatchProps {
 const Errors: React.SFC<StateProps & DispatchProps> =
     props => props.errors.length > 0
         ? <div>
-            {props.errors.map(err =>
-                <div>
+            {props.errors.map((err, key) =>
+                <div key={key}>
                     {err.message}
                     <button type='button' onClick={_ => props.removeError(err)}>
                         &times;
