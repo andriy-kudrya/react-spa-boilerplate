@@ -2,6 +2,7 @@ import params from './params'
 import paths from './paths'
 import plugins from './plugins'
 import rules from './rules'
+import devServer from './dev-server'
 
 const config = {
     context: paths.app,
@@ -28,10 +29,7 @@ const config = {
     plugins,
     mode: params.debug ? 'development' : 'production',
     devtool: 'source-map',
-    devServer: {
-        contentBase: paths.output,
-        historyApiFallback: true
-    },
+    devServer,
     optimization: {
         noEmitOnErrors: true,
         runtimeChunk: { name: 'manifest' },

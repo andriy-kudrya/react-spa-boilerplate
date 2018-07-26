@@ -23,6 +23,7 @@ const plugins = [
     }),
     new webpack.DefinePlugin({
         DEBUG: JSON.stringify(params.debug),
+        API: JSON.stringify(params.api),
         'process.env.NODE_ENV': JSON.stringify(params.debug ? 'development' : 'production'),
     }),
     new HtmlPlugin({

@@ -11,7 +11,7 @@ import authServiceFakeFactory from '#/services/fake/auth-service-fake'
 
 import cards from '#/features/cards/reducer'
 import cardsEffectFactory from '#/features/cards/effects'
-import cardServiceFakeFactory from '#/services/fake/card-service-fake'
+import cardServiceFakeFactory from '#/services/impl/card-service'
 
 import errors from '#/features/error/reducer'
 import errorMw from '#/features/error/middleware'
