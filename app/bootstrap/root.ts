@@ -5,6 +5,8 @@ import AppState from '#/entities/app-state'
 
 import effectMwFactory, { EffectsFactory } from '#/utils/redux/effect'
 
+import apiServiceFactory from '#/services/impl/api-service'
+
 import auth from '#/features/auth/reducer'
 import authEffectFactory from '#/features/auth/effects'
 import authServiceFakeFactory from '#/services/fake/auth-service-fake'
@@ -23,8 +25,9 @@ const rootReducer = combineReducers<AppState>({
     errors,
 })
 
-const effects = ([] as EffectsFactory<AppState>[]).concat(
-        cardsEffectFactory(cardServiceFakeFactory()),
+const apiService = apiServiceFactory()
+    , effects = ([] as EffectsFactory<AppState>[]).concat(
+        cardsEffectFactory(cardServiceFakeFactory(apiService)),
         authEffectFactory(authServiceFakeFactory()),
     )
     , effectMw = effectMwFactory(effects)
