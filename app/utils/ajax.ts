@@ -7,7 +7,7 @@ interface AjaxOptions {
     method: string,
     url: string,
     headers?: Header[]
-    body?: object | FormData
+    body?: string | FormData
 }
 
 interface Ajax {
