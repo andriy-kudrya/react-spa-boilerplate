@@ -7,4 +7,5 @@
     },
     "tslint.configFile": "./config/tslint/tslint.json",
     "tslint.autoFixOnSave": true,
+    "typescript.tsdk": "node_modules/typescript/lib",
 }
