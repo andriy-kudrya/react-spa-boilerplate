@@ -13,7 +13,7 @@ const middleware: Middleware<AppState> = _api => next => {
         try {
             const result: any = next(action)
 
-            if (result.catch)
+            if (result && result.catch)
                 return result.catch((reason: any) => next(addError(getAppError(reason))))
 
             return result
