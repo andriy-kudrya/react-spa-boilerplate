@@ -6,6 +6,7 @@ interface Header {
 interface AjaxOptions {
     method: string,
     url: string,
+    responseType: XMLHttpRequestResponseType
     headers?: Header[]
     body?: string | FormData
 }
@@ -14,25 +15,29 @@ interface Ajax {
     <T>(options: AjaxOptions): Promise<T>
 }
 
-function ajax<T>(options: AjaxOptions): Promise<T> {
-    return new Promise<T>((resolve, reject) => {
+type HeaderHash = {
+    [_: string]: string
+}
+
+interface AjaxResponse {
+    response: any
+    headers: HeaderHash
+}
+
+function ajax(options: AjaxOptions): Promise<AjaxResponse> {
+    return new Promise<AjaxResponse>((resolve, reject) => {
         const xhr = new XMLHttpRequest()
 
         xhr.open(options.method, options.url)
 
-        xhr.responseType = 'text'
+        xhr.responseType = options.responseType
         xhr.addEventListener('load', handleLoad)
         xhr.addEventListener('error', handleError)
 
         if (options.headers)
             options.headers.forEach(_ => xhr.setRequestHeader(_.header, _.value))
 
-        if (options.body) {
-            xhr.send(options.body)
-        }
-        else {
-            xhr.send()
-        }
+        xhr.send(options.body)
 
         function handleLoad(this: XMLHttpRequest) {
             const status = this.status
@@ -45,13 +50,20 @@ function ajax<T>(options: AjaxOptions): Promise<T> {
                 return
             }
 
-            try {
-                const object: T = this.response ? JSON.parse(this.response) : undefined
-                resolve(object)
-            }
-            catch (err) {
-                reject(err)
-            }
+            const headerLines = this.getAllResponseHeaders().trim().split(/[\r\n]+/)
+                , splitRegex = /(.*?): (.*)/
+                , headerArray = headerLines.map(line => {
+                    const [, header = '', value = ''] = splitRegex.exec(line) || []
+                    return { header, value }
+                })
+                , headers: HeaderHash = {}
+
+            headerArray.forEach(_ => headers[_.header] = _.value)
+
+            resolve({
+                response: this.response,
+                headers,
+            })
         }
 
         function handleError() {
@@ -95,4 +107,4 @@ function makeQueryPair(key: string, value: any, isArray: boolean): string {
         + encodeURIComponent(value == null ? 'null' : value)
 }
 
-export { ajax, Ajax, buildUrl }
+export { ajax, Ajax, buildUrl, Header, AjaxResponse }
