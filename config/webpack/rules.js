@@ -35,27 +35,27 @@ const babelLoader = {
         loader: 'babel-loader',
         options: {
             presets: [
-                !params.debug && ['env', {
+                !params.debug && ['@babel/preset-env', {
                     targets: {
                         browsers: ['last 2 versions', 'not ie < 11']
                     },
                     modules: false
                 }],
-                'react',
+                '@babel/preset-react',
             ].filter(_ => _),
             plugins: [
-                ['transform-runtime', {
+                ['@babel/plugin-transform-runtime', {
+                    corejs: false,
                     helpers: true,
-                    polyfill: false,
                     regenerator: false,
-                    moduleName: paths.babelHelpers
+                    useESModules: true,
                 }],
-                'syntax-dynamic-import',
-                params.debug && 'transform-react-jsx-self',
-                params.debug && 'transform-react-jsx-source',
-                !params.debug && 'transform-react-inline-elements',
+                '@babel/plugin-syntax-dynamic-import',
+                params.debug && '@babel/plugin-transform-react-jsx-self',
+                params.debug && '@babel/plugin-transform-react-jsx-source',
+                !params.debug && '@babel/plugin-transform-react-inline-elements',
                 // note: must be a last plugin, otherwise compilation might break
-                !params.debug && 'transform-react-constant-elements',
+                !params.debug && '@babel/plugin-transform-react-constant-elements',
             ].filter(_ => _)
         }
     }

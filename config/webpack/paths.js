@@ -11,7 +11,6 @@ const root = path.join(__dirname, '..', '..')
     )
     , tslintConfigFile = path.join(config, 'tslint', 'tslint.json')
     , tsconfigFile = path.join(root, 'tsconfig.json')
-    , babelHelpers = path.join(config, 'babel')
 
 export default {
     root,
@@ -21,5 +20,4 @@ export default {
     eslintConfigFile,
     tslintConfigFile,
     tsconfigFile,
-    babelHelpers,
 }
