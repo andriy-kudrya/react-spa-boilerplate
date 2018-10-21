@@ -67,6 +67,9 @@ function reducer(state: State = defaultState, action: Action): State {
 So in any line of code that deals with actions it is now possible to have consistent inferred action types
 that are defined in single place.
 
+That said, I've recently found interesting discussion with alternative approaches in the redux repo
+https://github.com/reduxjs/redux/issues/992
+
 ## Redux utilities
 There are currently just few of them: for reducer and simple side effects.
 
