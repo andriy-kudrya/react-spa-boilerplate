@@ -1,8 +1,8 @@
 import { Middleware } from '#/utils/redux'
 import AppState from '#/entities/app-state'
+import AppError from '#/entities/app-error'
 
 import { addError } from './actions'
-import AppError from 'entities/app-error'
 
 const middleware: Middleware<AppState> = _api => next => {
     window.addEventListener('error', (event: ErrorEvent) => {

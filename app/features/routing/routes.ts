@@ -1,21 +1,25 @@
 import createRouter, { Route } from 'router5'
 import browserPlugin from 'router5/plugins/browser'
-import { LOG_IN, CARDS } from '#/constants/routes'
+
+import * as routeNames from '#/constants/routes'
+
+import middleware from './middleware'
 
 const routes: Route[] = [
     {
-        name: LOG_IN,
+        name: routeNames.LOG_IN,
         path: '/log-in',
     },
     {
-        name: CARDS,
+        name: routeNames.CARDS,
         path: '/cards',
     },
 ]
 
 const router = createRouter(routes, {
-        defaultRoute: 'log-in',
+        defaultRoute: routeNames.LOG_IN,
     })
     .usePlugin(browserPlugin())
+    .useMiddleware(middleware)
 
 export default router

@@ -21,6 +21,9 @@ const Shell: React.SFC<StateProps> = props =>
     </div>
 
 function renderRoute(route: RouterState): React.ReactNode {
+    if (route == null)
+        return null
+
     switch (route.name) {
         case LOG_IN:
             return <Auth/>
