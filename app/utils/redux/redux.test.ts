@@ -78,7 +78,7 @@ describe('redux', function () {
 
         function createStore<S>(...effects: EffectsFactory<S>[]) {
             const mw = effectsMiddlewareFactory(effects)
-            return redux.createStore(_ => _, redux.applyMiddleware(mw))
+            return redux.createStore(_ => ({}), redux.applyMiddleware(mw))
         }
 
         it('forbids for same effects factory to have several handlers for same action', function () {
