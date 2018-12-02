@@ -1,11 +1,10 @@
 import { Middleware } from 'redux'
 import { action, actionHasType, ActionType } from '#/utils/redux'
 
-const REGISTER_MIDDLEWARE: ActionType<Middleware, void> = 'app.utils.REGISTER_MIDDLEWARE'
+const REGISTER_MIDDLEWARE: ActionType<Middleware, void> = 'app.lazy-loading.REGISTER_MIDDLEWARE'
+    , registerMiddleware = action(REGISTER_MIDDLEWARE)
 
-const registerMiddleware = action(REGISTER_MIDDLEWARE)
-
-const compositeMiddleware: Middleware = api => next => {
+const dynamicMiddleware: Middleware = api => next => {
     let mwInstance = next
 
     return action => {
@@ -19,6 +18,6 @@ const compositeMiddleware: Middleware = api => next => {
 }
 
 export {
-    compositeMiddleware,
+    dynamicMiddleware,
     registerMiddleware,
 }
