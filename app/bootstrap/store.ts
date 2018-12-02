@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux'
 
 import logMiddleware from '#/utils/middleware/log'
-import { compositeMiddleware, registerMiddleware } from '#/utils/middleware/composite-middleware'
+import { compositeMiddleware, registerMiddleware } from '#/features/lazy-loading/composite-middleware'
 import errorMiddleware from '#/features/error/middleware'
 
 import { rootReducer, middlewares } from './root'
