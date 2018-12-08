@@ -1,7 +1,6 @@
 import * as redux from 'redux'
 import { assert } from 'chai'
 import AppState from '#/entities/app-state'
-import { rootReducer } from '#/bootstrap/root'
 import { ActionType } from '#/utils/redux/types'
 import { action } from '#/utils/redux/action'
 import { noop } from '#/utils/function'
@@ -9,13 +8,17 @@ import effectsMiddlewareFactory, { EffectsFactory, handler } from '#/utils/redux
 import { delay } from '#/utils/timeout'
 
 import errorMw from './middleware'
+import errors from './reducer'
 // import { ADD_ERROR, REMOVE_ERROR, addError, removeError } from './actions'
 import { removeError } from './actions'
 
 describe('error', function () {
     function createStore(...effects: EffectsFactory<AppState>[]) {
         const mw = effectsMiddlewareFactory(effects)
-        return redux.createStore(rootReducer, redux.applyMiddleware(errorMw, mw))
+        return redux.createStore(
+            redux.combineReducers({ errors }),
+            redux.applyMiddleware(errorMw, mw)
+        )
     }
 
     const EFFECT: ActionType<void> = 'EFFECT'

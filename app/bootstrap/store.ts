@@ -1,15 +1,24 @@
 import { createStore, applyMiddleware } from 'redux'
+import { router5Middleware } from 'redux-router5'
+
+import AppState from '#/entities/app-state'
 
 import logMiddleware from '#/utils/middleware/log'
-import { dynamicMiddleware, registerMiddleware } from '#/features/lazy-loading/dynamic-middleware'
 import errorMiddleware from '#/features/error/middleware'
+import router from '#/features/routing/routes'
 
-import { rootReducer, middlewares } from './root'
+import createServiceFactory from '#/services/impl/service-factory'
+import appModuleLoaderFactory from '#/module-loader/app-module-loader'
+import { dynamicMiddleware } from '#/module-loader/dynamic-middleware'
 
-const store = createStore(rootReducer, applyMiddleware(logMiddleware, errorMiddleware, dynamicMiddleware))
+const store = createStore(
+        () => ({} as AppState),
+        applyMiddleware(logMiddleware, errorMiddleware, dynamicMiddleware, router5Middleware(router))
+    )
+    , services = createServiceFactory()
+    , appModuleLoader = appModuleLoaderFactory(store, services)
 
-middlewares.slice().reverse()
-    .map(registerMiddleware)
-    .forEach(store.dispatch)
+appModuleLoader.loadAuth()
+appModuleLoader.loadCards()
 
 export default store

@@ -2,12 +2,19 @@ import { State as RouterState } from 'router5'
 
 import { React, connect } from '#/facade/react'
 import AppState from '#/entities/app-state'
-import Auth from '#/features/auth/auth-form/auth'
 import { LOG_IN, CARDS } from '#/constants/routes'
-import SteamCards from '#/features/cards/list/card-list'
 
 import Nav from './nav'
 import Errors from './errors'
+
+const LazyAuth = React.lazy(() => import('#/features/auth/auth-form/auth'))
+    , LazyCards = React.lazy(() => import('#/features/cards/list/card-list'))
+
+// import Auth from '#/features/auth/auth-form/auth'
+// import SteamCards from '#/features/cards/list/card-list'
+// import { delay } from '#/utils/timeout'
+// const LazyAuth = React.lazy(() => delay(1000).then(() => ({ default: Auth })))
+//     , LazyCards = React.lazy(() => delay(1000).then(() => ({ default: SteamCards })))
 
 interface StateProps {
     route: RouterState
@@ -17,7 +24,9 @@ const Shell: React.SFC<StateProps> = props =>
     <div>
         <Nav />
         <Errors />
-        {renderRoute(props.route)}
+        <React.Suspense fallback={'Loading...'}>
+            {renderRoute(props.route)}
+        </React.Suspense>
     </div>
 
 function renderRoute(route: RouterState): React.ReactNode {
@@ -26,10 +35,10 @@ function renderRoute(route: RouterState): React.ReactNode {
 
     switch (route.name) {
         case LOG_IN:
-            return <Auth/>
+            return <LazyAuth/>
 
         case CARDS:
-            return <SteamCards/>
+            return <LazyCards/>
 
         default:
             return null
