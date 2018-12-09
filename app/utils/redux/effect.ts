@@ -14,7 +14,7 @@ function handler<P, R>(actionType: ActionType<P, R>, handler: Handler<P, R>): Ef
     return { actionType, handler }
 }
 
-function effectMiddlewareFactory<S>(effectsFactories: EffectsFactory<S>[]): Middleware<S> {
+function effectMiddlewareFactory<S>(...effectsFactories: EffectsFactory<S>[]): Middleware<S> {
     return api => {
         const map = createHash<Handler<any, any>>()
 

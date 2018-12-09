@@ -77,7 +77,7 @@ describe('redux', function () {
             , actionOne = action(ACTION_ONE)
 
         function createStore<S>(...effects: EffectsFactory<S>[]) {
-            const mw = effectsMiddlewareFactory(effects)
+            const mw = effectsMiddlewareFactory(...effects)
             return redux.createStore(_ => ({}), redux.applyMiddleware(mw))
         }
 

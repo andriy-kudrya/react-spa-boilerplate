@@ -14,7 +14,7 @@ import { removeError } from './actions'
 
 describe('error', function () {
     function createStore(...effects: EffectsFactory<AppState>[]) {
-        const mw = effectsMiddlewareFactory(effects)
+        const mw = effectsMiddlewareFactory(...effects)
         return redux.createStore(
             redux.combineReducers({ errors }),
             redux.applyMiddleware(errorMw, mw)
