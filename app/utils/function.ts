@@ -4,4 +4,29 @@ function id<T>(value: T): T {
     return value
 }
 
-export { noop, id }
+type Func<T extends any[], R, C = void> = (this: C, ...args: T) => R
+
+function memoizeLatestCall<T extends any[], R, C = void>(f: Func<T, R, C>): Func<T, R, C> {
+    let latestArgs: T,
+        latestContext: any,
+        latestResult: R
+
+    return function (...args) {
+        if (latestArgs && args.length === latestArgs.length && this === latestContext) {
+            let isEqual = true
+            for (let i = 0, length = args.length; i < length && isEqual; i++)
+                isEqual = isEqual && args[i] === latestArgs[i]
+
+            if (isEqual)
+                return latestResult
+        }
+
+        latestResult = f.apply(this, args)
+        latestArgs = args
+        latestContext = this
+
+        return latestResult
+    }
+}
+
+export { Func, noop, id, memoizeLatestCall }

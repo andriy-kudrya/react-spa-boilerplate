@@ -6,15 +6,8 @@ import { LOG_IN, CARDS } from '#/constants/routes'
 
 import Nav from './nav'
 import Errors from './errors'
-
-const LazyAuth = React.lazy(() => import('#/features/auth/auth-form/auth'))
-    , LazyCards = React.lazy(() => import('#/features/cards/list/card-list'))
-
-// import Auth from '#/features/auth/auth-form/auth'
-// import SteamCards from '#/features/cards/list/card-list'
-// import { delay } from '#/utils/timeout'
-// const LazyAuth = React.lazy(() => delay(1000).then(() => ({ default: Auth })))
-//     , LazyCards = React.lazy(() => delay(1000).then(() => ({ default: SteamCards })))
+import { AppModuleLoaderConsumer } from '#/module-loader/context'
+import { AppModuleLoader } from '#/module-loader/types'
 
 interface StateProps {
     route: RouterState
@@ -25,20 +18,24 @@ const Shell: React.SFC<StateProps> = props =>
         <Nav />
         <Errors />
         <React.Suspense fallback={'Loading...'}>
-            {renderRoute(props.route)}
+            <AppModuleLoaderConsumer
+                children={_ => renderRoute(props.route, _)}
+            />
         </React.Suspense>
     </div>
 
-function renderRoute(route: RouterState): React.ReactNode {
+function renderRoute(route: RouterState, loader: AppModuleLoader): React.ReactNode {
     if (route == null)
         return null
 
     switch (route.name) {
         case LOG_IN:
-            return <LazyAuth/>
+            const Auth = loader.loadAuth()
+            return <Auth />
 
         case CARDS:
-            return <LazyCards/>
+            const Cards = loader.loadCards()
+            return <Cards />
 
         default:
             return null

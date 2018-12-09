@@ -18,7 +18,7 @@ const store = createStore(
     , services = createServiceFactory()
     , appModuleLoader = appModuleLoaderFactory(store, services)
 
-appModuleLoader.loadAuth()
-appModuleLoader.loadCards()
+appModuleLoader.loadCore()
 
 export default store
+export { appModuleLoader }

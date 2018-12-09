@@ -8,16 +8,19 @@ import { Provider } from 'react-redux'
 import { RouterProvider } from '#/utils/router'
 import Shell from '#/features/shell/shell'
 import router from '#/features/routing/routes'
+import { AppModuleLoaderProvider } from '#/module-loader/context'
 
-import store from './store'
+import store, { appModuleLoader } from './store'
 
 router.start()
 
 render(
-    <RouterProvider value={router}>
-        <Provider store={store}>
-            <Shell />
-        </Provider>
-    </RouterProvider>,
+    <AppModuleLoaderProvider value={appModuleLoader}>
+        <RouterProvider value={router}>
+            <Provider store={store}>
+                <Shell />
+            </Provider>
+        </RouterProvider>
+    </AppModuleLoaderProvider>,
     document.getElementById('app')
 )
