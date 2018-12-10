@@ -34,10 +34,10 @@ const config = {
         noEmitOnErrors: true,
         runtimeChunk: { name: 'manifest' },
         splitChunks: {
-            chunks: 'all',
+            minSize: 0,
             cacheGroups: {
-                default: false,
                 vendor: {
+                    chunks: 'all',
                     test: /node_modules/,
                     name: 'vendor',
                     // priority: 10,
