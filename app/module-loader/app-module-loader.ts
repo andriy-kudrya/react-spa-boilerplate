@@ -30,7 +30,7 @@ function appModuleLoaderFactory(store: Store<AppState>, services: ServiceFactory
 
     function loadAuth() {
         return React.lazy(
-            () => import('./app-modules/auth')
+            () => import(/* webpackChunkName: 'auth' */ './app-modules/auth')
                 .then(_ => _.default(services))
                 .then(_ => {
                     load(_)
@@ -41,7 +41,7 @@ function appModuleLoaderFactory(store: Store<AppState>, services: ServiceFactory
 
     function loadCards() {
         return React.lazy(
-            () => import('./app-modules/cards')
+            () => import(/* webpackChunkName: 'cards' */ './app-modules/cards')
                 .then(_ => _.default(services))
                 .then(_ => {
                     load(_)
