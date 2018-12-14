@@ -1,9 +1,9 @@
-import { Auth } from '#/entities/app-state'
 import { reducer, handler } from '#/utils/redux/reducer'
 import { shallowUpdate } from '#/utils/object'
-import { LOGGED_IN } from './actions'
+import * as actions from './actions'
+import defaultState from './default-state'
 
-export default reducer<Auth>(
-    { id: '', login: '', token: '' },
-    handler(LOGGED_IN, shallowUpdate)
+export default reducer(
+    defaultState,
+    handler(actions.LOGGED_IN, shallowUpdate)
 )

@@ -1,23 +1,15 @@
-import { Cards as State } from '#/entities/app-state'
 import { Game } from '#/entities/card'
 import SortState from '#/entities/sort-state'
 import { reducer, handler } from '#/utils/redux/reducer'
 import { shallowUpdate } from '#/utils/object'
-import { CARD_LIST_LOADED, SORT_CARD_LIST, CARD_LIST_PAGE_CHANGE } from './actions'
+import * as actions from './actions'
+import defaultState from './default-state'
 
-const defaultState: State = {
-    games: [],
-    pagination: {
-        start: 0,
-        count: 10,
-    },
-}
-
-export default reducer<State>(
+export default reducer(
     defaultState,
-    handler(CARD_LIST_LOADED, (state, games) => shallowUpdate(state, { games })),
-    handler(SORT_CARD_LIST, (state, sortState) => shallowUpdate(state, { games: sortGames(state.games, sortState) })),
-    handler(CARD_LIST_PAGE_CHANGE, (state, pagination) => shallowUpdate(state, { pagination })),
+    handler(actions.CARD_LIST_LOADED, (state, games) => shallowUpdate(state, { games })),
+    handler(actions.SORT_CARD_LIST, (state, sortState) => shallowUpdate(state, { games: sortGames(state.games, sortState) })),
+    handler(actions.CARD_LIST_PAGE_CHANGE, (state, pagination) => shallowUpdate(state, { pagination })),
 )
 
 function sortGames(games: Game[], sortState: SortState): Game[] {

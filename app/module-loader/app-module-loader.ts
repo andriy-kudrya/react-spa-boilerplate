@@ -4,16 +4,15 @@ import AppState from '#/entities/app-state'
 import ServiceFactory from '#/services/service-factory'
 import { assign } from '#/utils/object'
 import { memoizeLatestCall } from '#/utils/function'
-import { router5Reducer } from 'redux-router5'
 import errors from '#/features/error/reducer'
 
-import { AppModule, ReducerMap } from './types'
+import { AppModule } from './types'
 import { registerMiddleware } from './dynamic-middleware'
 import coreModuleFactory from './app-modules/core'
 
-function appModuleLoaderFactory(store: Store<AppState>, services: ServiceFactory) {
-    const currentReducer: ReducerMap = {
-            router: router5Reducer,
+function appModuleLoaderFactory(store: Store<AppState>, services: ServiceFactory, defaultReducerMap: ReducersMapObject<AppState>) {
+    const currentReducer = {
+            ...defaultReducerMap,
             errors,
         }
         , result = {
@@ -54,7 +53,7 @@ function appModuleLoaderFactory(store: Store<AppState>, services: ServiceFactory
         if (module.reducer) {
             assign(currentReducer, module.reducer)
             store.replaceReducer(
-                combineReducers(currentReducer as ReducersMapObject<AppState>)
+                combineReducers(currentReducer)
             )
         }
 

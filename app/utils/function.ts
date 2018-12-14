@@ -8,7 +8,7 @@ type Func<T extends any[], R, C = void> = (this: C, ...args: T) => R
 
 function memoizeLatestCall<T extends any[], R, C = void>(f: Func<T, R, C>): Func<T, R, C> {
     let latestArgs: T,
-        latestContext: any,
+        latestContext: C,
         latestResult: R
 
     return function (...args) {
