@@ -1,15 +1,8 @@
-import { React, connect } from '#/facade/react'
-import AppError from '#/entities/app-error'
-import AppState from '#/entities/app-state'
+import { React, connect, stateMapper, dispatchMapper } from '#/facade/react'
 import { removeError } from '#/features/error/actions'
 
-interface StateProps {
-    errors: AppError[]
-}
-
-interface DispatchProps {
-    removeError: typeof removeError
-}
+type StateProps = ReturnType<typeof mapStateToProps>
+type DispatchProps = ReturnType<typeof mapDispatchToProps>
 
 const Errors: React.SFC<StateProps & DispatchProps> =
     props => props.errors.length > 0
@@ -25,14 +18,7 @@ const Errors: React.SFC<StateProps & DispatchProps> =
         </div>
         : null
 
-function mapStateToProps(state: AppState): StateProps {
-    return {
-        errors: state.errors,
-    }
-}
-
-const mapDispatchToProps = {
-    removeError,
-}
+const mapStateToProps = stateMapper(state => ({ errors: state.errors }))
+const mapDispatchToProps = dispatchMapper({ removeError })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Errors)

@@ -1,7 +1,7 @@
 import { State as RouterState } from 'router5'
 
-import { React, connect } from '#/facade/react'
-import AppState from '#/entities/app-state'
+import { React, connect, stateMapper } from '#/facade/react'
+import Auth from '#/features/auth/auth-form/auth'
 import { LOG_IN, CARDS } from '#/constants/routes'
 
 import Nav from './nav'
@@ -9,9 +9,7 @@ import Errors from './errors'
 import { AppModuleLoaderConsumer } from '#/module-loader/context'
 import { AppModuleLoader } from '#/module-loader/types'
 
-interface StateProps {
-    route: RouterState
-}
+type StateProps = ReturnType<typeof mapStateToProps>
 
 const Shell: React.SFC<StateProps> = props =>
     <div>
@@ -42,10 +40,6 @@ function renderRoute(route: RouterState, loader: AppModuleLoader): React.ReactNo
     }
 }
 
-function mapStateToProps(state: AppState): StateProps {
-    return {
-        route: state.router.route!,
-    }
-}
+const mapStateToProps = stateMapper(state => ({ route: state.router.route! }))
 
 export default connect(mapStateToProps)(Shell)

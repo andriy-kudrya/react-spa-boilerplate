@@ -1,6 +1,5 @@
-import { React, connect, bindComponent } from '#/facade/react'
+import { React, connect, bindComponent, dispatchMapper, stateMapper } from '#/facade/react'
 
-import AppState, { Cards } from '#/entities/app-state'
 import { SortContainer } from '#/utils/sort'
 
 import NumberInput from '#/utils/input/number-input'
@@ -12,15 +11,8 @@ import { loadCardList, sortCardList, cardListPageChange } from '../actions'
 import Header from './header'
 import CardListRow from './card-row'
 
-interface StateProps {
-    cards: Cards,
-}
-
-interface DispatchProps {
-    loadCardList: typeof loadCardList,
-    sortCardList: typeof sortCardList,
-    cardListPageChange: typeof cardListPageChange,
-}
+type StateProps = ReturnType<typeof mapStateToProps>
+type DispatchProps = ReturnType<typeof mapDispatchToProps>
 
 interface State {
     cardCount: number | undefined
@@ -87,7 +79,7 @@ class CardList extends React.Component<StateProps & DispatchProps, State> {
     }
 }
 
-const mapStateToProps = (state: AppState) => ({ cards: state.cards })
-    , mapDispatchToProps = { loadCardList, sortCardList, cardListPageChange }
+const mapStateToProps = stateMapper(state => ({ cards: state.cards }))
+const mapDispatchToProps = dispatchMapper({ loadCardList, sortCardList, cardListPageChange })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardList)

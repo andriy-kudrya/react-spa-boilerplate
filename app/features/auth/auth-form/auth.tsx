@@ -1,19 +1,13 @@
-import { React, connect, compose } from '#/facade/react'
+import { React, connect, dispatchMapper, stateMapper } from '#/facade/react'
 
-import AppState from '#/entities/app-state'
 import { Auth, Credentials } from '#/entities/auth'
 import { noop } from '#/utils/function'
 
 import { logIn } from '../actions'
 import AuthForm from './auth-form'
 
-interface StateProps {
-    auth: Auth
-}
-
-interface DispatchProps {
-    logIn: (_: Credentials) => Promise<void>
-}
+type StateProps = ReturnType<typeof mapStateToProps>
+type DispatchProps = ReturnType<typeof mapDispatchToProps>
 
 const Auth: React.SFC<StateProps & DispatchProps> = ({ auth, logIn }) =>
     <div>
@@ -29,16 +23,7 @@ const Auth: React.SFC<StateProps & DispatchProps> = ({ auth, logIn }) =>
         }
     </div>
 
-function mapStateToProps(state: AppState): StateProps {
-    return {
-        auth: state.auth,
-    }
-}
-
-function mapDispatchToProps(dispatch: any): DispatchProps {
-    return {
-        logIn: compose(dispatch, logIn),
-    }
-}
+const mapStateToProps = stateMapper(state => ({ auth: state.auth }))
+const mapDispatchToProps = dispatchMapper({ logIn })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth)
