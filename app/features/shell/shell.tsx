@@ -9,9 +9,7 @@ import Errors from './errors'
 import { AppModuleLoaderConsumer } from '#/module-loader/context'
 import { AppModuleLoader } from '#/module-loader/types'
 
-type StateProps = ReturnType<typeof mapStateToProps>
-
-const Shell: React.SFC<StateProps> = props =>
+const Shell = (props: ConnectedProps) =>
     <div>
         <Nav />
         <Errors />
@@ -41,5 +39,6 @@ function renderRoute(route: RouterState, loader: AppModuleLoader): React.ReactNo
 }
 
 const mapStateToProps = stateMapper(state => ({ route: state.router.route! }))
+type ConnectedProps = ReturnType<typeof mapStateToProps>
 
 export default connect(mapStateToProps)(Shell)

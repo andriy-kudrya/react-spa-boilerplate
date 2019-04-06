@@ -6,10 +6,7 @@ import { noop } from '#/utils/function'
 import { logIn } from '../actions'
 import AuthForm from './auth-form'
 
-type StateProps = ReturnType<typeof mapStateToProps>
-type DispatchProps = ReturnType<typeof mapDispatchToProps>
-
-const Auth: React.SFC<StateProps & DispatchProps> = ({ auth, logIn }) =>
+const Auth = ({ auth, logIn }: ConnectedProps) =>
     <div>
         <AuthForm onSubmit={_ => logIn(_ as Credentials).then(noop)} />
         {auth.token &&
@@ -25,5 +22,6 @@ const Auth: React.SFC<StateProps & DispatchProps> = ({ auth, logIn }) =>
 
 const mapStateToProps = stateMapper(state => ({ auth: state.auth }))
 const mapDispatchToProps = dispatchMapper({ logIn })
+type ConnectedProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth)

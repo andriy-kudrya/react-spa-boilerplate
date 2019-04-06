@@ -11,16 +11,13 @@ import { loadCardList, sortCardList, cardListPageChange } from '../actions'
 import Header from './header'
 import CardListRow from './card-row'
 
-type StateProps = ReturnType<typeof mapStateToProps>
-type DispatchProps = ReturnType<typeof mapDispatchToProps>
-
 interface State {
     cardCount: number | undefined
     dateAdded: number | undefined
 }
 
-class CardList extends React.Component<StateProps & DispatchProps, State> {
-    constructor(props: StateProps & DispatchProps) {
+class CardList extends React.Component<ConnectedProps, State> {
+    constructor(props: ConnectedProps) {
         super(props)
         this.state = { cardCount: undefined, dateAdded: undefined }
         bindComponent(this)
@@ -81,5 +78,6 @@ class CardList extends React.Component<StateProps & DispatchProps, State> {
 
 const mapStateToProps = stateMapper(state => ({ cards: state.cards }))
 const mapDispatchToProps = dispatchMapper({ loadCardList, sortCardList, cardListPageChange })
+type ConnectedProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardList)
