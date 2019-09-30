@@ -1,7 +1,7 @@
 import wrappedInputFactory, { Value } from './core'
 
 function formatValue<Empty>(value: Value<Empty>, empty: Empty) {
-    return value === empty ? '' : value.toString()
+    return value === empty ? '' : (value as number).toString()
 }
 
 function parseValue<Empty>(value: string, empty: Empty): number | Empty {

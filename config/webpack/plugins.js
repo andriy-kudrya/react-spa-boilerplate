@@ -1,6 +1,6 @@
 import webpack from 'webpack'
 import HtmlPlugin from 'html-webpack-plugin'
-import CleanPlugin from 'clean-webpack-plugin'
+import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
@@ -34,9 +34,7 @@ const plugins = [
     new webpack.ProvidePlugin({
         _debug: '#/shared/debug.js'
     }),
-    new CleanPlugin(['dist'], {
-        root: paths.root,
-    }),
+    new CleanWebpackPlugin(),
 ].filter(_ => _)
 
 export default plugins
