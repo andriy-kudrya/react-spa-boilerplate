@@ -1,16 +1,19 @@
 import { React, classnames } from '#/facade/react'
 import { LOG_IN, CARDS } from '#/constants/routes'
 
-import { Link, RouterConsumer } from '#/utils/router'
+import { Link, useRouter } from '#/utils/router'
 
-const NavLink: React.SFC<{ routeName: string }> = props =>
-    <RouterConsumer children={_ =>
-        <li className={classnames({ 'is-active': _.isActive(props.routeName) })}>
+const NavLink = (props: { routeName: string, children: React.ReactNode }) => {
+    const router = useRouter()
+
+    return (
+        <li className={classnames({ 'is-active': router.isActive(props.routeName) })}>
             <Link routeName={props.routeName} children={props.children}/>
         </li>
-    }/>
+    )
+}
 
-const Nav: React.SFC = () =>
+const Nav = () =>
     <div className='top-bar'>
         <div className='top-bar-left'>
             <ul className='menu'>

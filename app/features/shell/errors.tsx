@@ -1,21 +1,25 @@
-import { React, connect, stateMapper, dispatchMapper } from '#/facade/react'
-import { removeError } from '#/features/error/actions'
+import { React, useSelector, useAction } from '#/facade/react'
+import * as actions from '#/features/error/actions'
 
-const Errors = (props: ConnectedProps) => props.errors.length > 0
-    ? <div>
-        {props.errors.map((err, key) =>
-            <div key={key}>
-                {err.message}
-                <button type='button' onClick={_ => props.removeError(err)}>
-                    &times;
-                </button>
-            </div>
-        )}
-    </div>
-    : null
+const Errors = () => {
+    const errors = useSelector(_ => _.errors)
+        , removeError = useAction(actions.removeError)
 
-const mapStateToProps = stateMapper(state => ({ errors: state.errors }))
-const mapDispatchToProps = dispatchMapper({ removeError })
-type ConnectedProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+    if (errors.length === 0)
+        return null
 
-export default connect(mapStateToProps, mapDispatchToProps)(Errors)
+    return (
+        <div>
+            {errors.map((err, key) =>
+                <div key={key}>
+                    {err.message}
+                    <button type='button' onClick={_ => removeError(err)}>
+                        &times;
+                    </button>
+                </div>
+            )}
+        </div>
+    )
+}
+
+export default Errors

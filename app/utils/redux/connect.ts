@@ -1,4 +1,6 @@
 import { compose } from 'redux'
+import { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 import { ActionType } from './types'
 import { Func } from '../function'
 
@@ -27,6 +29,14 @@ function dispatchMapper<H extends ActionCreatorHash>(hash: H) {
     }
 }
 
+function useAction<T extends ActionCreator<any, any>>(action: T): MappedDispatch<T> {
+    const dispatch = useDispatch()
+        , composedDispatch = useCallback(compose(dispatch, action), [dispatch, action])
+
+    return composedDispatch as any
+}
+
 export {
     dispatchMapper,
+    useAction,
 }

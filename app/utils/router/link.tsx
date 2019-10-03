@@ -3,18 +3,14 @@ import { Router } from 'router5'
 
 import { dropFields } from '../object'
 
-import { RouterConsumer } from './context'
+import { useRouter } from './context'
 
 interface Props extends React.HTMLAttributes<HTMLAnchorElement> {
     routeName: string
     routeParams?: any
 }
 
-interface InternalProps extends Props {
-    router: Router
-}
-
-function handleClick(event: React.MouseEvent<HTMLAnchorElement>, props: InternalProps) {
+function handleClick(event: React.MouseEvent<HTMLAnchorElement>, props: Props, router: Router) {
     if (props.onClick)
         props.onClick(event)
 
@@ -26,19 +22,15 @@ function handleClick(event: React.MouseEvent<HTMLAnchorElement>, props: Internal
         return
 
     event.preventDefault()
-    props.router.navigate(props.routeName, props.routeParams)
+    router.navigate(props.routeName, props.routeParams)
 }
 
-const InternalLink: React.SFC<InternalProps> = props => {
-        const forwardedProps = dropFields(props, 'routeName', 'routeParams', 'router', 'onClick')
-            , href = props.router.buildPath(props.routeName, props.routeParams)
+const Link: React.FC<Props> = props => {
+        const router = useRouter()
+            , href = router.buildPath(props.routeName, props.routeParams)
+            , forwardedProps = dropFields(props, 'routeName', 'routeParams', 'onClick')
 
-        return <a {...forwardedProps} href={href} onClick={_ => handleClick(_, props)}/>
+        return <a {...forwardedProps} href={href} onClick={_ => handleClick(_, props, router)}/>
     }
-
-const Link: React.SFC<Props> = props =>
-    <RouterConsumer children={
-        _ => <InternalLink router={_} {...props}/>
-    }/>
 
 export default Link

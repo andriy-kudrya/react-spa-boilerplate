@@ -1,27 +1,29 @@
-import { React, connect, dispatchMapper, stateMapper } from '#/facade/react'
+import { React, useAction, useSelector } from '#/facade/react'
 
 import { Auth, Credentials } from '#/entities/auth'
 import { noop } from '#/utils/function'
 
-import { logIn } from '../actions'
+import * as actions from '../actions'
 import AuthForm from './auth-form'
 
-const Auth = ({ auth, logIn }: ConnectedProps) =>
-    <div>
-        <AuthForm onSubmit={_ => logIn(_ as Credentials).then(noop)} />
-        {auth.token &&
-            <div>
-                 Token = {auth.token}
-                 <br />
-                 Login = {auth.login}
-                 <br />
-                 Id = {auth.id}
-            </div>
-        }
-    </div>
+const Auth = () => {
+    const logIn = useAction(actions.logIn)
+        , auth = useSelector(_ => _.auth)
 
-const mapStateToProps = stateMapper(state => ({ auth: state.auth }))
-const mapDispatchToProps = dispatchMapper({ logIn })
-type ConnectedProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+    return (
+        <div>
+            <AuthForm onSubmit={_ => logIn(_ as Credentials).then(noop)} />
+            {auth.token &&
+                <div>
+                    Token = {auth.token}
+                    <br />
+                    Login = {auth.login}
+                    <br />
+                    Id = {auth.id}
+                </div>
+            }
+        </div>
+    )
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth)
+export default Auth

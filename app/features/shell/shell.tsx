@@ -1,24 +1,27 @@
 import { State as RouterState } from 'router5'
 
-import { React, connect, stateMapper } from '#/facade/react'
-import Auth from '#/features/auth/auth-form/auth'
+import { React, useContext, useSelector } from '#/facade/react'
 import { LOG_IN, CARDS } from '#/constants/routes'
 
 import Nav from './nav'
 import Errors from './errors'
-import { AppModuleLoaderConsumer } from '#/module-loader/context'
+import AppModuleLoaderContext from '#/module-loader/context'
 import { AppModuleLoader } from '#/module-loader/types'
 
-const Shell = (props: ConnectedProps) =>
-    <div>
-        <Nav />
-        <Errors />
-        <React.Suspense fallback={'Loading...'}>
-            <AppModuleLoaderConsumer
-                children={_ => renderRoute(props.route, _)}
-            />
-        </React.Suspense>
-    </div>
+const Shell = () => {
+    const loader = useContext(AppModuleLoaderContext)
+        , route = useSelector(_ => _.router.route!)
+
+    return (
+        <div>
+            <Nav />
+            <Errors />
+            <React.Suspense fallback={'Loading...'}>
+                {renderRoute(route, loader)}
+            </React.Suspense>
+        </div>
+    )
+}
 
 function renderRoute(route: RouterState, loader: AppModuleLoader): React.ReactNode {
     if (route == null)
@@ -38,7 +41,4 @@ function renderRoute(route: RouterState, loader: AppModuleLoader): React.ReactNo
     }
 }
 
-const mapStateToProps = stateMapper(state => ({ route: state.router.route! }))
-type ConnectedProps = ReturnType<typeof mapStateToProps>
-
-export default connect(mapStateToProps)(Shell)
+export default Shell

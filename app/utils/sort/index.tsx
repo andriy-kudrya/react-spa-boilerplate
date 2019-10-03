@@ -1,79 +1,50 @@
 import * as React from 'react'
+import { useLayoutEffect, useRef, useContext, useState, useCallback } from 'react'
 
 import SortState from '#/entities/sort-state'
 
-import { assign } from '../object'
 import { mediatorFactory, SortMediator, SortSubject } from './sort'
 
-const { Provider, Consumer } = React.createContext<SortMediator>(undefined as any)
+const Context = React.createContext<SortMediator>(undefined as any)
 
 interface SortContainerProps {
     onChange: (state: SortState) => void
+    children: React.ReactNode
 }
 
-class SortContainer extends React.Component<SortContainerProps> {
-    readonly _mediator: SortMediator
+function SortContainer(props: SortContainerProps) {
+    const [mediator] = useState(() => mediatorFactory(props.onChange))
 
-    constructor(props: SortContainerProps) {
-        super(props)
-        this._mediator = mediatorFactory(props.onChange)
-    }
-
-    render() {
-        return <Provider value={this._mediator} children={this.props.children}/>
-    }
+    return <Context.Provider value={mediator} children={props.children}/>
 }
 
-interface TargetState {
-    sorted: boolean,
-    ascending: boolean,
+function useSort(name: string) {
+    const mediator = useContext(Context)
+        , [sortState, setSortState] = useState({ sorted: false, ascending: false })
+        , subjectRef = useRef<SortSubject>()
+
+    useLayoutEffect(
+        () => {
+            const subject = mediator.createSubject(
+                name,
+                (sorted, ascending) => setSortState({ sorted, ascending })
+            )
+
+            subjectRef.current = subject
+
+            return () => mediator.removeSubject(subject)
+        },
+        [mediator]
+    )
+
+    const onClick = useCallback(
+        () => {
+            subjectRef.current!.flipOrder()
+        },
+        []
+    )
+
+    return { onClick, ...sortState}
 }
 
-interface TargetProps {
-    name: string
-    mediator: SortMediator
-    children: (value: TargetState & { onClick: React.MouseEventHandler<HTMLElement> }) => React.ReactNode
-}
-
-class SortTargetInternal extends React.Component<TargetProps, TargetState> {
-    _sortSubject: SortSubject | undefined
-
-    constructor(props: TargetProps) {
-        super(props)
-        this.state = { sorted: false, ascending: false }
-        this.handleClick = this.handleClick.bind(this)
-    }
-
-    componentDidMount() {
-        const { mediator, name } = this.props
-
-        this._sortSubject = mediator.createSubject(
-            name,
-            (sorted, ascending) => this.setState({ sorted, ascending })
-        )
-    }
-
-    componentWillUnmount() {
-        this.props.mediator.removeSubject(this._sortSubject!)
-    }
-
-    handleClick() {
-        this._sortSubject!.flipOrder()
-    }
-
-    render() {
-        return this.props.children(assign({ onClick: this.handleClick }, this.state))
-    }
-}
-
-interface SortTargetProps {
-    name: string
-    children: (value: { sorted: boolean, ascending: boolean, onClick: React.MouseEventHandler<HTMLElement> }) => React.ReactNode
-}
-
-const SortTarget: React.SFC<SortTargetProps> = props =>
-    <Consumer>
-        {_ => <SortTargetInternal mediator={_} name={props.name} children={props.children}/>}
-    </Consumer>
-
-export { SortContainer, SortTarget }
+export { SortContainer, useSort }

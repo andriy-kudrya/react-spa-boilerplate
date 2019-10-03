@@ -1,9 +1,6 @@
-import { React } from '#/facade/react'
+import { createContext } from 'react'
 import { AppModuleLoader } from './types'
 
-const { Provider, Consumer } = React.createContext<AppModuleLoader>(undefined as any)
+const AppModuleLoaderContext = createContext<AppModuleLoader>(undefined as any)
 
-export {
-    Provider as AppModuleLoaderProvider,
-    Consumer as AppModuleLoaderConsumer,
-}
+export default AppModuleLoaderContext

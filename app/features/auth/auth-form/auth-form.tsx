@@ -8,7 +8,7 @@ interface OwnProps {
     onSubmit: (_: object) => Promise<void>
 }
 
-const AuthForm: React.SFC<OwnProps> = props =>
+const AuthForm = (props: OwnProps) =>
     <Form
         onSubmit={props.onSubmit}
         validate={validate}

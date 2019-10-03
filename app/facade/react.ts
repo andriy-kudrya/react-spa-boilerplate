@@ -1,5 +1,6 @@
 import * as React from 'react'
 export { React }
+export { useContext, useEffect, useState, useMemo } from 'react'
 
 export { connect } from 'react-redux'
 
@@ -12,7 +13,8 @@ import AppState from '#/entities/app-state'
 import { Func } from '#/utils/function'
 
 export { compose } from '#/utils/redux/compose'
-export { dispatchMapper } from '#/utils/redux/connect'
+export { dispatchMapper, useAction } from '#/utils/redux/connect'
+
 export { stateMapper }
 
 /**
@@ -21,3 +23,6 @@ export { stateMapper }
 function stateMapper<S>(f: Func<[AppState], S>) {
     return f
 }
+
+import { useSelector as useSelectorGeneric } from 'react-redux'
+export const useSelector: <T>(selector: (state: AppState) => T, equalityFn?: (left: T, right: T) => boolean) => T = useSelectorGeneric
