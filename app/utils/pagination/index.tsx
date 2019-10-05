@@ -1,7 +1,6 @@
-import * as React from 'react'
+import { React } from '#/facade/react'
 
 import PaginationState from '#/entities/pagination-state'
-import { bindComponent } from '#/utils/react'
 import { shallowUpdate } from '#/utils/object'
 
 import { Page } from './components'
@@ -12,66 +11,59 @@ interface Props {
     onChange: (state: PaginationState) => void
 }
 
-class Pagination extends React.Component<Props> {
-    constructor(props: Props) {
-        super(props)
-        bindComponent(this)
+function Pagination(props: Props) {
+    function handlePageClick(page: number) {
+        notifyPageChange(page)
     }
 
-    handlePageClick(page: number) {
-        this.notifyPageChange(page)
+    function handlePrevClick() {
+        notifyPageChange(calcCurrentPage(props.state) - 1)
     }
 
-    handlePrevClick() {
-        this.notifyPageChange(calcCurrentPage(this.props.state) - 1)
+    function handleNextClick() {
+        notifyPageChange(calcCurrentPage(props.state) + 1)
     }
 
-    handleNextClick() {
-        this.notifyPageChange(calcCurrentPage(this.props.state) + 1)
-    }
-
-    notifyPageChange(page: number) {
-        const { state, onChange } = this.props
+    function notifyPageChange(page: number) {
+        const { state, onChange } = props
             , start = page * state.count
             , nextState = shallowUpdate(state, { start })
 
         onChange(nextState)
     }
 
-    render() {
-        const { state, totalCount } = this.props
-            , currentPage = calcCurrentPage(state)
-            , maxPage = totalCount > 0 ? Math.ceil(totalCount / state.count) - 1 : 0
-            , pages = calcSuggestedPages(currentPage, maxPage)
+    const { state, totalCount } = props
+        , currentPage = calcCurrentPage(state)
+        , maxPage = totalCount > 0 ? Math.ceil(totalCount / state.count) - 1 : 0
+        , pages = calcSuggestedPages(currentPage, maxPage)
 
-        return (
-            <nav>
-                <ul className='pagination'>
+    return (
+        <nav>
+            <ul className='pagination'>
+                <Page
+                    page={NaN}
+                    className='pagination-previous'
+                    disabled={currentPage === 0}
+                    onClick={handlePrevClick}
+                >Previous</Page>
+                {pages.map(_ =>
                     <Page
-                        page={NaN}
-                        className='pagination-previous'
-                        disabled={currentPage === 0}
-                        onClick={this.handlePrevClick}
-                    >Previous</Page>
-                    {pages.map(_ =>
-                        <Page
-                            key={_}
-                            page={_}
-                            disabled={_ === currentPage}
-                            active={_ === currentPage}
-                            onClick={this.handlePageClick}
-                        >{_ + 1}</Page>
-                    )}
-                    <Page
-                        page={NaN}
-                        className='pagination-next'
-                        disabled={currentPage === maxPage}
-                        onClick={this.handleNextClick}
-                    >Next</Page>
-                </ul>
-            </nav>
-        )
-    }
+                        key={_}
+                        page={_}
+                        disabled={_ === currentPage}
+                        active={_ === currentPage}
+                        onClick={handlePageClick}
+                    >{_ + 1}</Page>
+                )}
+                <Page
+                    page={NaN}
+                    className='pagination-next'
+                    disabled={currentPage === maxPage}
+                    onClick={handleNextClick}
+                >Next</Page>
+            </ul>
+        </nav>
+    )
 }
 
 export default Pagination

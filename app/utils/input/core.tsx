@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { bindComponent } from '../react'
+import { memo, useRef, useState } from 'react'
 import { dropFields, Redefine } from '../object'
 
 function testInputTypeSupport(type: string): boolean {
@@ -44,52 +44,44 @@ interface Parse {
 function wrappedInputFactory(inputType: string, formatValue: Format, formatFallbackValue: Format, parseValue: Parse, parseFallbackValue: Parse) {
     const inputTypeSupported = testInputTypeSupport(inputType)
 
-    class WrappedInput<Empty> extends React.PureComponent<InputProps<Empty>> {
-        private _lastInputValue: string
-        private _lastValue?: Value<Empty>
+    function WrappedInput<Empty>(props: InputProps<Empty>) {
+        const lastInputValue = useRef(
+                inputTypeSupported
+                    ? formatValue(props.value, props.emptyValue)
+                    : formatFallbackValue(props.value, props.emptyValue)
+            )
+            , lastValue = useRef<Value<Empty> | undefined>(props.value)
+            , [, forceUpdate] = useState({})
 
-        constructor(props: InputProps<Empty>) {
-            super(props)
-            bindComponent(this)
-
-            this._lastValue = props.value
-            this._lastInputValue = inputTypeSupported
-                ? formatValue(props.value, props.emptyValue)
-                : formatFallbackValue(props.value, props.emptyValue)
-        }
-
-        handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
-            const props = this.props
-                , inputValue = event.target.value
+        function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
+            const inputValue = event.target.value
                 , number = inputTypeSupported
                     ? parseValue(inputValue, props.emptyValue)
                     : parseFallbackValue(inputValue, props.emptyValue)
 
-            this._lastInputValue = inputValue
-            this._lastValue = number
+            lastInputValue.current = inputValue
+            lastValue.current = number
 
+            // todo: do not dispatch update when inputTypeSupported === false and empty value doesn't changed
             props.onChange(number!)
 
-            if (!inputTypeSupported)
-                this.forceUpdate()
+            if (!inputTypeSupported && number === props.emptyValue)
+                forceUpdate({})
         }
 
-        render() {
-            const props = this.props
-                , forwardedProps = dropFields(props, 'value', 'onChange', 'emptyValue')
-                , inputValue = props.value === this._lastValue
-                    ? this._lastInputValue
-                    : inputTypeSupported
-                        ? formatValue(props.value, props.emptyValue)
-                        : formatFallbackValue(props.value, props.emptyValue)
+        const forwardedProps = dropFields(props, 'value', 'onChange', 'emptyValue')
+            , inputValue = props.value === lastValue.current
+                ? lastInputValue.current
+                : inputTypeSupported
+                    ? formatValue(props.value, props.emptyValue)
+                    : formatFallbackValue(props.value, props.emptyValue)
 
-            return inputTypeSupported
-                ? <input {...forwardedProps} value={inputValue} onChange={this.handleChange} type={inputType}/>
-                : <input {...forwardedProps} value={inputValue} onChange={this.handleChange} type='text'/>
-        }
+        return inputTypeSupported
+            ? <input {...forwardedProps} value={inputValue} onChange={handleChange} type={inputType}/>
+            : <input {...forwardedProps} value={inputValue} onChange={handleChange} type='text'/>
     }
 
-    return WrappedInput
+    return memo(WrappedInput)
 }
 
 export default wrappedInputFactory
