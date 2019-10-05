@@ -1,17 +1,111 @@
 {
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
+        "tsconfigRootDir": "./",
+        "project": "./tsconfig.json",
         "ecmaVersion": 6,
         "sourceType": "module",
-        "jsx": true
+        "ecmaFeatures": {
+            "modules": true
+        }
     },
     "rules": {
         "strict": "error",
-        "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
         "no-console": "warn",
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "react/no-children-prop": "off",
+        "no-constant-condition": ["error", {
+            "checkLoops": false
+        }],
+        "prefer-const": "warn",
+        "no-var": "error",
+        "no-throw-literal": "error",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["warn", {
+            "vars": "all",
+            "varsIgnorePattern": "^_",
+            "args": "all",
+            "argsIgnorePattern": "^_",
+            "caughtErrors": "all",
+            "caughtErrorsIgnorePattern": "^_"
+        }],
+        "@typescript-eslint/unbound-method": "off",
+        "@typescript-eslint/member-delimiter-style": ["warn", {
+            "multiline": {
+                "delimiter": "none",
+                "requireLast": true
+            },
+            "singleline": {
+                "delimiter": "comma",
+                "requireLast": false
+            }
+        }],
+        "@typescript-eslint/no-empty-interface": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-use-before-define": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+
+        // "@typescript-eslint/array-type": ["warn", {
+        //     "default": "array",
+        //     "readonly": "array"
+        // }],
+
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+
+        // Stylistic Issues
+        "brace-style": "off",
+        "@typescript-eslint/brace-style": ["warn", "stroustrup", { "allowSingleLine": true }],
+        "func-call-spacing": "off",
+        "@typescript-eslint/func-call-spacing": ["warn", "never"],
+        "quotes": "off",
+        "@typescript-eslint/quotes": ["warn", "single", {
+            "avoidEscape": true,
+            "allowTemplateLiterals": true
+        }],
+        "semi": "off",
+        "@typescript-eslint/semi": ["warn", "never"],
+        "@typescript-eslint/type-annotation-spacing": ["warn"],
+        "comma-dangle": ["warn", "always-multiline"],
+        "comma-spacing": ["warn"],
+        "comma-style": ["warn", "first", {
+            "exceptions": {
+                "ArrayExpression": true,
+                "ArrayPattern": true,
+                "ArrowFunctionExpression": true,
+                "CallExpression": true,
+                "FunctionDeclaration": true,
+                "FunctionExpression": true,
+                "ImportDeclaration": true,
+                "ObjectExpression": true,
+                "ObjectPattern": true,
+                "VariableDeclaration": false,
+                "NewExpression": true
+            }
+        }],
+        "jsx-quotes": ["error", "prefer-single"],
+        "no-tabs": ["warn"]
     },
-    "plugins": ["react"],
-    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "plugins": ["@typescript-eslint", "react", "react-hooks"],
+    "settings": {
+        "react": {
+            "version": "detect"
+        },
+        "linkComponents": [
+            // Components used as alternatives to <a> for linking, eg. <Link to={ url } />
+            "Hyperlink",
+            {"name": "Link", "linkAttribute": "routeName"}
+        ]
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:react/recommended"
+    ],
     "env": {
     	"browser": true,
         "es6": true

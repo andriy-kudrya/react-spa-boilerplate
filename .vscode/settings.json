@@ -5,7 +5,19 @@
         ".vscode": true,
         "node_modules": true,
     },
-    "tslint.configFile": "./config/tslint/tslint.json",
-    "tslint.autoFixOnSave": true,
     "typescript.tsdk": "node_modules/typescript/lib",
+    "eslint.autoFixOnSave": true,
+    "eslint.options": { "configFile": "./config/eslint/prod.eslintrc.json" },
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        {
+            "language": "typescript",
+            "autoFix": true,
+        },
+        {
+            "language": "typescriptreact",
+            "autoFix": true,
+        }
+    ]
 }

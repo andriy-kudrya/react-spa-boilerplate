@@ -1,11 +1,11 @@
 interface Header {
-    header: string,
-    value: string,
+    header: string
+    value: string
 }
 
 interface AjaxOptions {
-    method: string,
-    url: string,
+    method: string
+    url: string
     responseType: XMLHttpRequestResponseType
     headers?: Header[]
     body?: string | FormData

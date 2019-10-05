@@ -37,8 +37,8 @@ function factory(): ApiService {
     }
 
     interface JsonAjaxOptions {
-        method: string,
-        url: string,
+        method: string
+        url: string
         headers?: Header[]
         body?: string | FormData
     }

@@ -9,8 +9,8 @@ import { AppModule } from '../types'
 function appModuleFactory(services: ServiceFactory): AppModule {
     const middlewares = [
             effectMwFactory(authEffectFactory(services.auth())),
-        ],
-        reducer = { auth }
+        ]
+        , reducer = { auth }
 
     return { middlewares, reducer }
 }

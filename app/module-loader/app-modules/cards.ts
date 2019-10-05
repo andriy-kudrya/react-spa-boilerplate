@@ -10,8 +10,8 @@ import { AppModule } from '../types'
 function appModuleFactory(services: ServiceFactory): AppModule {
     const middlewares = [
             effectMwFactory(cardsEffectFactory(services.card())),
-        ],
-        reducer = { cards }
+        ]
+        , reducer = { cards }
 
     return { mainView: Cards, middlewares, reducer }
 }

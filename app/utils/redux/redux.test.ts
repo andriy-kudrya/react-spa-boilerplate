@@ -12,8 +12,8 @@ import effectsMiddlewareFactory, { EffectsFactory, handler as effectHandler } fr
 describe('redux', function () {
     describe('reducer', function () {
         interface State {
-            one: number,
-            two: number,
+            one: number
+            two: number
         }
 
         const ACTION_ONE: ActionType<number> = 'ACTION_ONE'

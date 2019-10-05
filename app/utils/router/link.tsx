@@ -25,7 +25,7 @@ function handleClick(event: React.MouseEvent<HTMLAnchorElement>, props: Props, r
     router.navigate(props.routeName, props.routeParams)
 }
 
-const Link: React.FC<Props> = props => {
+const Link = (props: Props) => {
         const router = useRouter()
             , href = router.buildPath(props.routeName, props.routeParams)
             , forwardedProps = dropFields(props, 'routeName', 'routeParams', 'onClick')

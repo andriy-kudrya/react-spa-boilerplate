@@ -13,22 +13,22 @@ const scssRule = {
                 loader: 'css-loader',
                 options: {
                     sourceMap: !params.debug,
-                }
+                },
             },
             !params.debug && {
                 loader: 'clean-css-loader',
                 options: {
                     level: 2,
-                }
+                },
             },
             {
                 loader: 'postcss-loader',
                 options: {
-                    plugins: () => [autoprefixer]
-                }
+                    plugins: () => [autoprefixer],
+                },
             },
             { loader: 'sass-loader' },
-        ].filter(_ => _)
+        ].filter(_ => _),
     }
 
 const babelLoader = {
@@ -37,9 +37,9 @@ const babelLoader = {
             presets: [
                 !params.debug && ['@babel/preset-env', {
                     targets: {
-                        browsers: ['last 2 versions', 'not ie < 11']
+                        browsers: ['last 2 versions', 'not ie < 11'],
                     },
-                    modules: false
+                    modules: false,
                 }],
                 '@babel/preset-react',
             ].filter(_ => _),
@@ -56,8 +56,8 @@ const babelLoader = {
                 !params.debug && '@babel/plugin-transform-react-inline-elements',
                 // note: must be a last plugin, otherwise compilation might break
                 !params.debug && '@babel/plugin-transform-react-constant-elements',
-            ].filter(_ => _)
-        }
+            ].filter(_ => _),
+        },
     }
 
 const rules = [
@@ -73,8 +73,8 @@ const rules = [
             babelLoader,
             {
                 loader: 'ts-loader',
-                options: { transpileOnly: true }
-            }
+                options: { transpileOnly: true },
+            },
         ],
     },
     {
@@ -85,12 +85,13 @@ const rules = [
             loader: 'eslint-loader',
             options: {
                 configFile: paths.eslintConfigFile,
+                formatter: 'codeframe',
                 emitError: true,
                 failOnError: true,
                 emitWarning: false,
-                failOnWarning: false
-            }
-        }]
+                failOnWarning: false,
+            },
+        }],
     },
     scssRule,
 ].filter(_ => _)

@@ -7,9 +7,7 @@
     "build": "webpack --config ./config/webpack --bail",
     "dev": "webpack-dev-server --config ./config/webpack --env.debug",
     "serve": "webpack-dev-server --config ./config/webpack --inline=false",
-    "karma": "karma start ./config/karma",
-    "tslint": "tslint -c ./config/tslint/tslint.json -t codeFrame 'app/**/*.{ts,tsx}'",
-    "tslint-fix": "tslint -c ./config/tslint/tslint.json -t codeFrame --fix 'app/**/*.{ts,tsx}'"
+    "karma": "karma start ./config/karma"
   },
   "author": "andriy.kudrya",
   "devDependencies": {
@@ -31,6 +29,8 @@
     "@types/react": "^16.9.5",
     "@types/react-dom": "^16.9.1",
     "@types/react-redux": "^7.1.4",
+    "@typescript-eslint/eslint-plugin": "^2.3.2",
+    "@typescript-eslint/parser": "^2.3.2",
     "autoprefixer": "^9.6.2",
     "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
@@ -40,6 +40,7 @@
     "eslint": "^6.5.1",
     "eslint-loader": "^3.0.2",
     "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^2.1.2",
     "fork-ts-checker-webpack-plugin": "^1.5.0",
     "html-webpack-plugin": "^3.2.0",
     "karma": "^4.3.0",
@@ -55,9 +56,7 @@
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
     "ts-loader": "^6.2.0",
-    "tslint": "^5.20.0",
     "typescript": "^3.6.3",
-    "typescript-tslint-plugin": "^0.5.4",
     "webpack": "^4.41.0",
     "webpack-bundle-analyzer": "^3.5.2",
     "webpack-cli": "^3.3.9",

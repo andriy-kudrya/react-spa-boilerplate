@@ -18,8 +18,11 @@ const plugins = [
     }),
     new ForkTsCheckerWebpackPlugin({
         tsconfig: paths.tsconfigFile,
-        tslint: paths.tslintConfigFile,
         formatter: 'codeframe',
+        eslint: true,
+        eslintOptions: {
+            configFile: paths.eslintConfigFile,
+        },
     }),
     new webpack.DefinePlugin({
         DEBUG: JSON.stringify(params.debug),
@@ -28,11 +31,11 @@ const plugins = [
     }),
     new HtmlPlugin({
         filename: 'index.html',
-        template: `${paths.assets}/index.html`
+        template: `${paths.assets}/index.html`,
     }),
     params.analyze && new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: false }),
     new webpack.ProvidePlugin({
-        _debug: '#/shared/debug.js'
+        _debug: '#/shared/debug.js',
     }),
     new CleanWebpackPlugin(),
 ].filter(_ => _)

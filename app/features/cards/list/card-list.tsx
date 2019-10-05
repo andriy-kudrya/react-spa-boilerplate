@@ -19,7 +19,7 @@ function CardList() {
         , [dateAdded, setDateAdded] = useState<number>()
         , cards = useSelector(_ => _.cards)
 
-    useEffect(() => void loadCardList(), [])
+    useEffect(() => void loadCardList(), [loadCardList])
 
     const { start, count } = cards.pagination
         , games = cards.games.slice(start, start + count)

@@ -34,7 +34,7 @@ function useSort(name: string) {
 
             return () => mediator.removeSubject(subject)
         },
-        [mediator]
+        [name, mediator]
     )
 
     const onClick = useCallback(

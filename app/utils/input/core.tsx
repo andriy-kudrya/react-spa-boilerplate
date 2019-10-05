@@ -15,12 +15,10 @@ function testInputTypeSupport(type: string): boolean {
 function prependZero(value: number, expectedSize: number): string {
     let result = value.toString()
 
-    while (true) {
-        if (result.length >= expectedSize)
-            return result
-
+    while (result.length < expectedSize)
         result = '0' + result
-    }
+
+    return result
 }
 
 type Value<Empty> = number | Empty

@@ -2,10 +2,8 @@
     "extends": "./prod.eslintrc.json",
 
     "rules": {
-        "no-unused-vars": "off",
         "no-console": "off",
-        "no-debugger": "off",
-        "react/prop-types": "off"
+        "no-debugger": "off"
     },
     "globals": {
         "_debug": true

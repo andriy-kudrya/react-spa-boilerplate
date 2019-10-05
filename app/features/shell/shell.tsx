@@ -28,14 +28,14 @@ function renderRoute(route: RouterState, loader: AppModuleLoader): React.ReactNo
         return null
 
     switch (route.name) {
-        case LOG_IN:
+        case LOG_IN: {
             const Auth = loader.loadAuth()
             return <Auth />
-
-        case CARDS:
+        }
+        case CARDS: {
             const Cards = loader.loadCards()
             return <Cards />
-
+        }
         default:
             return null
     }
