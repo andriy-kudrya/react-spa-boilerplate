@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { StatelessComponent } from 'react'
-import { Field } from 'react-final-form'
+import { useField } from 'react-final-form'
 
 import DateInput from '../input/utc-date-input'
 
@@ -9,16 +8,18 @@ import { showFieldError } from './helpers'
 interface InputFieldProps {
     id?: string
     name: string
+    children?: React.ReactNode
 }
 
-const UtcDateField: StatelessComponent<InputFieldProps> = ({name, id, children}) =>
-    <Field name={name} render={
-        _ =>
-            <div>
-                <label htmlFor={id} children={children}/>
-                <DateInput id={id} emptyValue='' {..._.input}/>
-                {showFieldError(_.meta) && <span>{_.meta.error}</span>}
-            </div>
-    }/>
+const UtcDateField = (props: InputFieldProps) => {
+    const field = useField(props.name)
+    return (
+        <div>
+            <label htmlFor={props.id} children={props.children}/>
+            <DateInput id={props.id} emptyValue='' {...field.input}/>
+            {showFieldError(field.meta) && <span>{field.meta.error}</span>}
+        </div>
+    )
+}
 
 export default UtcDateField

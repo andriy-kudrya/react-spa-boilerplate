@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { StatelessComponent } from 'react'
-import { Field } from 'react-final-form'
+import { useField } from 'react-final-form'
 
 import NumberInput from '../input/number-input'
 
@@ -9,16 +8,18 @@ import { showFieldError } from './helpers'
 interface InputFieldProps {
     id?: string
     name: string
+    children?: React.ReactNode
 }
 
-const NumberField: StatelessComponent<InputFieldProps> = ({name, id, children}) =>
-    <Field name={name} render={
-        _ =>
+const NumberField = (props: InputFieldProps) => {
+        const field = useField(props.name)
+        return (
             <div>
-                <label htmlFor={id} children={children}/>
-                <NumberInput id={id} emptyValue='' {..._.input}/>
-                {showFieldError(_.meta) && <span>{_.meta.error}</span>}
+                <label htmlFor={props.id} children={props.children}/>
+                <NumberInput id={props.id} emptyValue='' {...field.input}/>
+                {showFieldError(field.meta) && <span>{field.meta.error}</span>}
             </div>
-    }/>
+        )
+    }
 
 export default NumberField

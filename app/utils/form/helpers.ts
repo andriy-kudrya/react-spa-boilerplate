@@ -1,6 +1,6 @@
 import { FormRenderProps, FieldRenderProps } from 'react-final-form'
 
-function showFieldError(meta: FieldRenderProps['meta']): boolean {
+function showFieldError(meta: FieldRenderProps<unknown, HTMLElement>['meta']): boolean {
     return !!(meta.invalid && meta.touched)
 }
 
