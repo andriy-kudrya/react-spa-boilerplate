@@ -1,6 +1,6 @@
 import { React, useAction, useSelector } from '#/facade/react'
 
-import { Auth, Credentials } from '#/entities/auth'
+import { Credentials } from '#/entities/auth'
 import { noop } from '#/utils/function'
 
 import * as actions from '../actions'
