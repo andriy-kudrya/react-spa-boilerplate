@@ -10,13 +10,14 @@ const Errors = () => {
 
     return (
         <div>
-            {errors.map((err, key) =>
-                <div key={key}>
-                    {err.message}
-                    <button type='button' onClick={_ => removeError(err)}>
-                        &times;
-                    </button>
-                </div>
+            {errors.map(
+                (err, key) =>
+                    <div key={key}>
+                        {err.message}
+                        <button type='button' onClick={_ => removeError(err)}>
+                            &times;
+                        </button>
+                    </div>
             )}
         </div>
     )

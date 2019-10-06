@@ -50,7 +50,10 @@ function ajax(options: AjaxOptions): Promise<AjaxResponse> {
                 return
             }
 
-            const headerLines = this.getAllResponseHeaders().trim().split(/[\r\n]+/)
+            const headerLines = this
+                    .getAllResponseHeaders()
+                    .trim()
+                    .split(/[\r\n]+/)
                 , splitRegex = /(.*?): (.*)/
                 , headerArray = headerLines.map(line => {
                     const [, header = '', value = ''] = splitRegex.exec(line) || []

@@ -46,14 +46,15 @@ function Pagination(props: Props) {
                     disabled={currentPage === 0}
                     onClick={handlePrevClick}
                 >Previous</Page>
-                {pages.map(_ =>
-                    <Page
-                        key={_}
-                        page={_}
-                        disabled={_ === currentPage}
-                        active={_ === currentPage}
-                        onClick={handlePageClick}
-                    >{_ + 1}</Page>
+                {pages.map(
+                    _ =>
+                        <Page
+                            key={_}
+                            page={_}
+                            disabled={_ === currentPage}
+                            active={_ === currentPage}
+                            onClick={handlePageClick}
+                        >{_ + 1}</Page>
                 )}
                 <Page
                     page={NaN}
@@ -70,7 +71,8 @@ export default Pagination
 
 function calcCurrentPage(state: PaginationState): number {
     const count = state.count
-        , start = state.start % count === 0 ? state.start : 0 // normalize start
+        // align start position by item count boundary
+        , start = state.start % count === 0 ? state.start : 0
         , currentPage = start / count
 
     return currentPage

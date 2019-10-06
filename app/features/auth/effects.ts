@@ -7,11 +7,13 @@ import * as routes from '#/constants/routes'
 import { LOG_IN, loggedIn } from './actions'
 
 const factory = (authService: AuthService): EffectsFactory => dispatch => [
-    handler(LOG_IN, credentials =>
-        authService.logIn(credentials).then(data => {
-            dispatch(loggedIn(data))
-            dispatch(actions.navigateTo(routes.CARDS))
-        })
+    handler(
+        LOG_IN,
+        credentials =>
+            authService.logIn(credentials).then(data => {
+                dispatch(loggedIn(data))
+                dispatch(actions.navigateTo(routes.CARDS))
+            })
     ),
 ]
 

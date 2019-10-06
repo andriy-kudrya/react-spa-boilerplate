@@ -44,7 +44,7 @@ function useSort(name: string) {
         []
     )
 
-    return { onClick, ...sortState}
+    return { onClick, ...sortState }
 }
 
 export { SortContainer, useSort }

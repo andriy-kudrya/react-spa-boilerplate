@@ -18,13 +18,14 @@ function effectMiddlewareFactory<S>(...effectsFactories: EffectsFactory<S>[]): M
     return api => {
         const map = createHash<Handler<any, any>>()
 
-        effectsFactories.forEach(factory =>
-            factory(api.dispatch, api.getState).forEach(_ => {
-                if (map.has(_.actionType))
-                    throw Error(`Action ${_.actionType} handler has been registered already`)
+        effectsFactories.forEach(
+            factory =>
+                factory(api.dispatch, api.getState).forEach(_ => {
+                    if (map.has(_.actionType))
+                        throw Error(`Action ${_.actionType} handler has been registered already`)
 
-                map.set(_.actionType, _.handler)
-            })
+                    map.set(_.actionType, _.handler)
+                })
         )
 
         return next => action => {

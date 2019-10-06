@@ -51,8 +51,8 @@ function mediatorFactory(onChange: (state: SortState) => void): SortMediator {
     }
 
     function handleChangeOrder(eventSubject: SortSubjectInternal, order: Order) {
-        subjects.forEach(subject =>
-            subject.setOrder(subject === eventSubject ? order : Order.None)
+        subjects.forEach(
+            _ => _.setOrder(_ === eventSubject ? order : Order.None)
         )
 
         fireState()

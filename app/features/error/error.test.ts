@@ -74,14 +74,15 @@ describe('error', function () {
             ])
             .catch(noop)
 
-        return ready.then(_ =>
-            assert.deepEqual(
-                store.getState().errors,
-                [
-                    { message: 'foo' },
-                    { message: 'bar' },
-                ]
-            )
+        return ready.then(
+            _ =>
+                assert.deepEqual(
+                    store.getState().errors,
+                    [
+                        { message: 'foo' },
+                        { message: 'bar' },
+                    ]
+                )
         )
     })
 
@@ -104,13 +105,14 @@ describe('error', function () {
             }
         }, 0)
 
-        const result = delay(1).then(_ =>
-            assert.deepEqual(
-                store.getState().errors,
-                [
-                    { message: 'unhandled' },
-                ]
-            )
+        const result = delay(1).then(
+            _ =>
+                assert.deepEqual(
+                    store.getState().errors,
+                    [
+                        { message: 'unhandled' },
+                    ]
+                )
         )
 
         return result

@@ -27,10 +27,10 @@ export default InputField
 
 type ConcreteFieldProps = Pick<InputFieldProps, 'id' | 'name'>
 
-const TextField: React.SFC<ConcreteFieldProps> = ({id, name, children}) =>
+const TextField: React.SFC<ConcreteFieldProps> = ({ id, name, children }) =>
     <InputField id={id} name={name} type='text' children={children} />
 
-const PasswordField: React.SFC<ConcreteFieldProps> = ({id, name, children}) =>
+const PasswordField: React.SFC<ConcreteFieldProps> = ({ id, name, children }) =>
     <InputField id={id} name={name} type='password' children={children} />
 
 export { TextField, PasswordField }
