@@ -1,5 +1,3 @@
-import { assert } from 'chai'
-
 import * as redux from 'redux'
 
 import { shallowUpdate } from '../object'
@@ -33,7 +31,7 @@ describe('redux', function () {
 
             const result = reduce(undefined, { type: 'unknown' })
 
-            assert.deepEqual(result, defaultState)
+            expect(result).toEqual(defaultState)
         })
 
         it('should preserve current state after unknown action', function () {
@@ -45,7 +43,7 @@ describe('redux', function () {
 
             const result = reduce(currentState, { type: 'unknown' })
 
-            assert.deepEqual(result, currentState)
+            expect(result).toEqual(currentState)
         })
 
         it('should delegate action to handler', function () {
@@ -56,7 +54,7 @@ describe('redux', function () {
 
             const result = reduce(undefined, actionOne(5))
 
-            assert.deepEqual(result, { one: 5, two: 2 })
+            expect(result).toEqual({ one: 5, two: 2 })
         })
 
         it('should throw when second handler is registered for same action type', function () {
@@ -67,7 +65,7 @@ describe('redux', function () {
                     handler(ACTION_ONE, _ => _)
                 )
 
-            assert.throws(createReducer)
+            expect(createReducer).toThrow()
         })
     })
 
@@ -87,7 +85,7 @@ describe('redux', function () {
                     effectHandler(ACTION_ONE, noop),
                 ]
 
-            assert.throws(() => createStore(effects))
+            expect(() => createStore(effects)).toThrow()
         })
 
         it('allows for same effects factory to have distinct action handlers', function () {
@@ -96,7 +94,7 @@ describe('redux', function () {
                     effectHandler(ACTION_TWO, noop),
                 ]
 
-            assert.doesNotThrow(() => createStore(effects))
+            expect(() => createStore(effects)).not.toThrow()
         })
 
         it('produces side effect when action for registered handler is dispatched', function () {
@@ -108,7 +106,7 @@ describe('redux', function () {
 
             store.dispatch(actionOne('modified'))
 
-            assert.equal(effectTarget, 'modified')
+            expect(effectTarget).toBe('modified')
         })
 
         it('should not produce side effect when action for not registered handler is dispatched', function () {
@@ -120,7 +118,7 @@ describe('redux', function () {
 
             store.dispatch(actionOne('modified'))
 
-            assert.equal(effectTarget, 'initial')
+            expect(effectTarget).toBe('initial')
         })
     })
 })

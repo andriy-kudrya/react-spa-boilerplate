@@ -1,5 +1,4 @@
 import * as redux from 'redux'
-import { assert } from 'chai'
 import AppState from '#/entities/app-state'
 import { ActionType } from '#/utils/redux/types'
 import { action } from '#/utils/redux/action'
@@ -37,7 +36,7 @@ describe('error', function () {
             ]
             , store = createStore(effects)
 
-        assert.doesNotThrow(() => store.dispatch(effect()))
+        expect(() => store.dispatch(effect())).not.toThrow()
     })
 
     it('should register synchronous error', function () {
@@ -51,8 +50,7 @@ describe('error', function () {
         store.dispatch(effect())
         store.dispatch(effectTwo())
 
-        assert.deepEqual(
-            store.getState().errors,
+        expect(store.getState().errors).toEqual(
             [
                 { message: 'foo' },
                 { message: 'bar' },
@@ -76,8 +74,7 @@ describe('error', function () {
 
         return ready.then(
             _ =>
-                assert.deepEqual(
-                    store.getState().errors,
+                expect(store.getState().errors).toEqual(
                     [
                         { message: 'foo' },
                         { message: 'bar' },
@@ -89,26 +86,15 @@ describe('error', function () {
     it('should register unhandled error', function () {
         const store = createStore(() => [])
 
-        // suppress karma error handler (otherwise it doesn't runs tests)
-        const onError = window.onerror
-        window.onerror = noop
+        jest.spyOn(console, 'error').mockImplementationOnce(noop)
 
         setTimeout(() => {
-            try {
-                throw new Error('unhandled')
-            }
-            finally {
-                setTimeout(() =>
-                    // recover karma error handler
-                    window.onerror = onError
-                , 0)
-            }
+            throw new Error('unhandled')
         }, 0)
 
         const result = delay(1).then(
             _ =>
-                assert.deepEqual(
-                    store.getState().errors,
+                expect(store.getState().errors).toEqual(
                     [
                         { message: 'unhandled' },
                     ]
@@ -132,8 +118,7 @@ describe('error', function () {
         // exercise
         store.dispatch(removeError(error))
 
-        assert.deepEqual(
-            store.getState().errors,
+        expect(store.getState().errors).toEqual(
             [
                 { message: 'bar' },
             ]

@@ -1,4 +1,3 @@
-import { assert } from 'chai'
 import { dropFields } from './object'
 
 describe('object utils', function () {
@@ -14,7 +13,7 @@ describe('object utils', function () {
                 'z'
             )
 
-            assert.deepEqual(result, { y: 'y' })
+            expect(result).toEqual({ y: 'y' })
         })
 
         it('must not mutate target', function () {
@@ -22,7 +21,7 @@ describe('object utils', function () {
 
             dropFields(target, 'y')
 
-            assert.deepEqual(target, { y: 'y' })
+            expect(target).toEqual({ y: 'y' })
         })
     })
 })
