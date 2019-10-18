@@ -44,3 +44,5 @@ $menu-icons-back-compat: false;
 @include foundation-top-bar;
 @include foundation-visibility-classes;
 @include foundation-float-classes;
+
+@import 'popup';
