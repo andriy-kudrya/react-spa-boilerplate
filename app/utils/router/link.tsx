@@ -25,12 +25,12 @@ function handleClick(event: React.MouseEvent<HTMLAnchorElement>, props: Props, r
     router.navigate(props.routeName, props.routeParams)
 }
 
-const Link = (props: Props) => {
-        const router = useRouter()
-            , href = router.buildPath(props.routeName, props.routeParams)
-            , forwardedProps = dropFields(props, 'routeName', 'routeParams', 'onClick')
+function Link(props: Props, ref: React.Ref<HTMLAnchorElement>) {
+    const router = useRouter()
+        , href = router.buildPath(props.routeName, props.routeParams)
+        , forwardedProps = dropFields(props, 'routeName', 'routeParams', 'onClick')
 
-        return <a {...forwardedProps} href={href} onClick={_ => handleClick(_, props, router)}/>
-    }
+    return <a ref={ref} {...forwardedProps} href={href} onClick={_ => handleClick(_, props, router)}/>
+}
 
-export default Link
+export default React.forwardRef(Link)
