@@ -1,7 +1,11 @@
 .app-popup-plane
     top: 0
     position: absolute
+    width: 100%
+    pointer-events: none
 
 
 .app-popup-container
-    position: absolute
+    // fixed position doesn't trigger scroll on window
+    position: fixed
+    pointer-events: auto
