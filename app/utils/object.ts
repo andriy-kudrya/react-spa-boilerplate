@@ -36,4 +36,10 @@ function shallowUpdate<T extends object>(object: T, ...update: Partial<T>[]): T 
     return assign({}, object, ...update)
 }
 
-export { assign, shallowUpdate, dropFields, Redefine }
+function pick<T, K extends keyof T>(target: T, ...keys: K[]): Pick<T, K> {
+    const result: any = {}
+    keys.forEach(_ => result[_] = target[_])
+    return result
+}
+
+export { assign, shallowUpdate, pick, dropFields, Redefine }
