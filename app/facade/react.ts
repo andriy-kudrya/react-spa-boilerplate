@@ -1,6 +1,6 @@
 import * as React from 'react'
 export { React }
-export { useContext, useEffect, useState, useMemo } from 'react'
+export { useContext, useEffect, useLayoutEffect, useState, useMemo } from 'react'
 
 export { connect } from 'react-redux'
 
