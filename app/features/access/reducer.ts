@@ -8,7 +8,7 @@ export default reducer(
         actions.CALC_ACCESS,
         (_, _payload) =>
             ({
-                logIn: true,
+                logIn: false,
                 viewCards: true,
             })
     ),

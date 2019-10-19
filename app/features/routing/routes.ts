@@ -5,6 +5,7 @@ import * as access from '#/constants/access'
 
 interface AppRoute extends Route {
     access: access.Access
+    name: routeNames.Routes
 }
 
 const routes: AppRoute[] = [

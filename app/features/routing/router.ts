@@ -5,8 +5,6 @@ import * as routeNames from '#/constants/routes'
 import { omit } from '#/utils/object'
 
 import middleware from './middleware'
-
-
 import routes from './routes'
 
 const router = createRouter(

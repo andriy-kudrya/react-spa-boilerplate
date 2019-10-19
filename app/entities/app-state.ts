@@ -1,7 +1,7 @@
 import { RouterState } from 'redux-router5'
-import { Access } from '#/constants/access'
 import { Game } from '#/entities/card'
 import { Auth } from '#/entities/auth'
+import Access from '#/entities/access'
 import AppError from '#/entities/app-error'
 import PaginationState from '#/entities/pagination-state'
 
@@ -11,7 +11,7 @@ interface Cards {
 }
 
 interface AppState {
-    access: { [_ in Access]: boolean }
+    access: Access
     auth: Auth
     cards: Cards
     router: RouterState

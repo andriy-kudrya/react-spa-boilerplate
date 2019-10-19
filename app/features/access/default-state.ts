@@ -1,6 +1,6 @@
-import { Access } from '#/constants/access'
+import Access from '#/entities/access'
 
-const defaultState: { [_ in Access]: boolean } = {
+const defaultState: Access = {
     logIn: true,
     viewCards: false,
 }
