@@ -13,11 +13,13 @@ import { dynamicMiddleware } from '#/module-loader/dynamic-middleware'
 
 import { reducer } from '#/utils/redux/reducer'
 import errorsState from '#/features/error/default-state'
+import access from '#/features/access/default-state'
 import authState from '#/features/auth/default-state'
 import cardsState from '#/features/cards/default-state'
 
 const defaultReducerMap: ReducersMapObject<AppState> = {
         errors: reducer(errorsState),
+        access: reducer(access),
         auth: reducer(authState),
         cards: reducer(cardsState),
         router: router5Reducer,

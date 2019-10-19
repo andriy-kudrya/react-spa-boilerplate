@@ -5,6 +5,7 @@ import ServiceFactory from '#/services/service-factory'
 import { assign } from '#/utils/object'
 import { memoizeLatestCall } from '#/utils/function'
 import errors from '#/features/error/reducer'
+import access from '#/features/access/reducer'
 
 import { AppModule } from './types'
 import { registerMiddleware } from './dynamic-middleware'
@@ -14,6 +15,7 @@ function appModuleLoaderFactory(store: Store<AppState>, services: ServiceFactory
     const currentReducer = {
             ...defaultReducerMap,
             errors,
+            access,
         }
         , result = {
             loadCore,

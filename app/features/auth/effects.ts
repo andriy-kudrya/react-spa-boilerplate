@@ -5,6 +5,7 @@ import { handler, EffectsFactory } from '#/facade/effect'
 import * as routes from '#/constants/routes'
 
 import { LOG_IN, loggedIn } from './actions'
+import { calcAccess } from '#/features/access/actions'
 
 const factory = (authService: AuthService): EffectsFactory => dispatch => [
     handler(
@@ -12,6 +13,7 @@ const factory = (authService: AuthService): EffectsFactory => dispatch => [
         credentials =>
             authService.logIn(credentials).then(data => {
                 dispatch(loggedIn(data))
+                dispatch(calcAccess(data))
                 dispatch(actions.navigateTo(routes.CARDS))
             })
     ),
