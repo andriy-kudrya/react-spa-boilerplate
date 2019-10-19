@@ -33,7 +33,7 @@ function Nav() {
             <div className='navbar-brand'>Card viewer</div>
             <ul className='navbar-nav'>
                 <NavLink routeName={routes.LOG_IN} access={access.LOG_IN}>Log In</NavLink>
-                <NavLink routeName={routes.CARDS} access={access.CARDS}>Cards</NavLink>
+                <NavLink routeName={routes.CARDS} access={access.VIEW_CARDS}>Cards</NavLink>
             </ul>
         </nav>
     )

@@ -24,13 +24,13 @@ const assign: typeof assignFallback = (Object as any).assign || assignFallback
 type Redefine<Target extends object, Augmentation extends object, Drop extends keyof Target = never> =
     Augmentation & Pick<Target, Exclude<keyof Target, keyof Augmentation | Drop>>
 
-type DropFields<T extends object, K extends string | number | symbol> = Pick<T, Exclude<keyof T, K>>
-
-function dropFields<T extends object, F extends keyof T>(target: T, ...fields: F[]): DropFields<T, F> {
+function dropFields<T extends object, F extends keyof T>(target: T, ...fields: F[]): Omit<T, F> {
     const result = assign({}, target)
     fields.forEach(_ => delete result[_])
     return result
 }
+
+const omit = dropFields
 
 function shallowUpdate<T extends object>(object: T, ...update: Partial<T>[]): T {
     return assign({}, object, ...update)
@@ -42,4 +42,4 @@ function pick<T, K extends keyof T>(target: T, ...keys: K[]): Pick<T, K> {
     return result
 }
 
-export { assign, shallowUpdate, pick, dropFields, Redefine }
+export { assign, shallowUpdate, pick, omit, dropFields, Redefine }

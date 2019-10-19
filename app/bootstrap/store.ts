@@ -5,7 +5,7 @@ import AppState from '#/entities/app-state'
 
 import logMiddleware from '#/utils/middleware/log'
 import errorMiddleware from '#/features/error/middleware'
-import router from '#/features/routing/routes'
+import router from '#/features/routing/router'
 
 import createServiceFactory from '#/services/impl/service-factory'
 import appModuleLoaderFactory from '#/module-loader/app-module-loader'

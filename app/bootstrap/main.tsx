@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 
 import { RouterProvider } from '#/utils/router'
 import Shell from '#/features/shell/shell'
-import router from '#/features/routing/routes'
+import router from '#/features/routing/router'
 import AppModuleLoaderContext from '#/module-loader/context'
 
 import store, { appModuleLoader } from './store'

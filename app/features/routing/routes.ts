@@ -1,25 +1,23 @@
-import createRouter, { Route } from 'router5'
-import browserPlugin from 'router5/plugins/browser'
+import { Route } from 'router5'
 
 import * as routeNames from '#/constants/routes'
+import * as access from '#/constants/access'
 
-import middleware from './middleware'
+interface AppRoute extends Route {
+    access: access.Access
+}
 
-const routes: Route[] = [
+const routes: AppRoute[] = [
     {
         name: routeNames.LOG_IN,
         path: '/log-in',
+        access: access.LOG_IN,
     },
     {
         name: routeNames.CARDS,
         path: '/cards',
+        access: access.VIEW_CARDS,
     },
 ]
 
-const router = createRouter(routes, {
-        defaultRoute: routeNames.LOG_IN,
-    })
-    .usePlugin(browserPlugin())
-    .useMiddleware(middleware)
-
-export default router
+export default routes
