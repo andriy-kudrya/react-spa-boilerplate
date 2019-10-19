@@ -1,7 +1,7 @@
 import { Form } from 'react-final-form'
 
 import { React } from '#/facade/react'
-import { TextField, PasswordField, Submit, submitDisabled } from '#/utils/form'
+import { TextField, PasswordField, Submit, submitDisabled } from '#/components/form'
 import validate from './auth-form-validate'
 
 interface OwnProps {

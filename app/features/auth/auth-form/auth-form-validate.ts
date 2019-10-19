@@ -1,4 +1,4 @@
-import { required, ValidationResult } from '#/utils/form/validate'
+import { required, ValidationResult } from '#/components/form/validate'
 import { Credentials } from '#/entities/auth'
 
 export default function validate(entity: Partial<Credentials>) {

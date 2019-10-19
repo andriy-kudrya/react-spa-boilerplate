@@ -5,9 +5,11 @@ function showFieldError(meta: FieldRenderProps<unknown, HTMLElement>['meta']): b
 }
 
 function formTouched(props: FormRenderProps): boolean {
-    const touched = (props as any).touched
-        , keys = Object.keys(touched)
+    const touched = props.touched
+    if (!touched)
+        return false
 
+    const keys = Object.keys(touched)
     if (keys.length === 0)
         return false
 

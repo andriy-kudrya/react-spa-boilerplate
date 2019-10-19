@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useField } from 'react-final-form'
 
-import NumberInput from '../input/number-input'
+import NumberInput from '#/utils/input/number-input'
 
 import { showFieldError } from './helpers'
 
