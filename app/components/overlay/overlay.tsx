@@ -7,45 +7,45 @@ interface Props {
     children?: React.ReactNode
 }
 
-function usePopupPlane() {
-    const popupPlaneSelector = 'app-popup-plane'
-        , [popupPlane, setPopupPlane] = useState(
-            () => document.querySelector<HTMLDivElement>(popupPlaneSelector) || undefined
+function useOverlayRoot() {
+    const overlayRootSelector = 'overlay-root'
+        , [overlayRoot, setOverlayRoot] = useState(
+            () => document.querySelector<HTMLDivElement>(overlayRootSelector) || undefined
         )
 
     useLayoutEffect(
         () => {
-            if (popupPlane)
+            if (overlayRoot)
                 return
 
             const plane = document.createElement('div')
-            plane.setAttribute('class', popupPlaneSelector)
+            plane.setAttribute('class', overlayRootSelector)
 
             document.body.appendChild(plane)
 
-            setPopupPlane(plane)
+            setOverlayRoot(plane)
         },
         [] // eslint-disable-line react-hooks/exhaustive-deps
     )
 
-    return popupPlane
+    return overlayRoot
 }
 
-function Popup(props: Props) {
-    const plane = usePopupPlane()
-    if (!plane)
+function Overlay(props: Props) {
+    const root = useOverlayRoot()
+    if (!root)
         return null
 
     return createPortal(
         <div
             style={{ top: props.top, left: props.left }}
-            className='app-popup-container'
-            data-testid='popup'
+            className='overlay-container'
+            data-testid='overlay'
         >
             {props.children}
         </div>,
-        plane
+        root
     )
 }
 
-export default Popup
+export default Overlay

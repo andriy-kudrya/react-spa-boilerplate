@@ -1,14 +1,9 @@
 import { React, useState, useLayoutEffect } from '#/facade/react'
-import Popup from './popup'
+import Overlay from './overlay'
 
 interface Props {
     element: HTMLElement | null
     children?: React.ReactNode
-}
-
-function useMenuRef() {
-    const [element, setElement] = useState<HTMLElement | null>(null)
-    return [element, setElement] as const
 }
 
 function Menu(props: Props) {
@@ -35,13 +30,11 @@ function Menu(props: Props) {
         return null
 
     return (
-        <Popup {...position}>
+        <Overlay {...position}>
             {props.children}
-        </Popup>
+        </Overlay>
     )
 }
 
-export {
-    Menu,
-    useMenuRef,
-}
+
+export default Menu
