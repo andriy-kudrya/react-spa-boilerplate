@@ -1,23 +1,19 @@
 import { FormRenderProps, FieldRenderProps } from 'react-final-form'
+import { getIn } from 'final-form'
 
 function showFieldError(meta: FieldRenderProps<unknown, HTMLElement>['meta']): boolean {
     return !!(meta.invalid && meta.touched)
 }
 
-function formTouched(props: FormRenderProps): boolean {
+function hasShownErrors(props: FormRenderProps): boolean {
     const touched = props.touched
-    if (!touched)
-        return false
+        , paths = touched ? Object.keys(touched).filter(_ => touched[_]) : []
 
-    const keys = Object.keys(touched)
-    if (keys.length === 0)
-        return false
-
-    return keys.every(_ => touched[_])
+    return paths.some(_ => !!getIn(props.errors, _))
 }
 
 function submitDisabled(props: FormRenderProps) {
-    return props.submitting || props.invalid && formTouched(props)
+    return props.submitting || props.invalid && hasShownErrors(props)
 }
 
-export { formTouched, submitDisabled, showFieldError }
+export { submitDisabled, showFieldError }
