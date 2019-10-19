@@ -1,4 +1,5 @@
 export { useContext, useEffect, useLayoutEffect, useState, useCallback, useMemo } from 'react'
+export { useAction } from '#/utils/redux/connect'
 
 import { useSelector as useSelectorGeneric } from 'react-redux'
 export const useSelector: <T>(selector: (state: AppState) => T, equalityFn?: (left: T, right: T) => boolean) => T = useSelectorGeneric

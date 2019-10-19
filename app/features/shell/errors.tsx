@@ -1,4 +1,5 @@
-import { React, useSelector, useAction } from '#/facade/react'
+import { React } from '#/facade/react'
+import { useSelector, useAction } from '#/facade/hooks'
 import * as actions from '#/features/error/actions'
 
 const Errors = () => {

@@ -1,4 +1,5 @@
-import { React, useLayoutEffect, useState } from '#/facade/react'
+import { React } from '#/facade/react'
+import { useLayoutEffect, useState } from '#/facade/hooks'
 import { createPortal } from 'react-dom'
 
 interface Props {

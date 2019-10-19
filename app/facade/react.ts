@@ -12,7 +12,7 @@ import AppState from '#/entities/app-state'
 import { Func } from '#/utils/function'
 
 export { compose } from '#/utils/redux/compose'
-export { dispatchMapper, useAction } from '#/utils/redux/connect'
+export { dispatchMapper } from '#/utils/redux/connect'
 
 export { stateMapper }
 
@@ -22,5 +22,3 @@ export { stateMapper }
 function stateMapper<S>(f: Func<[AppState], S>) {
     return f
 }
-
-export * from './hook'

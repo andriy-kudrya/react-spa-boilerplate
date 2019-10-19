@@ -1,4 +1,5 @@
-import { React, classnames, useAccess } from '#/facade/react'
+import { React, classnames } from '#/facade/react'
+import { useAccess } from '#/facade/hooks'
 import { LOG_IN, CARDS } from '#/constants/routes'
 
 import { Link, useRouter } from '#/utils/router'

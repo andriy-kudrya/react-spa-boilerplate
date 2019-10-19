@@ -1,4 +1,5 @@
-import { React, useAction, useSelector } from '#/facade/react'
+import { React } from '#/facade/react'
+import { useAction, useSelector } from '#/facade/hooks'
 
 import { Credentials } from '#/entities/auth'
 import { noop } from '#/utils/function'

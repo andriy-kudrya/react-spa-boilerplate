@@ -1,6 +1,7 @@
 import { State as RouterState } from 'router5'
 
-import { React, useContext, useSelector } from '#/facade/react'
+import { React } from '#/facade/react'
+import { useContext, useSelector } from '#/facade/hooks'
 import { LOG_IN, CARDS } from '#/constants/routes'
 
 import Nav from './nav'

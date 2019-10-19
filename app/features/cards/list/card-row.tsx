@@ -1,4 +1,5 @@
-import { React, useMemo } from '#/facade/react'
+import { React } from '#/facade/react'
+import { useMemo } from '#/facade/hooks'
 import { dateFormatter } from '#/utils/format/date'
 import { Game } from '#/entities/card'
 

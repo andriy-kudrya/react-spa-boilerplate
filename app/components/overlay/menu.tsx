@@ -1,4 +1,5 @@
-import { React, useState, useLayoutEffect } from '#/facade/react'
+import { React } from '#/facade/react'
+import { useState, useLayoutEffect } from '#/facade/hooks'
 import Overlay from './overlay'
 
 interface Props {
