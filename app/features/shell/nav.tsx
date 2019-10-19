@@ -1,4 +1,4 @@
-import { React, classnames, useSelector } from '#/facade/react'
+import { React, classnames, useAccess } from '#/facade/react'
 import { LOG_IN, CARDS } from '#/constants/routes'
 
 import { Link, useRouter } from '#/utils/router'
@@ -25,7 +25,7 @@ function NavLink(props: NavLinkProps) {
 }
 
 function Nav() {
-    const viewCards = useSelector(_ => _.access.viewCards)
+    const viewCards = useAccess('viewCards')
 
     return (
         <nav className='navbar navbar-expand sticky-top navbar-dark bg-dark'>
