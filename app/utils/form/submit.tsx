@@ -7,6 +7,6 @@ interface Props {
 }
 
 const Submit = (props: Props) =>
-    <button className={classnames('button', props.className)} type='submit' disabled={props.disabled} children={props.children} />
+    <button className={classnames('btn btn-primary', props.className)} type='submit' disabled={props.disabled} children={props.children} />
 
 export default Submit

@@ -42,7 +42,6 @@ function Pagination(props: Props) {
             <ul className='pagination'>
                 <Page
                     page={NaN}
-                    className='pagination-previous'
                     disabled={currentPage === 0}
                     onClick={handlePrevClick}
                 >Previous</Page>
@@ -58,7 +57,6 @@ function Pagination(props: Props) {
                 )}
                 <Page
                     page={NaN}
-                    className='pagination-next'
                     disabled={currentPage === maxPage}
                     onClick={handleNextClick}
                 >Next</Page>

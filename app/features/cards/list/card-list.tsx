@@ -28,7 +28,7 @@ function CardList() {
         <div>
             <NumberInput value={cardCount} onChange={setCardCount} placeholder='Min cards...'/>
             <DateInput value={dateAdded} onChange={setDateAdded} placeholder='Min date added...'/>
-            <table>
+            <table className='table'>
                 <thead>
                     <tr>
                         <SortContainer onChange={sortCardList}>

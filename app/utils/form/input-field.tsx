@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { React, classnames } from '#/facade/react'
 import { useField } from 'react-final-form'
 import { showFieldError } from './helpers'
 
@@ -13,12 +13,13 @@ interface InputFieldProps {
 
 const InputField = (props: InputFieldProps) => {
         const field = useField(props.name, { type: props.type })
+            , showError = showFieldError(field.meta)
 
         return (
-            <div>
+            <div className='form-group'>
                 <label htmlFor={props.id} children={props.children}/>
-                <input id={props.id} {...field.input} />
-                {showFieldError(field.meta) && <span>{field.meta.error}</span>}
+                <input className={classnames('form-control', { 'is-invalid': showError })} id={props.id} {...field.input} />
+                {showError && <span className='invalid-feedback'>{field.meta.error}</span>}
             </div>
         )
     }
