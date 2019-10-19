@@ -5,7 +5,7 @@ import params from './params'
 import paths from './paths'
 
 const scssRule = {
-        test: /\.(scss)$/,
+        test: /\.(scss|sass)$/,
         use: [
             // params.debug ? { loader: 'style-loader' } : MiniCssExtractPlugin.loader,
             MiniCssExtractPlugin.loader,
