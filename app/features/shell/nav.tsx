@@ -1,19 +1,21 @@
 import { React, classnames } from '#/facade/react'
 import { useAccess } from '#/facade/hooks'
-import { LOG_IN, CARDS } from '#/constants/routes'
+import * as routes from '#/constants/routes'
+import * as access from '#/constants/access'
 
 import { Link, useRouter } from '#/utils/router'
 
 interface NavLinkProps {
     routeName: string
-    access?: boolean
+    access: access.Access
     children: React.ReactNode
 }
 
 function NavLink(props: NavLinkProps) {
     const router = useRouter()
+        , access = useAccess(props.access)
 
-    if (props.access === false)
+    if (!access)
         return null
 
     return (
@@ -26,14 +28,12 @@ function NavLink(props: NavLinkProps) {
 }
 
 function Nav() {
-    const viewCards = useAccess('viewCards')
-
     return (
         <nav className='navbar navbar-expand sticky-top navbar-dark bg-dark'>
             <div className='navbar-brand'>Card viewer</div>
             <ul className='navbar-nav'>
-                <NavLink routeName={LOG_IN}>Log In</NavLink>
-                <NavLink routeName={CARDS} access={viewCards}>Cards</NavLink>
+                <NavLink routeName={routes.LOG_IN} access={access.LOG_IN}>Log In</NavLink>
+                <NavLink routeName={routes.CARDS} access={access.CARDS}>Cards</NavLink>
             </ul>
         </nav>
     )
