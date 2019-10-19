@@ -105,21 +105,6 @@ const factory = (authService: AuthService): EffectsFactory => dispatch => [
 ```
 Anything more complex is supposed to use middleware directly (e.g. error handling, synchronization with sessionStorage).
 
-## Production bundle size
-In addition to application logic itself third party libraries greatly contribute to app bundle in terms of size.
-Actually libraries may easily outweigh application logic and end up in megabytes of data transferred over the wire. 
-There various reasons for this:
-- Many libraries use es6+ with babel 6 transpilation where classes (maybe other features) generate non treeshakable code (resolved in babel 7)
-- In the same time they transpile every source file on its own so babel helpers are duplicated for every source file
-- Often library code is not treeshakable on its own
-- Often library has way more functionality than project probably might need
-
-What is done there to reduce bundle size:
-- Do not use useful libraries that have extreme sizes (e.g. redux-form minified 120 kB, it is more than react with react-dom, currently used final-form from the same author :) )
-- Do not use useful libraries if extra functionality is not required (e.g. core-js ~60kB substituted with promise-polyfill ~7kB, that said core-js is extremely optimized it terms of size)
-- Do not use useful libraries if it is not hard to implement required functionality on my own (e.g. react-router5 ~10kB was removed in favor of own Link component ~1kB)
-- Have own set of commonly used components that are tricky to implement (component libraries tend to have megabytes of code). They are supposed to have minimal markup or not at all if possible to let easy customization for particular project needs (currently there are sort helpers, date/number inputs but without IE11 fallback yet)
-
 # Error handling
 There is error middleware that handles synchronous and asynchronous errors. In case of asynchronous it expects that other middlewares in chain,
 including effects, return promise that rejects in case of errors. In a more complex case other middleware might need to handle errors by itself.
