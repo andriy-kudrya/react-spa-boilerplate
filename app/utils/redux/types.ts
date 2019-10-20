@@ -16,16 +16,16 @@ type ActionType<P, R> = string & {
     attachDispatchResultTypeHack?: R
 }
 
-interface VoidAction<R> {
+interface NoPayloadAction<R> {
     type: ActionType<void, R>
 }
 
-interface NonVoidAction<P, R> {
+interface PayloadAction<P, R> {
     type: ActionType<P, R>
     payload: P
 }
 
-type Action<P, R> = [P] extends [void] ? VoidAction<R> : NonVoidAction<P, R>
+type Action<P, R> = [P] extends [void] ? NoPayloadAction<R> : PayloadAction<P, R>
 
 type DispatchResult<P, R> = R extends Default ? Action<P, Default> : R
 
@@ -33,8 +33,8 @@ type DispatchResult<P, R> = R extends Default ? Action<P, Default> : R
 // so overloaded dispatch is used instead of single parameter Action<P, R>
 // https://github.com/Microsoft/TypeScript/issues/25301
 interface Dispatch {
-    <R>(action: VoidAction<R>): DispatchResult<void, R>
-    <P, R>(action: NonVoidAction<P, R>): DispatchResult<P, R>
+    <R>(action: NoPayloadAction<R>): DispatchResult<void, R>
+    <P, R>(action: PayloadAction<P, R>): DispatchResult<P, R>
 }
 
 interface MiddlewareAPI<S> {
@@ -56,8 +56,8 @@ type NoInfer<T> = T & {[K in keyof T]: T[K]}
 export {
     ActionType,
     Action,
-    VoidAction,
-    NonVoidAction,
+    NoPayloadAction,
+    PayloadAction,
     Dispatch,
     DispatchResult,
     Default,
