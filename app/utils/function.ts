@@ -4,9 +4,9 @@ function id<T>(value: T): T {
     return value
 }
 
-type Func<T extends any[], R, C = void> = (this: C, ...args: T) => R
+type Func<T extends any[], R, C = unknown> = (this: C, ...args: T) => R
 
-function memoizeLatestCall<T extends any[], R, C = void>(f: Func<T, R, C>): Func<T, R, C> {
+function memoizeLatestCall<T extends any[], R, C = unknown>(f: Func<T, R, C>): Func<T, R, C> {
     let latestArgs: T
       , latestContext: C
       , latestResult: R
