@@ -1,17 +1,9 @@
-import { action, ActionType } from '#/utils/redux'
+import { creatorFactory } from '#/utils/redux'
 import { Credentials } from '#/entities/auth'
 import { Auth } from '#/entities/app-state'
 
-const LOG_IN: ActionType<Credentials, Promise<void>> = 'app.auth.LOG_IN'
-    , LOGGED_IN: ActionType<Auth> = 'app.auth.LOGGED_IN'
+const creator = creatorFactory('app.auth')
 
-const logIn = action(LOG_IN)
-    , loggedIn = action(LOGGED_IN)
+export const logIn = creator<Credentials, Promise<void>>('LOG_IN')
+           , loggedIn = creator<Auth>('LOGGED_IN')
 
-export {
-    LOG_IN,
-    LOGGED_IN,
-
-    logIn,
-    loggedIn,
-}

@@ -5,7 +5,7 @@ import defaultState from './default-state'
 export default reducer(
     defaultState,
     handler(
-        actions.CALC_ACCESS,
+        actions.calcAccess,
         (_, _payload) =>
             ({
                 logIn: false,

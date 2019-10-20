@@ -2,7 +2,7 @@ import { Reducer } from 'redux'
 
 import createHash from './hash'
 
-import { ActionType, Action } from './types'
+import { ActionType, Action, NoInfer } from './types'
 import { isPayloadAction } from './action'
 
 // TODO: type inference doesn't work for ActionType<void> when creating reducer with *reducer* factory below
@@ -16,8 +16,8 @@ interface ActionHandler<S, P, R> {
     handler: Handler<S, P>
 }
 
-function handler<S, P, R>(actionType: ActionType<P, R>, handler: Handler<S, P>): ActionHandler<S, P, R> {
-    return { actionType, handler }
+function handler<S, P, R>(creator: { type: ActionType<P, R> }, handler: Handler<NoInfer<S>, NoInfer<P>>): ActionHandler<S, P, R> {
+    return { actionType: creator.type, handler }
 }
 
 function reducer<S>(defaultState: S, ...payloadHandlers: ActionHandler<S, any, any>[]): Reducer<S> {

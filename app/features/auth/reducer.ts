@@ -5,5 +5,5 @@ import defaultState from './default-state'
 
 export default reducer(
     defaultState,
-    handler(actions.LOGGED_IN, shallowUpdate)
+    handler(actions.loggedIn, shallowUpdate),
 )

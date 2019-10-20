@@ -1,12 +1,6 @@
-import { action, ActionType } from '#/utils/redux'
+import { creatorFactory } from '#/utils/redux'
 import { Auth } from '#/entities/auth'
 
-const CALC_ACCESS: ActionType<Auth> = 'app.access.CALC_ACCESS'
+const creator = creatorFactory('app.access')
 
-const calcAccess = action(CALC_ACCESS)
-
-export {
-    CALC_ACCESS,
-
-    calcAccess,
-}
+export const calcAccess = creator<Auth>('CALC_ACCESS')

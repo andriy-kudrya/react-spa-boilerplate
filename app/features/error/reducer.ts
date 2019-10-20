@@ -4,6 +4,6 @@ import defaultState from './default-state'
 
 export default reducer(
     defaultState,
-    handler(actions.ADD_ERROR, (state, error) => state.concat(error)),
-    handler(actions.REMOVE_ERROR, (state, error) => state.filter(_ => _ !== error)),
+    handler(actions.addError, (state, error) => state.concat(error)),
+    handler(actions.removeError, (state, error) => state.filter(_ => _ !== error)),
 )

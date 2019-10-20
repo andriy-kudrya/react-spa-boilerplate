@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { ActionType } from './types'
 import { Func } from '../function'
 
-type ActionCreator<T extends any[], R> = (...args: T) => { type: ActionType<any, R> }
+type ActionCreator<T extends any[], R> = Func<T, { type: ActionType<any, R> }>
 
 type MappedDispatch<F extends ActionCreator<any, any>> =
     F extends ActionCreator<infer T, infer R> ? Func<T, R> : never

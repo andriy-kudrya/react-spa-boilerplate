@@ -1,4 +1,4 @@
-import { ActionType, DispatchResult, Dispatch, Middleware } from './types'
+import { ActionType, DispatchResult, Dispatch, Middleware, NoInfer } from './types'
 import { isPayloadAction } from './action'
 
 import createHash from './hash'
@@ -10,8 +10,8 @@ interface EffectHandler<P, R> {
     handler: Handler<P, R>
 }
 
-function handler<P, R>(actionType: ActionType<P, R>, handler: Handler<P, R>): EffectHandler<P, R> {
-    return { actionType, handler }
+function handler<P, R>(creator: { type: ActionType<P, R> }, handler: Handler<NoInfer<P>, NoInfer<R>>): EffectHandler<P, R> {
+    return { actionType: creator.type, handler }
 }
 
 function effectMiddlewareFactory<S>(...effectsFactories: EffectsFactory<S>[]): Middleware<S> {

@@ -7,9 +7,9 @@ import defaultState from './default-state'
 
 export default reducer(
     defaultState,
-    handler(actions.CARD_LIST_LOADED, (state, games) => shallowUpdate(state, { games })),
-    handler(actions.SORT_CARD_LIST, (state, sortState) => shallowUpdate(state, { games: sortGames(state.games, sortState) })),
-    handler(actions.CARD_LIST_PAGE_CHANGE, (state, pagination) => shallowUpdate(state, { pagination })),
+    handler(actions.cardListLoaded, (state, games) => shallowUpdate(state, { games })),
+    handler(actions.sortCardList, (state, sortState) => shallowUpdate(state, { games: sortGames(state.games, sortState) })),
+    handler(actions.cardListPageChange, (state, pagination) => shallowUpdate(state, { pagination })),
 )
 
 function sortGames(games: Game[], sortState: SortState): Game[] {

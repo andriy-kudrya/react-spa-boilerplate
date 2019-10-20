@@ -43,6 +43,11 @@ interface Middleware<S> {
     // (api: MiddlewareAPI<S>): (next: Dispatch) => Dispatch
 }
 
+// https://github.com/Microsoft/TypeScript/issues/14829#issuecomment-322267089
+// Used only in redux utils as of now
+// Otherwise should be moved to common module
+type NoInfer<T> = T & {[K in keyof T]: T[K]}
+
 export {
     ActionType,
     Action,
@@ -53,4 +58,5 @@ export {
     Default,
     MiddlewareAPI,
     Middleware,
+    NoInfer,
 }

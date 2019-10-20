@@ -1,14 +1,14 @@
 import CardService from '#/services/card-service'
 import { handler, EffectsFactory } from '#/facade/effect'
 
-import { LOAD_CARD_LIST, cardListLoaded } from './actions'
+import * as actions from './actions'
 
 const factory = (cardService: CardService): EffectsFactory => dispatch => [
     handler(
-        LOAD_CARD_LIST,
+        actions.loadCardList,
         () =>
             cardService.getAll().then(games => {
-                dispatch(cardListLoaded(games))
+                dispatch(actions.cardListLoaded(games))
                 return games
             })
     ),

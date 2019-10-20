@@ -2,20 +2,20 @@ import * as redux from 'redux'
 
 import { shallowUpdate } from '../object'
 import { noop } from '../function'
-import { action } from './action'
-import { ActionType } from './types'
+import { creatorFactory } from './action'
 import { reducer, handler } from './reducer'
 import effectsMiddlewareFactory, { EffectsFactory, handler as effectHandler } from './effect'
 
 describe('redux', function () {
+    const creator = creatorFactory('test')
+
     describe('reducer', function () {
         interface State {
             one: number
             two: number
         }
 
-        const ACTION_ONE: ActionType<number> = 'ACTION_ONE'
-            , actionOne = action(ACTION_ONE)
+        const actionOne = creator<number>('ACTION_ONE')
             , defaultState: State = {
                 one: 1,
                 two: 2,
@@ -26,7 +26,7 @@ describe('redux', function () {
         it('should return default state after unknown action when state is not supplied', function () {
             const reduce = reducer(
                     defaultState,
-                    handler(ACTION_ONE, (state, payload) => shallowUpdate(state, { one: payload }))
+                    handler(actionOne, (state, payload) => shallowUpdate(state, { one: payload }))
                 )
 
             const result = reduce(undefined, { type: 'unknown' })
@@ -37,7 +37,7 @@ describe('redux', function () {
         it('should preserve current state after unknown action', function () {
             const reduce = reducer(
                     defaultState,
-                    handler(ACTION_ONE, (state, payload) => shallowUpdate(state, { one: payload }))
+                    handler(actionOne, (state, payload) => shallowUpdate(state, { one: payload }))
                 )
                 , currentState = reduce(undefined, actionOne(5))
 
@@ -49,7 +49,7 @@ describe('redux', function () {
         it('should delegate action to handler', function () {
             const reduce = reducer(
                     defaultState,
-                    handler(ACTION_ONE, (state, payload) => shallowUpdate(state, { one: payload }))
+                    handler(actionOne, (state, payload) => shallowUpdate(state, { one: payload }))
                 )
 
             const result = reduce(undefined, actionOne(5))
@@ -61,8 +61,8 @@ describe('redux', function () {
             const createReducer = () =>
                 reducer(
                     defaultState,
-                    handler(ACTION_ONE, _ => _),
-                    handler(ACTION_ONE, _ => _)
+                    handler(actionOne, _ => _),
+                    handler(actionOne, _ => _)
                 )
 
             expect(createReducer).toThrow()
@@ -70,9 +70,8 @@ describe('redux', function () {
     })
 
     describe('effectsMiddlewareFactory', function () {
-        const ACTION_ONE: ActionType<string, void> = 'ACTION_ONE'
-            , ACTION_TWO: ActionType<string, void> = 'ACTION_TWO'
-            , actionOne = action(ACTION_ONE)
+        const actionOne = creator<string, void>('ACTION_ONE')
+            , actionTwo = creator<string, void>('ACTION_TWO')
 
         function createStore<S>(...effects: EffectsFactory<S>[]) {
             const mw = effectsMiddlewareFactory(...effects)
@@ -81,8 +80,8 @@ describe('redux', function () {
 
         it('forbids for same effects factory to have several handlers for same action', function () {
             const effects: EffectsFactory<{}> = () => [
-                    effectHandler(ACTION_ONE, noop),
-                    effectHandler(ACTION_ONE, noop),
+                    effectHandler(actionOne, noop),
+                    effectHandler(actionOne, noop),
                 ]
 
             expect(() => createStore(effects)).toThrow()
@@ -90,8 +89,8 @@ describe('redux', function () {
 
         it('allows for same effects factory to have distinct action handlers', function () {
             const effects: EffectsFactory<{}> = () => [
-                    effectHandler(ACTION_ONE, noop),
-                    effectHandler(ACTION_TWO, noop),
+                    effectHandler(actionOne, noop),
+                    effectHandler(actionTwo, noop),
                 ]
 
             expect(() => createStore(effects)).not.toThrow()
@@ -100,7 +99,7 @@ describe('redux', function () {
         it('produces side effect when action for registered handler is dispatched', function () {
             let effectTarget = 'initial'
             const effects: EffectsFactory<{}> = () => [
-                    effectHandler(ACTION_ONE, _ => { effectTarget = _ }),
+                    effectHandler(actionOne, _ => { effectTarget = _ }),
                 ]
                 , store = createStore(effects)
 
@@ -112,7 +111,7 @@ describe('redux', function () {
         it('should not produce side effect when action for not registered handler is dispatched', function () {
             let effectTarget = 'initial'
             const effects: EffectsFactory<{}> = () => [
-                    effectHandler(ACTION_TWO, _ => { effectTarget = _ }),
+                    effectHandler(actionTwo, _ => { effectTarget = _ }),
                 ]
                 , store = createStore(effects)
 

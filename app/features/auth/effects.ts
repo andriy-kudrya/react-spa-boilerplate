@@ -1,20 +1,20 @@
-import { actions } from 'redux-router5'
+import { actions as routerActions } from 'redux-router5'
 
 import AuthService from '#/services/auth-service'
 import { handler, EffectsFactory } from '#/facade/effect'
 import * as routes from '#/constants/routes'
 
-import { LOG_IN, loggedIn } from './actions'
+import * as actions from './actions'
 import { calcAccess } from '#/features/access/actions'
 
 const factory = (authService: AuthService): EffectsFactory => dispatch => [
     handler(
-        LOG_IN,
+        actions.logIn,
         credentials =>
             authService.logIn(credentials).then(data => {
-                dispatch(loggedIn(data))
+                dispatch(actions.loggedIn(data))
                 dispatch(calcAccess(data))
-                dispatch(actions.navigateTo(routes.CARDS))
+                dispatch(routerActions.navigateTo(routes.CARDS))
             })
     ),
 ]

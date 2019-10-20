@@ -1,12 +1,23 @@
-import { ActionType, Action } from './types'
+import { ActionType, Action, Default } from './types'
 
-function action<R>(type: ActionType<void, R>): () => Action<void, R>
-function action<P, R>(type: ActionType<P, R>): (payload: P) => Action<P, R>
-function action<P, R>(type: ActionType<P, R>) {
-    return function (payload: P) {
-        return arguments.length ? { type, payload } : { type }
+function creatorFactory(typePrefix: string) {
+    function getCreator<P extends void, R = Default>(suffix: ActionType<void, R>): (() => Action<void, R>) & { type: ActionType<P, R> }
+    function getCreator<P, R = Default>(suffix: ActionType<P, R>): ((payload: P) => Action<P, R>) & { type: ActionType<P, R> }
+    function getCreator<P, R>(suffix: ActionType<P, R>) {
+        const type = `${typePrefix}.${suffix}`
+
+        function actionCreator(payload: P) {
+            return arguments.length ? { type, payload } : { type }
+        }
+
+        actionCreator.type = type
+
+        return actionCreator
     }
+
+    return getCreator
 }
+
 
 function isPayloadAction(action: Action<any, any>): action is { type: ActionType<any, any>, payload: any } {
     return 'payload' in action
@@ -16,4 +27,4 @@ function actionHasType<P, R>(action: any, type: ActionType<P, R>): action is Act
     return action.type === type
 }
 
-export { action, isPayloadAction, actionHasType }
+export { creatorFactory, isPayloadAction, actionHasType }
