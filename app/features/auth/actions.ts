@@ -6,4 +6,3 @@ const creator = creatorFactory('app.auth')
 
 export const logIn = creator<Credentials, Promise<void>>('LOG_IN')
            , loggedIn = creator<Auth>('LOGGED_IN')
-

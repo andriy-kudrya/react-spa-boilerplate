@@ -6,21 +6,26 @@ interface Default {
  * @param P Payload type
  * @param R Result type of "dispatch" function when action of this type is dispatched.
  * By default it should be action itself but I see no way to declare such recursive type:
- * ActionType<P, R =
- *    ActionType<P, R =
- *        ...
- *    >
+ * Action<P,
+ *    Action<P, ...>
  * >
  * So 'Default' terminator is used
  */
-type ActionType<P, R = Default> = string & {
+type ActionType<P, R> = string & {
     attachPayloadTypeHack?: P
     attachDispatchResultTypeHack?: R
 }
 
-type VoidAction<R> = { type: ActionType<void, R> }
-type NonVoidAction<P, R> = { type: ActionType<P, R>, payload: P }
-type Action<P, R> = P extends void ? VoidAction<R> : NonVoidAction<P, R>
+interface VoidAction<R> {
+    type: ActionType<void, R>
+}
+
+interface NonVoidAction<P, R> {
+    type: ActionType<P, R>
+    payload: P
+}
+
+type Action<P, R> = [P] extends [void] ? VoidAction<R> : NonVoidAction<P, R>
 
 type DispatchResult<P, R> = R extends Default ? Action<P, Default> : R
 
