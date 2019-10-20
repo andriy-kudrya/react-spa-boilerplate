@@ -1,4 +1,4 @@
-import { ActionType, DispatchResult, Dispatch, Middleware, NoInfer } from './types'
+import { ActionType, HasActionType, DispatchResult, Dispatch, Middleware, NoInfer } from './types'
 import { isPayloadAction } from './action'
 
 import createHash from './hash'
@@ -10,7 +10,7 @@ interface EffectHandler<P, R> {
     handler: Handler<P, R>
 }
 
-function handler<P, R>(creator: { type: ActionType<P, R> }, handler: Handler<NoInfer<P>, NoInfer<R>>): EffectHandler<P, R> {
+function handler<P, R>(creator: HasActionType<P, R>, handler: Handler<NoInfer<P>, NoInfer<R>>): EffectHandler<P, R> {
     return { actionType: creator.type, handler }
 }
 
