@@ -1,16 +1,16 @@
 import { compose } from 'redux'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { ActionType } from './types'
+import { HasActionType } from './types'
 import { Func } from '../function'
 
-type ActionCreator<T extends any[], R> = Func<T, { type: ActionType<any, R> }>
+type ActionCreator<T extends any[] = any[], R = any> = Func<T, HasActionType<any, R>>
 
-type MappedDispatch<F extends ActionCreator<any, any>> =
+type MappedDispatch<F extends ActionCreator> =
     F extends ActionCreator<infer T, infer R> ? Func<T, R> : never
 
 interface ActionCreatorHash {
-    [_: string]: ActionCreator<any, any>
+    [_: string]: ActionCreator
 }
 
 type DispatchHash<T extends ActionCreatorHash> = {
@@ -29,7 +29,7 @@ function dispatchMapper<H extends ActionCreatorHash>(hash: H) {
     }
 }
 
-function useAction<T extends ActionCreator<any, any>>(action: T): MappedDispatch<T> {
+function useAction<T extends ActionCreator>(action: T): MappedDispatch<T> {
     const dispatch = useDispatch()
         , composedDispatch = useCallback(compose(dispatch, action), [dispatch, action])
 

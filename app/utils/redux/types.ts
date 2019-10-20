@@ -16,11 +16,13 @@ type ActionType<P, R> = string & {
     attachDispatchResultTypeHack?: R
 }
 
-interface NoPayloadAction<R> {
-    type: ActionType<void, R>
+interface HasActionType<P, R> {
+    type: ActionType<P, R>
 }
 
-interface PayloadAction<P, R> {
+interface NoPayloadAction<R> extends HasActionType<void, R> {}
+
+interface PayloadAction<P, R> extends HasActionType<P, R> {
     type: ActionType<P, R>
     payload: P
 }
@@ -56,6 +58,7 @@ type NoInfer<T> = T & {[K in keyof T]: T[K]}
 export {
     ActionType,
     Action,
+    HasActionType,
     NoPayloadAction,
     PayloadAction,
     Dispatch,
