@@ -1,15 +1,6 @@
-interface Default {
-    ['!@#$']: '!@#$'
-}
-
 /**
  * @param P Payload type
  * @param R Result type of "dispatch" function when action of this type is dispatched.
- * By default it should be action itself but I see no way to declare such recursive type:
- * Action<P,
- *    Action<P, ...>
- * >
- * So 'Default' terminator is used
  */
 type ActionType<P, R> = string & {
     attachPayloadTypeHack?: P
@@ -29,14 +20,12 @@ interface PayloadAction<P, R> extends HasActionType<P, R> {
 
 type Action<P, R> = [P] extends [void] ? NoPayloadAction<R> : PayloadAction<P, R>
 
-type DispatchResult<P, R> = R extends Default ? Action<P, Default> : R
-
 // Type inference does not work with conditional types
 // so overloaded dispatch is used instead of single parameter Action<P, R>
 // https://github.com/Microsoft/TypeScript/issues/25301
 interface Dispatch {
-    <R>(action: NoPayloadAction<R>): DispatchResult<void, R>
-    <P, R>(action: PayloadAction<P, R>): DispatchResult<P, R>
+    <R>(action: NoPayloadAction<R>): R
+    <P, R>(action: PayloadAction<P, R>): R
 }
 
 interface MiddlewareAPI<S> {
@@ -62,8 +51,6 @@ export {
     NoPayloadAction,
     PayloadAction,
     Dispatch,
-    DispatchResult,
-    Default,
     MiddlewareAPI,
     Middleware,
     NoInfer,

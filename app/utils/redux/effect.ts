@@ -1,9 +1,9 @@
-import { ActionType, HasActionType, DispatchResult, Dispatch, Middleware, NoInfer } from './types'
+import { ActionType, HasActionType, Dispatch, Middleware, NoInfer } from './types'
 import { isPayloadAction } from './action'
 
 import createHash from './hash'
 
-type Handler<P, R> = (payload: P) => DispatchResult<P, R>
+type Handler<P, R> = (payload: P) => R
 
 interface EffectHandler<P, R> {
     actionType: ActionType<P, R>

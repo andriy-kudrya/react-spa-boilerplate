@@ -1,8 +1,19 @@
-import { ActionType, Action, Default } from './types'
+import { ActionType, Action, HasActionType } from './types'
+/**
+ * By default return type of dispatch function should be action itself but I see no way to declare such recursive type:
+ * Action<P,
+ *    Action<P, ...>
+ * >
+ * Default dispatch result doesn't seem to be useful anyway so 'AnyAction' terminator is used
+ */
+interface AnyAction {
+    type: string
+    payload?: any
+}
 
 function creatorFactory(typePrefix: string) {
-    function getCreator<P extends void, R = Default>(suffix: ActionType<void, R>): (() => Action<void, R>) & { type: ActionType<P, R> }
-    function getCreator<P, R = Default>(suffix: ActionType<P, R>): ((payload: P) => Action<P, R>) & { type: ActionType<P, R> }
+    function getCreator<P extends void, R = AnyAction>(suffix: ActionType<void, R>): (() => Action<void, R>) & HasActionType<P, R>
+    function getCreator<P, R = AnyAction>(suffix: ActionType<P, R>): ((payload: P) => Action<P, R>) & HasActionType<P, R>
     function getCreator<P, R>(suffix: ActionType<P, R>) {
         const type = `${typePrefix}.${suffix}`
 
