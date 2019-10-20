@@ -29,7 +29,7 @@ function dispatchMapper<H extends ActionCreatorHash>(hash: H) {
     }
 }
 
-function useAction<T extends ActionCreator>(action: T): MappedDispatch<T> {
+function useAction<T extends any[], R>(action: ActionCreator<T, R>): Func<T, R> {
     const dispatch = useDispatch()
         , composedDispatch = useCallback(compose(dispatch, action), [dispatch, action])
 
