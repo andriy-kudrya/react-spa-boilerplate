@@ -34,8 +34,8 @@ function isPayloadAction(action: Action<any, any>): action is { type: ActionType
     return 'payload' in action
 }
 
-function actionHasType<P, R>(action: any, type: ActionType<P, R>): action is Action<P, R> {
-    return action.type === type
+function actionHasType<P, R>(action: any, creator: HasActionType<P, R>): action is Action<P, R> {
+    return action.type === creator.type
 }
 
 export { creatorFactory, isPayloadAction, actionHasType }

@@ -8,7 +8,7 @@ const dynamicMiddleware: Middleware = api => next => {
     let mwInstance = next
 
     return action => {
-        if (!actionHasType(action, registerMiddleware.type))
+        if (!actionHasType(action, registerMiddleware))
             return mwInstance(action)
 
         const mw = action.payload
