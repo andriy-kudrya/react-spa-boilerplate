@@ -29,6 +29,8 @@ function dispatchMapper<H extends ActionCreatorHash>(hash: H) {
     }
 }
 
+// NOTE: case when R extends Default is not handled but that result is not useful anyway
+// same applies to dispatchMapper above
 function useAction<T extends any[], R>(action: ActionCreator<T, R>): Func<T, R> {
     const dispatch = useDispatch()
         , composedDispatch = useCallback(compose(dispatch, action), [dispatch, action])
