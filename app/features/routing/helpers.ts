@@ -1,12 +1,12 @@
 import * as a from '#/constants/access'
-import { Routes } from '#/constants/routes'
+import * as r from '#/constants/routes'
 import Access from '#/entities/access'
 
 import routes from './routes'
 
 const routeAccess = new Map<string, a.Access>(routes.map(_ => [_.name, _.access] as const))
 
-function hasAccess(stateName: Routes, access: Access): boolean
+function hasAccess(stateName: r.Routes, access: Access): boolean
 function hasAccess(stateName: string, access: Access): boolean
 function hasAccess(stateName: string, access: Access): boolean {
     const accessEnum = routeAccess.get(stateName)
@@ -16,4 +16,10 @@ function hasAccess(stateName: string, access: Access): boolean {
     return access[accessEnum]
 }
 
-export { hasAccess }
+const routePriority = [r.LOG_IN, r.CARDS] as const
+
+function defaultRoute(access: Access): r.Routes {
+    return routePriority.find(_ => hasAccess(_, access))!
+}
+
+export { hasAccess, defaultRoute }

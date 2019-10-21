@@ -4,15 +4,16 @@ import * as router5 from 'router5'
 import AppState from '#/entities/app-state'
 import { MiddlewareAPI } from '#/utils/redux'
 
-import { hasAccess } from './helpers'
+import { hasAccess, defaultRoute } from './helpers'
 
 const middleware: router5.MiddlewareFactory = (_router, dependencies) => (toState, _fromState) => {
     const { getState } = dependencies.store as MiddlewareAPI<AppState>
-        , allowTransition = hasAccess(toState.name, getState().access)
+        , access = getState().access
+        , allowTransition = hasAccess(toState.name, access)
 
-    return allowTransition/* || Promise.reject({
-        redirect: { name: routes.LOG_IN },
-    }) */
+    return allowTransition || Promise.reject({
+        redirect: { name: defaultRoute(access) },
+    })
 }
 
 export default middleware
