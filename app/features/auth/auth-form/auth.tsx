@@ -1,7 +1,6 @@
 import { React } from '#/facade/react'
 import { useAction, useSelector } from '#/facade/hooks'
 
-import { Credentials } from '#/entities/auth'
 import { noop } from '#/utils/function'
 
 import * as actions from '../actions'
@@ -15,7 +14,7 @@ const Auth = () => {
         <div className='container'>
             <div className='row'>
                 <div className='col col-sm-7 col-md-5 col-lg-4 col-xl-3 mx-auto'>
-                    <AuthForm onSubmit={_ => logIn(_ as Credentials).then(noop)} />
+                    <AuthForm onSubmit={_ => logIn(_).then(noop)} />
                     {auth.token &&
                         <div>
                             Token = {auth.token}

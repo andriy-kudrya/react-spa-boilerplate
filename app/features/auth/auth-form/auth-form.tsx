@@ -3,13 +3,14 @@ import { Form } from 'react-final-form'
 import { React } from '#/facade/react'
 import { TextField, PasswordField, Submit, submitDisabled } from '#/components/form'
 import validate from './auth-form-validate'
+import { Credentials } from '#/entities/auth'
 
 interface OwnProps {
-    onSubmit: (_: object) => Promise<void>
+    onSubmit: (_: Credentials) => Promise<void>
 }
 
 const AuthForm = (props: OwnProps) =>
-    <Form
+    <Form<any>
         onSubmit={props.onSubmit}
         validate={validate}
         render={form =>
