@@ -12,17 +12,21 @@ const Auth = () => {
         , auth = useSelector(_ => _.auth)
 
     return (
-        <div>
-            <AuthForm onSubmit={_ => logIn(_ as Credentials).then(noop)} />
-            {auth.token &&
-                <div>
-                    Token = {auth.token}
-                    <br />
-                    Login = {auth.login}
-                    <br />
-                    Id = {auth.id}
+        <div className='container'>
+            <div className='row'>
+                <div className='col col-sm-7 col-md-5 col-lg-4 col-xl-3 mx-auto'>
+                    <AuthForm onSubmit={_ => logIn(_ as Credentials).then(noop)} />
+                    {auth.token &&
+                        <div>
+                            Token = {auth.token}
+                            <br />
+                            Login = {auth.login}
+                            <br />
+                            Id = {auth.id}
+                        </div>
+                    }
                 </div>
-            }
+            </div>
         </div>
     )
 }
