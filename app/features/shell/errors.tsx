@@ -1,5 +1,6 @@
 import { React } from '#/facade/react'
 import { useSelector, useAction } from '#/facade/hooks'
+import Overlay from '#/components/overlay/overlay'
 import * as actions from '#/features/error/actions'
 
 const Errors = () => {
@@ -10,17 +11,19 @@ const Errors = () => {
         return null
 
     return (
-        <div>
-            {errors.map(
-                (err, key) =>
-                    <div key={key}>
-                        {err.message}
-                        <button type='button' onClick={_ => removeError(err)}>
-                            &times;
-                        </button>
-                    </div>
-            )}
-        </div>
+        <Overlay top={60} left={20}>
+            <div className='alert alert-danger alert-dismissible' role='alert'>
+                {errors.map(
+                    (err, idx) =>
+                        <div key={idx}>
+                            {err.message}
+                        </div>
+                )}
+                <button type='button' className='close' aria-label='Close' onClick={_ => errors.forEach(removeError)}>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+        </Overlay>
     )
 }
 

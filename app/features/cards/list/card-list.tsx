@@ -26,7 +26,7 @@ function CardList() {
         , games = cards.games.slice(start, start + count)
 
     return (
-        <div>
+        <div className='container'>
             <NumberInput value={cardCount} onChange={setCardCount} placeholder='Min cards...'/>
             <DateInput value={dateAdded} onChange={setDateAdded} placeholder='Min date added...'/>
             <table className='table'>
