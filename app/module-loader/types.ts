@@ -14,6 +14,7 @@ interface AppModule {
 interface AppModuleLoader {
     loadAuth(): React.ExoticComponent
     loadCards(): React.ExoticComponent
+    loadDemo(): React.ExoticComponent
 }
 
 export { AppModule, ReducerMap, AppModuleLoader }

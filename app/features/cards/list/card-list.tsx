@@ -1,10 +1,8 @@
 import { React } from '#/facade/react'
-import { useEffect, useState, useSelector, useAction } from '#/facade/hooks'
+import { useEffect, useSelector, useAction } from '#/facade/hooks'
 
 import { SortContainer } from '#/utils/sort'
 
-import NumberInput from '#/utils/input/number-input'
-import DateInput from '#/utils/input/utc-date-input'
 import Pagination from '#/utils/pagination'
 
 import * as actions from '../actions'
@@ -16,8 +14,6 @@ function CardList() {
     const loadCardList = useAction(actions.loadCardList)
         , sortCardList = useAction(actions.sortCardList)
         , cardListPageChange = useAction(actions.cardListPageChange)
-        , [cardCount, setCardCount] = useState<number>()
-        , [dateAdded, setDateAdded] = useState<number>()
         , cards = useSelector(_ => _.cards)
 
     useEffect(() => void loadCardList(), [loadCardList])
@@ -27,8 +23,6 @@ function CardList() {
 
     return (
         <div className='container'>
-            <NumberInput value={cardCount} onChange={setCardCount} placeholder='Min cards...'/>
-            <DateInput value={dateAdded} onChange={setDateAdded} placeholder='Min date added...'/>
             <table className='table'>
                 <thead>
                     <tr>

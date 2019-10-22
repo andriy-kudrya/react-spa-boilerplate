@@ -19,6 +19,11 @@ const routes: AppRoute[] = [
         path: '/cards',
         access: access.VIEW_CARDS,
     },
+    {
+        name: routeNames.DEMO,
+        path: '/demo',
+        access: access.DEMO,
+    },
 ]
 
 export default routes

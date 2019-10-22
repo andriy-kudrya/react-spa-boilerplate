@@ -34,6 +34,7 @@ function Nav() {
             <ul className='navbar-nav'>
                 <NavLink routeName={routes.LOG_IN} access={access.LOG_IN}>Log In</NavLink>
                 <NavLink routeName={routes.CARDS} access={access.VIEW_CARDS}>Cards</NavLink>
+                <NavLink routeName={routes.DEMO} access={access.DEMO}>Demo</NavLink>
             </ul>
         </nav>
     )

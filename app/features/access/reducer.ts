@@ -10,6 +10,7 @@ export default reducer(
             ({
                 logIn: false,
                 viewCards: true,
+                demo: true,
             })
     ),
 )

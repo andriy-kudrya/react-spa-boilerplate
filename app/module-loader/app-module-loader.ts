@@ -21,6 +21,7 @@ function appModuleLoaderFactory(store: Store<AppState>, services: ServiceFactory
             loadCore,
             loadAuth: memoizeLatestCall(loadAuth),
             loadCards: memoizeLatestCall(loadCards),
+            loadDemo: memoizeLatestCall(loadDemo),
         }
 
     return result
@@ -43,6 +44,17 @@ function appModuleLoaderFactory(store: Store<AppState>, services: ServiceFactory
     function loadCards() {
         return React.lazy(
             () => import(/* webpackChunkName: 'cards' */ './app-modules/cards')
+                .then(_ => _.default(services))
+                .then(_ => {
+                    load(_)
+                    return { default: _.mainView! }
+                })
+        )
+    }
+
+    function loadDemo() {
+        return React.lazy(
+            () => import(/* webpackChunkName: 'cards' */ './app-modules/demo')
                 .then(_ => _.default(services))
                 .then(_ => {
                     load(_)
