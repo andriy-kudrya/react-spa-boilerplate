@@ -54,7 +54,7 @@ function appModuleLoaderFactory(store: Store<AppState>, services: ServiceFactory
 
     function loadDemo() {
         return React.lazy(
-            () => import(/* webpackChunkName: 'cards' */ './app-modules/demo')
+            () => import(/* webpackChunkName: 'demo' */ './app-modules/demo')
                 .then(_ => _.default(services))
                 .then(_ => {
                     load(_)
