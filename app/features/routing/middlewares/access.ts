@@ -10,7 +10,7 @@ const accessMw: Middleware = (store, toState) => {
 
     return Promise.reject({
         redirect: { name: defaultRoute(access) },
-        message: 'Access denied'
+        message: 'Access denied',
     })
 }
 
