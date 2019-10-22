@@ -9,7 +9,7 @@ function useRouter() {
         , [, setState] = useState({})
 
     useEffect(
-        () => router.subscribe(_ => setState({})),
+        () => router.subscribe(setState),
         [router]
     )
 
