@@ -3,11 +3,17 @@ import { ajax, buildUrl, Header, AjaxResponse } from '#/utils/ajax'
 import { assign } from '#/utils/object'
 
 import ApiService from '../api-service'
+import TokenService from '../token-service'
 
-function factory(): ApiService {
+function factory(): ApiService & TokenService {
     return {
         get,
         post,
+        setToken,
+    }
+
+    function setToken(_token: string) {
+        // TODO: let ajax use this token in header to authenticate user
     }
 
     function get<T>(path: string[], query?: object): Promise<T> {

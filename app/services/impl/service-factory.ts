@@ -15,6 +15,9 @@ function createServiceFactory(): ServiceFactory {
         card() {
             return cardService
         },
+        token() {
+            return apiService
+        },
     }
 }
 
