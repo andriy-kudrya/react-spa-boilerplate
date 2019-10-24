@@ -3,7 +3,7 @@ import '#/styles/main.sass'
 import * as React from 'react'
 import { render } from 'react-dom'
 
-import { Provider } from 'react-redux'
+import ReduxContext from '#/utils/redux/context'
 
 import { RouterProvider } from '#/utils/router'
 import Shell from '#/features/shell/shell'
@@ -17,9 +17,9 @@ router.start()
 render(
     <AppModuleLoaderContext.Provider value={appModuleLoader}>
         <RouterProvider value={router}>
-            <Provider store={store}>
+            <ReduxContext.Provider value={store}>
                 <Shell />
-            </Provider>
+            </ReduxContext.Provider>
         </RouterProvider>
     </AppModuleLoaderContext.Provider>,
     document.getElementById('app')
