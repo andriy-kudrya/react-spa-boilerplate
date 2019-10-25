@@ -17,13 +17,6 @@ function assignFallback(target: any, ...sources: any[]): any {
 
 const assign: typeof assignFallback = (Object as any).assign || assignFallback
 
-/**
- * Overwrites and adds fields to Target from Augmentation
- * and removes specific fields from Drop
- */
-type Redefine<Target extends object, Augmentation extends object, Drop extends keyof Target = never> =
-    Augmentation & Pick<Target, Exclude<keyof Target, keyof Augmentation | Drop>>
-
 function omit<T extends object, F extends keyof T>(target: T, ...fields: F[]): Omit<T, F> {
     const result = assign({}, target)
     fields.forEach(_ => delete result[_])
@@ -40,4 +33,4 @@ function pick<T, K extends keyof T>(target: T, ...keys: K[]): Pick<T, K> {
     return result
 }
 
-export { assign, shallowUpdate, pick, omit, Redefine }
+export { assign, shallowUpdate, pick, omit }

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { memo, useRef, useState } from 'react'
-import { omit, Redefine } from '../object'
+import { omit } from '../object'
 
 function testInputTypeSupport(type: string): boolean {
     const invalidValue = 'invalid value'
@@ -29,7 +29,7 @@ interface NewInputProps<Empty> {
     onChange(_: Value<Empty>): void
 }
 
-type InputProps<Empty> = Redefine<React.InputHTMLAttributes<HTMLInputElement>, NewInputProps<Empty>, 'type'>
+type InputProps<Empty> = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'type'> & NewInputProps<Empty>
 
 interface Format {
     <Empty>(value: Value<Empty>, empty: Empty): string
