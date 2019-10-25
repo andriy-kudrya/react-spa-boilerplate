@@ -1,4 +1,4 @@
-import { React, classnames } from '#/facade/react'
+import { React, classes } from '#/facade/react'
 
 interface Props {
     disabled?: boolean
@@ -7,6 +7,6 @@ interface Props {
 }
 
 const Submit = (props: Props) =>
-    <button className={classnames('btn btn-primary', props.className)} type='submit' disabled={props.disabled} children={props.children} />
+    <button className={classes('btn btn-primary', props.className)} type='submit' disabled={props.disabled} children={props.children} />
 
 export default Submit

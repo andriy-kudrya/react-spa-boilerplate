@@ -1,4 +1,4 @@
-import { React, classnames } from '#/facade/react'
+import { React, classes } from '#/facade/react'
 import { useAccess } from '#/facade/hooks'
 import * as routes from '#/constants/routes'
 import * as access from '#/constants/access'
@@ -19,7 +19,7 @@ function NavLink(props: NavLinkProps) {
         return null
 
     return (
-        <li className={classnames('nav-item', { active: router.isActive(props.routeName) })}>
+        <li className={classes('nav-item', router.isActive(props.routeName) && 'active')}>
             <Link className='nav-link' routeName={props.routeName}>
                 {props.children} <span className='sr-only'>(current)</span>
             </Link>
