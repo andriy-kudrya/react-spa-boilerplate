@@ -1,9 +1,9 @@
-import { dropFields } from './object'
+import { omit } from './object'
 
 describe('object utils', function () {
     describe('dropFields', function () {
         it('should drop only specified fields', function () {
-            const result = dropFields(
+            const result = omit(
                 {
                     x: 'x',
                     y: 'y',
@@ -19,7 +19,7 @@ describe('object utils', function () {
         it('must not mutate target', function () {
             const target = { y: 'y' }
 
-            dropFields(target, 'y')
+            omit(target, 'y')
 
             expect(target).toEqual({ y: 'y' })
         })

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Router } from 'router5'
 
-import { dropFields } from '../object'
+import { omit } from '../object'
 
 import { useRouter } from './context'
 
@@ -28,7 +28,7 @@ function handleClick(event: React.MouseEvent<HTMLAnchorElement>, props: Props, r
 function Link(props: Props, ref: React.Ref<HTMLAnchorElement>) {
     const router = useRouter()
         , href = router.buildPath(props.routeName, props.routeParams)
-        , forwardedProps = dropFields(props, 'routeName', 'routeParams', 'onClick')
+        , forwardedProps = omit(props, 'routeName', 'routeParams', 'onClick')
 
     return <a ref={ref} {...forwardedProps} href={href} onClick={_ => handleClick(_, props, router)}/>
 }

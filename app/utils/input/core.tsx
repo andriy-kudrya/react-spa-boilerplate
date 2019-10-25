@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { memo, useRef, useState } from 'react'
-import { dropFields, Redefine } from '../object'
+import { omit, Redefine } from '../object'
 
 function testInputTypeSupport(type: string): boolean {
     const invalidValue = 'invalid value'
@@ -67,7 +67,7 @@ function wrappedInputFactory(inputType: string, formatValue: Format, formatFallb
                 forceUpdate({})
         }
 
-        const forwardedProps = dropFields(props, 'value', 'onChange', 'emptyValue')
+        const forwardedProps = omit(props, 'value', 'onChange', 'emptyValue')
             , inputValue = props.value === lastValue.current
                 ? lastInputValue.current
                 : inputTypeSupported
