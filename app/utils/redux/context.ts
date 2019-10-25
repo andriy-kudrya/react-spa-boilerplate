@@ -1,6 +1,7 @@
 import { Store } from 'redux'
 import * as React from 'react'
-import { useLayoutEffect, useContext, useReducer, useRef, useCallback } from 'react'
+import { useLayoutEffect, useContext, useRef, useCallback } from 'react'
+import { useForceUpdate } from '../react'
 import { Dispatch } from './types'
 
 const Context = React.createContext<Store | undefined>(undefined)
@@ -14,11 +15,9 @@ function useStore<T>(): Store<T> {
     return store
 }
 
-const defaultEqual = <T>(one: T, two: T) => one === two
-    , inc = (x: number) => x + 1
-    , useForceUpdate = () => useReducer<React.Reducer<number, void>>(inc, 0)[1] as () => void
+const strictEqual = <T>(one: T, two: T) => one === two
 
-function useSelector<S, T>(selector: (state: S) => T, equal: (one: T, two: T) => boolean = defaultEqual): T {
+function useSelector<S, T>(selector: (state: S) => T, equal: (one: T, two: T) => boolean = strictEqual): T {
     // Hook states:
     // - initial call
     // - subsequent call due external condition
