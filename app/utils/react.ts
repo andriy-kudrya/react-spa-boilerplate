@@ -5,9 +5,19 @@ const inc = (x: number) => x + 1
 
 type ClassesParam = string | undefined | null | false
 
-const classes = (...params: ClassesParam[]) => params.reduce<string>(
-        (acc, v) => v ? acc.concat(' ', v) : acc,
-        ''
-    )
+const classes = (...params: ClassesParam[]) =>
+        params.reduce<string>(
+            (acc, v) => v ? acc.concat(' ', v) : acc,
+            ''
+        ) || undefined
 
-export { useForceUpdate, classes }
+const cn = (classes: TemplateStringsArray, ...conditions: (boolean | null | undefined)[]) =>
+        classes
+            .reduce(
+                (acc, v, idx) =>
+                    conditions[idx - 1] ? acc + ' ' + v : acc
+            )
+            .replace(/\s{2,}/g, ' ')
+            .trim() || undefined
+
+export { useForceUpdate, classes, cn }
