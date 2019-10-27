@@ -1,105 +1,59 @@
 import SortState from '#/entities/sort-state'
 
-const enum Order { None, Asc, Desc }
-
-interface SortMediator {
-    createSubject(name: string, onOrderChanged: OnOrderChanged): SortSubject
-    removeSubject(subject: SortSubject): void
+interface SortStateManager {
+    subscribe(listener: () => void): () => void
+    flip(name: string): void
+    getState(name: string): { sorted: boolean, ascending: boolean }
 }
 
-interface SortSubjectInternal {
-    readonly name: string
-    setOrder(order: Order): void
-    getOrder(): Order
+interface FieldState {
+    sorted: boolean
+    ascending: boolean
 }
 
-interface SortSubject {
-    flipOrder(): void
-}
+function createSortState(onChange: (state: SortState) => void): SortStateManager {
+    const enum Order { Asc, Desc }
+    type SortedField = { name: string, order: Order }
 
-interface OnRequestOrder {
-    (order: Order): void
-}
-
-interface OnOrderChanged {
-    (sorted: boolean, ascending: boolean): void
-}
-
-function mediatorFactory(onChange: (state: SortState) => void): SortMediator {
-    let subjects: SortSubjectInternal[] = []
+    let listeners: (() => void)[] = []
+      , sortedField: SortedField | undefined
 
     return {
-        createSubject,
-        removeSubject,
+        subscribe,
+        flip,
+        getState,
     }
 
-    function createSubject(name: string, onOrderChanged: OnOrderChanged): SortSubject {
-        const subject = subjectFactory(
-                name,
-                order => handleChangeOrder(subject, order),
-                onOrderChanged,
-            )
+    function subscribe(listener: () => void): () => void {
+        listeners = listeners.concat(listener)
 
-        subjects = subjects.concat(subject)
-        subject.setOrder(Order.None)
-
-        return subject
-    }
-
-    function removeSubject(subject: SortSubject) {
-        subjects = subjects.filter(_ => _ !== subject as any)
-    }
-
-    function handleChangeOrder(eventSubject: SortSubjectInternal, order: Order) {
-        subjects.forEach(
-            _ => _.setOrder(_ === eventSubject ? order : Order.None)
-        )
-
-        fireState()
-    }
-
-    function fireState() {
-        const subject = subjects.filter(_ => _.getOrder() !== Order.None)[0]
-
-        if (!subject) {
-            onChange([])
-            return
+        return () => {
+            listeners = listeners.filter(_ => _ !== listener)
         }
+    }
 
-        const state: SortState = [{
-            name: subject.name,
-            order: subject.getOrder() === Order.Asc ? 'asc' : 'desc',
-        }]
+    function flip(name: string): void {
+        if (sortedField && sortedField.name === name)
+            sortedField = {
+                name,
+                order: sortedField.order === Order.Asc ? Order.Desc : Order.Asc,
+            }
+        else
+            sortedField = { name, order: Order.Asc }
 
-        onChange(state)
+        onChange(sortedField ? [{ name: sortedField.name, order: sortedField.order === Order.Asc ? 'asc' : 'desc' }] : [])
+        notifyListeners()
+    }
+
+    function notifyListeners() {
+        listeners.forEach(_ => _())
+    }
+
+    function getState(name: string): FieldState {
+        return sortedField && sortedField.name === name
+                ? { sorted: true, ascending: sortedField.order === Order.Asc }
+                : { sorted: false, ascending: false }
     }
 }
 
-function subjectFactory(name: string, onRequestOrder: OnRequestOrder, onOrderChanged: OnOrderChanged): SortSubject & SortSubjectInternal {
-    let lastOrder = Order.None
-
-    return {
-        name,
-        setOrder,
-        getOrder,
-
-        flipOrder,
-    }
-
-    function setOrder(order: Order) {
-        if (lastOrder !== order)
-            onOrderChanged(order !== Order.None, order === Order.Asc)
-
-        lastOrder = order
-    }
-
-    function getOrder() {
-        return lastOrder
-    }
-
-    function flipOrder() {
-        onRequestOrder(lastOrder === Order.Asc ? Order.Desc : Order.Asc)
-    }
-}
-
-export { mediatorFactory, SortMediator, SortSubject }
+export { createSortState, SortStateManager, FieldState }

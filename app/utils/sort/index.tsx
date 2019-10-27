@@ -1,11 +1,13 @@
 import * as React from 'react'
-import { useLayoutEffect, useRef, useContext, useState, useCallback } from 'react'
+import { useContext, useState, useCallback } from 'react'
 
 import SortState from '#/entities/sort-state'
 
-import { mediatorFactory, SortMediator, SortSubject } from './sort'
+import useSubscription from '../react/use-subscription'
 
-const Context = React.createContext<SortMediator>(undefined as any)
+import { createSortState, SortStateManager, FieldState } from './sort'
+
+const Context = React.createContext<SortStateManager>(undefined as any)
 
 interface SortContainerProps {
     onChange: (state: SortState) => void
@@ -13,38 +15,28 @@ interface SortContainerProps {
 }
 
 function SortContainer(props: SortContainerProps) {
-    const [mediator] = useState(() => mediatorFactory(props.onChange))
+    const [state] = useState(() => createSortState(props.onChange))
 
-    return <Context.Provider value={mediator} children={props.children}/>
+    return <Context.Provider value={state} children={props.children}/>
 }
 
+const subscribe = (state: SortStateManager, callback: () => void) => state.subscribe(callback)
+    , stateEqual = (one: FieldState, two: FieldState) => one.ascending === two.ascending && one.sorted === two.sorted
+
 function useSort(name: string) {
-    const mediator = useContext(Context)
-        , [sortState, setSortState] = useState({ sorted: false, ascending: false })
-        , subjectRef = useRef<SortSubject>()
-
-    useLayoutEffect(
-        () => {
-            const subject = mediator.createSubject(
-                name,
-                (sorted, ascending) => setSortState({ sorted, ascending })
-            )
-
-            subjectRef.current = subject
-
-            return () => mediator.removeSubject(subject)
-        },
-        [name, mediator]
-    )
-
-    const onClick = useCallback(
-        () => {
-            subjectRef.current!.flipOrder()
-        },
-        []
-    )
+    const state = useContext(Context)
+        , onClick = useCallback(
+            () => state.flip(name),
+            [state, name]
+        )
+        , getSortState = useCallback(
+            (state: SortStateManager) => state.getState(name),
+            [name]
+        )
+        , sortState = useSubscription(state, subscribe, getSortState, stateEqual)
 
     return { onClick, ...sortState }
 }
 
 export { SortContainer, useSort }
+
