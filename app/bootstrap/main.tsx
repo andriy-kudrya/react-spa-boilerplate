@@ -19,7 +19,7 @@ render(
         <ReduxContext.Provider value={store}>
             <AppModuleLoaderContext.Provider value={appModuleLoader}>
                 <RouterProvider value={router}>
-                            <Shell />
+                    <Shell />
                 </RouterProvider>
             </AppModuleLoaderContext.Provider>
         </ReduxContext.Provider>
