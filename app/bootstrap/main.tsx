@@ -15,12 +15,14 @@ import store, { appModuleLoader } from './store'
 router.start()
 
 render(
-    <AppModuleLoaderContext.Provider value={appModuleLoader}>
-        <RouterProvider value={router}>
-            <ReduxContext.Provider value={store}>
-                <Shell />
-            </ReduxContext.Provider>
-        </RouterProvider>
-    </AppModuleLoaderContext.Provider>,
+    <React.StrictMode>
+        <AppModuleLoaderContext.Provider value={appModuleLoader}>
+            <RouterProvider value={router}>
+                <ReduxContext.Provider value={store}>
+                        <Shell />
+                </ReduxContext.Provider>
+            </RouterProvider>
+        </AppModuleLoaderContext.Provider>
+    </React.StrictMode>,
     document.getElementById('app')
 )

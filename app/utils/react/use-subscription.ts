@@ -1,71 +1,96 @@
-import { useLayoutEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef } from 'react'
 import useForceUpdate from './use-force-update'
 
 const strictEqual = <T>(one: T, two: T) => one === two
 
+/**
+ * Tracks changes to subscribed value
+ * Something in-between of:
+ * - https://github.com/facebook/react/blob/master/packages/use-subscription/src/useSubscription.js
+ * - https://github.com/reduxjs/react-redux/blob/2eac86163be2bd5627dab3e33e8b4e0926895442/src/hooks/useSelector.js
+ * @param subject
+ * @param getCurrentValue
+ * @param subscribe
+ * @param equal
+ */
 function useSubscription<S, T>(
     subject: S,
-    getCurrentValue: (subject: S) => T,
     subscribe: (subject: S, callback: () => void) => () => void,
-    equal: (one: T, two: T) => boolean = strictEqual
-): T {
-    // Hook states:
-    // - initial call
-    // - subsequent call due internal/external condition (e.g. setState call in render or parent component render)
-    // - subsequent call due subject update
+    getCurrentValue: (subject: S) => T,
+    equal?: (one: any, two: any) => boolean,
+): T
+function useSubscription<S, T, M = T>(
+    subject: S,
+    subscribe: (subject: S, callback: () => void) => () => void,
+    getCurrentValue: (subject: S) => T,
+    equal?: (one: any, two: any) => boolean,
+    mapValue?: (value: T) => M
+): M
+function useSubscription<S, T, M = T>(
+    subject: S,
+    subscribe: (subject: S, callback: () => void) => () => void,
+    getCurrentValue: (subject: S) => T,
+    equal: (one: any, two: any) => boolean = strictEqual,
+    mapValue?: (value: T) => M
+): M {
+    type State = {
+        currentValue: T | M
+        getCurrentValue: typeof getCurrentValue
+        mapValue: typeof mapValue
+        equal: typeof equal
+    }
 
     const forceUpdate = useForceUpdate()
-        , currentValueRef = useRef<T>()
-        , getCurrentValueRef = useRef<typeof getCurrentValue>()
-        , subscribeRef = useRef<typeof subscribe>()
-        , equalRef = useRef<typeof equal>()
+        , stateRef = useRef<State>()
+        , state = stateRef.current
+        , uncommittedValue = state && state.getCurrentValue === getCurrentValue && state.mapValue === mapValue
+            ? state.currentValue
+            : mapValue
+                ? mapValue(getCurrentValue(subject))
+                : getCurrentValue(subject)
 
-    const state = getCurrentValue === getCurrentValueRef.current
-            ? currentValueRef.current!
-            : getCurrentValue(subject)
-
-    useLayoutEffect(
+    useEffect(
         () => {
-            currentValueRef.current = state
-            getCurrentValueRef.current = getCurrentValue
-            subscribeRef.current = subscribe
-            equalRef.current = equal
+            stateRef.current = {
+                currentValue: uncommittedValue,
+                getCurrentValue,
+                mapValue,
+                equal,
+            }
         }
     )
 
-    const handleChange = useCallback(
-            () => {
-                const nextValue = getCurrentValueRef.current!(subject)
-                if (equalRef.current!(nextValue, currentValueRef.current!))
+    useEffect(
+        () => {
+            let disposed = false
+
+            const handleChange = () => {
+                if (disposed)
                     return
 
-                currentValueRef.current = nextValue
+                const state = stateRef.current!
+                    , nextValue = state.mapValue ? state.mapValue(state.getCurrentValue(subject)) : state.getCurrentValue(subject)
+
+                if (state.equal(nextValue, state.currentValue))
+                    return
+
+                state.currentValue = nextValue
                 forceUpdate()
-            },
-            // no need to include 'update' function because it is dispatch from useReducer, but eslint is complaining
-            [subject, forceUpdate]
-        )
-        , initialUnsubscribe = useRef<(() => void) | boolean>(false)
-
-    if (!initialUnsubscribe.current)
-        initialUnsubscribe.current = subscribe(subject, handleChange)
-
-    useLayoutEffect(
-        () => {
-            const initialSubscription = initialUnsubscribe.current
-
-            if (typeof initialSubscription === 'function') {
-                initialUnsubscribe.current = true
-                return initialSubscription
             }
 
-            return subscribeRef.current!(subject, handleChange)
+            handleChange()
+
+            const dispose = subscribe(subject, handleChange)
+            return () => {
+                disposed = true
+                dispose()
+            }
         },
-        // no need to include 'subject' dependency because handleChange will be updated anyway when subject is changed, but eslint is complaining
-        [handleChange, subject]
+        // no need to include 'forceUpdate' dependency but eslint is complaining
+        [subject, subscribe, forceUpdate]
     )
 
-    return state
+    return uncommittedValue as any
 }
 
 export default useSubscription
