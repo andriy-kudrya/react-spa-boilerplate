@@ -16,13 +16,13 @@ router.start()
 
 render(
     <React.StrictMode>
-        <AppModuleLoaderContext.Provider value={appModuleLoader}>
-            <RouterProvider value={router}>
-                <ReduxContext.Provider value={store}>
-                        <Shell />
-                </ReduxContext.Provider>
-            </RouterProvider>
-        </AppModuleLoaderContext.Provider>
+        <ReduxContext.Provider value={store}>
+            <AppModuleLoaderContext.Provider value={appModuleLoader}>
+                <RouterProvider value={router}>
+                            <Shell />
+                </RouterProvider>
+            </AppModuleLoaderContext.Provider>
+        </ReduxContext.Provider>
     </React.StrictMode>,
     document.getElementById('app')
 )
