@@ -1,5 +1,5 @@
 import * as React from 'react'
 export { React }
 
-export { classes, cn } from '#/utils/react/react'
+export { default as cn } from '#/utils/react/cn'
 export { compose } from '#/utils/redux/compose'
