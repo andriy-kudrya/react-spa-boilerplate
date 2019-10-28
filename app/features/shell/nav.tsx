@@ -14,14 +14,15 @@ interface NavLinkProps {
 function NavLink(props: NavLinkProps) {
     const router = useRouter()
         , access = useAccess(props.access)
+        , active = router.isActive(props.routeName)
 
     if (!access)
         return null
 
     return (
-        <li className={cn`nav-item ${router.isActive(props.routeName)}active`}>
+        <li className={cn`nav-item ${active}active`}>
             <Link className='nav-link' routeName={props.routeName}>
-                {props.children} <span className='sr-only'>(current)</span>
+                {props.children} {active && <span className='sr-only'>(current)</span>}
             </Link>
         </li>
     )
