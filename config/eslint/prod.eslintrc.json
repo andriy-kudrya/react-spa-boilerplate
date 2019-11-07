@@ -61,7 +61,9 @@
         // }],
 
         "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn",
+        "react-hooks/exhaustive-deps": ["warn", {
+            "additionalHooks": "^use.*Dep$"
+        }],
 
         // Stylistic Issues
         "@typescript-eslint/type-annotation-spacing": ["warn"],
@@ -72,7 +74,13 @@
         "block-spacing": ["warn"],
         "brace-style": "off",
         "@typescript-eslint/brace-style": ["warn", "stroustrup", { "allowSingleLine": true }],
-        "comma-dangle": ["warn", "always-multiline"],
+        "comma-dangle": ["warn", {
+            "arrays": "always-multiline",
+            "objects": "always-multiline",
+            "imports": "always-multiline",
+            "exports": "always-multiline",
+            "functions": "only-multiline"
+        }],
         "comma-spacing": ["warn"],
         "comma-style": ["warn", "first", {
             "exceptions": {
