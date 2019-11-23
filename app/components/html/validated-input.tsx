@@ -2,7 +2,6 @@ import { React } from '#/facade/react'
 import { useRef } from '#/facade/hooks'
 import { omit } from '#/utils/object'
 
-// type Value = React.InputHTMLAttributes<HTMLInputElement>['value'] | ValidityState
 type ValidatedValue = string | ValidityState
 
 interface Props extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'> {
