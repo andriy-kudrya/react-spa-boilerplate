@@ -18,7 +18,7 @@ function prependZero(value: number, expectedSize: number): string {
     return result
 }
 
-const EMPTY_VALUE = '' as const
+const EMPTY_VALUE = ''
 
 type NumericValue = number | ''
 
@@ -34,6 +34,10 @@ function wrappedInputFactory(inputType: string, formatValue: Format, formatFallb
     const inputTypeSupported = testInputTypeSupport(inputType)
         , format = inputTypeSupported ? formatValue : formatFallbackValue
         , parse = inputTypeSupported ? parseValue : parseFallbackValue
+        , initialLastValue = {
+            input: EMPTY_VALUE as string,
+            parsed: parse(EMPTY_VALUE),
+        } as const
 
     interface NewInputProps {
         value: NumericValue
@@ -43,31 +47,30 @@ function wrappedInputFactory(inputType: string, formatValue: Format, formatFallb
     type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'type'> & NewInputProps
 
     function WrappedInput(props: InputProps, ref: React.Ref<HTMLInputElement>) {
-        const formattedValue = format(props.value)
-            , lastInputValue = useRef(formattedValue)
-            , lastValue = useRef<NumericValue | undefined>(props.value)
+        const lastValue = useRef(initialLastValue)
             , forceUpdate = useForceUpdate()
 
         function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
-            const inputValue = event.target.value
-                , number = parse(inputValue)
+            const value = {
+                    input: event.target.value,
+                    parsed: parse(event.target.value),
+                }
 
-            lastInputValue.current = inputValue
-            lastValue.current = number
+            lastValue.current = value
 
             // todo: do not dispatch update when inputTypeSupported === false and empty value doesn't changed
-            props.onChange(number)
+            props.onChange(value.parsed)
 
-            if (!inputTypeSupported && number === EMPTY_VALUE)
+            if (!inputTypeSupported && value.parsed === EMPTY_VALUE)
                 forceUpdate()
         }
 
         const forwardedProps = omit(props, 'value', 'onChange')
-            , inputValue = props.value === lastValue.current
-                ? lastInputValue.current
-                : formattedValue
+            , inputValue = props.value === lastValue.current.parsed
+                ? lastValue.current.input
+                : format(props.value)
 
-        return <input ref={ref} {...forwardedProps} value={inputValue} onChange={handleChange} type={inputType} />
+        return <input {...forwardedProps} ref={ref} value={inputValue} onChange={handleChange} type={inputType} />
     }
 
     return memo(forwardRef(WrappedInput))
