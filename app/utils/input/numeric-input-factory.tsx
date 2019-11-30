@@ -61,7 +61,7 @@ function wrappedInputFactory(inputType: string, formatValue: Format, formatFallb
             // todo: do not dispatch update when inputTypeSupported === false and empty value doesn't changed
             props.onChange(value.parsed)
 
-            if (!inputTypeSupported && value.parsed === EMPTY_VALUE)
+            if (!inputTypeSupported)
                 forceUpdate()
         }
 

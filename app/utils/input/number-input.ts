@@ -5,7 +5,7 @@ function formatValue(value: NumericValue) {
 }
 
 function parseValue(value: string): NumericValue {
-    const parsedValue = parseFloat(value)
+    const parsedValue = Number(value)
 
     return isNaN(parsedValue) ? EMPTY_VALUE : parsedValue
 }
