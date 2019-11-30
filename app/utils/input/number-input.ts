@@ -1,4 +1,4 @@
-import wrappedInputFactory, { Value } from './core'
+import wrappedInputFactory, { Value } from './numeric-input-factory'
 
 function formatValue<Empty>(value: Value<Empty>, empty: Empty) {
     return value === empty ? '' : (value as number).toString()

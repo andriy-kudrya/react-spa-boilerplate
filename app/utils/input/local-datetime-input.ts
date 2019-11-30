@@ -1,4 +1,4 @@
-import wrappedInputFactory, { Value, prependZero } from './core'
+import wrappedInputFactory, { Value, prependZero } from './numeric-input-factory'
 
 function formatValue<Empty>(value: Value<Empty>, empty: Empty): string {
     if (value === empty)
