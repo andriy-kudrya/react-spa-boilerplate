@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { memo, useRef, useState } from 'react'
+import { memo, useRef } from 'react'
+import useForceUpdate from '../react/use-force-update'
 import { omit } from '../object'
 
 function testInputTypeSupport(type: string): boolean {
@@ -17,14 +18,16 @@ function prependZero(value: number, expectedSize: number): string {
     return result
 }
 
-type Value<Empty> = number | Empty
+const EMPTY_VALUE = '' as const
+
+type NumericValue = number | ''
 
 interface Format {
-    <Empty>(value: Value<Empty>, empty: Empty): string
+    (value: NumericValue): string
 }
 
 interface Parse {
-    <Empty>(value: string, empty: Empty): number | Empty
+    (value: string): NumericValue
 }
 
 function wrappedInputFactory(inputType: string, formatValue: Format, formatFallbackValue: Format, parseValue: Parse, parseFallbackValue: Parse) {
@@ -32,35 +35,34 @@ function wrappedInputFactory(inputType: string, formatValue: Format, formatFallb
         , format = inputTypeSupported ? formatValue : formatFallbackValue
         , parse = inputTypeSupported ? parseValue : parseFallbackValue
 
-    interface NewInputProps<Empty> {
-        value: Value<Empty>
-        emptyValue?: Empty
-        onChange(_: Value<Empty>): void
+    interface NewInputProps {
+        value: NumericValue
+        onChange(_: NumericValue): void
     }
 
-    type InputProps<Empty> = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'type'> & NewInputProps<Empty>
+    type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'type'> & NewInputProps
 
-    function WrappedInput<Empty>(props: InputProps<Empty>) {
-        const formattedValue = format(props.value, props.emptyValue)
+    function WrappedInput(props: InputProps) {
+        const formattedValue = format(props.value)
             , lastInputValue = useRef(formattedValue)
-            , lastValue = useRef<Value<Empty> | undefined>(props.value)
-            , [, forceUpdate] = useState({})
+            , lastValue = useRef<NumericValue | undefined>(props.value)
+            , forceUpdate = useForceUpdate()
 
         function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
             const inputValue = event.target.value
-                , number = parse(inputValue, props.emptyValue)
+                , number = parse(inputValue)
 
             lastInputValue.current = inputValue
             lastValue.current = number
 
             // todo: do not dispatch update when inputTypeSupported === false and empty value doesn't changed
-            props.onChange(number!)
+            props.onChange(number)
 
-            if (!inputTypeSupported && number === props.emptyValue)
-                forceUpdate({})
+            if (!inputTypeSupported && number === EMPTY_VALUE)
+                forceUpdate()
         }
 
-        const forwardedProps = omit(props, 'value', 'onChange', 'emptyValue')
+        const forwardedProps = omit(props, 'value', 'onChange')
             , inputValue = props.value === lastValue.current
                 ? lastInputValue.current
                 : formattedValue
@@ -72,4 +74,4 @@ function wrappedInputFactory(inputType: string, formatValue: Format, formatFallb
 }
 
 export default wrappedInputFactory
-export { Value, prependZero }
+export { NumericValue, prependZero, EMPTY_VALUE }

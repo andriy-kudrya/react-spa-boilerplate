@@ -1,10 +1,10 @@
-import wrappedInputFactory, { Value, prependZero } from './numeric-input-factory'
+import wrappedInputFactory, { NumericValue, prependZero, EMPTY_VALUE } from './numeric-input-factory'
 
-function formatValue<Empty>(value: Value<Empty>, empty: Empty): string {
-    if (value === empty)
+function formatValue(value: NumericValue): string {
+    if (value === EMPTY_VALUE)
         return ''
 
-    const date = new Date(value as number)
+    const date = new Date(value)
 
     return ''
         + prependZero(date.getFullYear(), 4) + '-'
@@ -14,15 +14,15 @@ function formatValue<Empty>(value: Value<Empty>, empty: Empty): string {
         + prependZero(date.getMinutes(), 2)
 }
 
-function parseValue<Empty>(value: string, empty: Empty): number | Empty {
-    return value === '' ? empty : Date.parse(value)
+function parseValue(value: string): NumericValue {
+    return value === '' ? EMPTY_VALUE : Date.parse(value)
 }
 
-function formatFallbackValue<Empty>(value: Value<Empty>, empty: Empty): string {
-    if (value === empty)
+function formatFallbackValue(value: NumericValue): string {
+    if (value === EMPTY_VALUE)
         return ''
 
-    const date = new Date(value as number)
+    const date = new Date(value)
 
     return ''
         + prependZero(date.getDate(), 2) + '.'
@@ -32,12 +32,12 @@ function formatFallbackValue<Empty>(value: Value<Empty>, empty: Empty): string {
         + prependZero(date.getMinutes(), 2)
 }
 
-function parseFallbackValue<Empty>(value: string, empty: Empty): number | Empty {
+function parseFallbackValue(value: string): NumericValue {
     const dateRegex = /(\d\d)\.(\d\d)\.(\d\d\d\d) (\d\d):(\d\d)/g
         , execResult = dateRegex.exec(value)
 
     if (execResult === null)
-        return empty
+        return EMPTY_VALUE
 
     const date = new Date(
         parseInt(execResult[3], 10),
@@ -47,7 +47,7 @@ function parseFallbackValue<Empty>(value: string, empty: Empty): number | Empty 
         parseInt(execResult[5], 10)
     ).getTime()
 
-    return formatFallbackValue(date, empty) !== value ? empty : date
+    return formatFallbackValue(date) !== value ? EMPTY_VALUE : date
 }
 
 const LocalDateTimeInput = wrappedInputFactory(

@@ -16,7 +16,7 @@ const NumberField = (props: InputFieldProps) => {
         return (
             <div>
                 <label htmlFor={props.id} children={props.children}/>
-                <NumberInput id={props.id} emptyValue='' {...field.input}/>
+                <NumberInput id={props.id} {...field.input}/>
                 {showFieldError(field.meta) && <span>{field.meta.error}</span>}
             </div>
         )

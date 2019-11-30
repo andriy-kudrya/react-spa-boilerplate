@@ -1,13 +1,13 @@
-import wrappedInputFactory, { Value } from './numeric-input-factory'
+import wrappedInputFactory, { NumericValue, EMPTY_VALUE } from './numeric-input-factory'
 
-function formatValue<Empty>(value: Value<Empty>, empty: Empty) {
-    return value === empty ? '' : (value as number).toString()
+function formatValue(value: NumericValue) {
+    return value === EMPTY_VALUE ? '' : value.toString()
 }
 
-function parseValue<Empty>(value: string, empty: Empty): number | Empty {
+function parseValue(value: string): NumericValue {
     const parsedValue = parseFloat(value)
 
-    return isNaN(parsedValue) ? empty : parsedValue
+    return isNaN(parsedValue) ? EMPTY_VALUE : parsedValue
 }
 
 const NumberInput = wrappedInputFactory(

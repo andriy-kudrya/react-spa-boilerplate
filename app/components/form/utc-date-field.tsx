@@ -16,7 +16,7 @@ const UtcDateField = (props: InputFieldProps) => {
     return (
         <div>
             <label htmlFor={props.id} children={props.children}/>
-            <DateInput id={props.id} emptyValue='' {...field.input}/>
+            <DateInput id={props.id} {...field.input}/>
             {showFieldError(field.meta) && <span>{field.meta.error}</span>}
         </div>
     )
