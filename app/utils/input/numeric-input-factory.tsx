@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { memo, useRef } from 'react'
+import { memo, forwardRef, useRef } from 'react'
 import useForceUpdate from '../react/use-force-update'
 import { omit } from '../object'
 
@@ -42,7 +42,7 @@ function wrappedInputFactory(inputType: string, formatValue: Format, formatFallb
 
     type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'type'> & NewInputProps
 
-    function WrappedInput(props: InputProps) {
+    function WrappedInput(props: InputProps, ref: React.Ref<HTMLInputElement>) {
         const formattedValue = format(props.value)
             , lastInputValue = useRef(formattedValue)
             , lastValue = useRef<NumericValue | undefined>(props.value)
@@ -67,10 +67,10 @@ function wrappedInputFactory(inputType: string, formatValue: Format, formatFallb
                 ? lastInputValue.current
                 : formattedValue
 
-        return <input {...forwardedProps} value={inputValue} onChange={handleChange} type={inputType} />
+        return <input ref={ref} {...forwardedProps} value={inputValue} onChange={handleChange} type={inputType} />
     }
 
-    return memo(WrappedInput)
+    return memo(forwardRef(WrappedInput))
 }
 
 export default wrappedInputFactory
