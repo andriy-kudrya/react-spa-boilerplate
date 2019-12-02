@@ -6,6 +6,7 @@ interface Props {
     top: number
     left: number
     children?: React.ReactNode
+    containerRef?: React.Ref<HTMLDivElement>
 }
 
 function useOverlayRoot() {
@@ -39,6 +40,7 @@ function Overlay(props: Props) {
 
     return createPortal(
         <div
+            ref={props.containerRef}
             style={{ top: props.top, left: props.left }}
             className='overlay-container'
             data-testid='overlay'

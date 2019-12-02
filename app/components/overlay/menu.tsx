@@ -5,6 +5,7 @@ import Overlay from './overlay'
 interface Props {
     element: HTMLElement | null
     children?: React.ReactNode
+    containerRef?: React.Ref<HTMLDivElement>
 }
 
 function Menu(props: Props) {
@@ -31,7 +32,7 @@ function Menu(props: Props) {
         return null
 
     return (
-        <Overlay {...position}>
+        <Overlay {...position} containerRef={props.containerRef}>
             {props.children}
         </Overlay>
     )
