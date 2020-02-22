@@ -8,7 +8,12 @@ const scssRule = {
         test: /\.(scss|sass)$/,
         use: [
             // params.debug ? { loader: 'style-loader' } : MiniCssExtractPlugin.loader,
-            MiniCssExtractPlugin.loader,
+            {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                    esModule: true,
+                },
+            },
             {
                 loader: 'css-loader',
                 options: {
