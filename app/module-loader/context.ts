@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { AppModuleLoader } from './types'
+import type { AppModuleLoader } from './types'
 
 const AppModuleLoaderContext = createContext<AppModuleLoader>(undefined as any)
 

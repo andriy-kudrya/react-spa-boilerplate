@@ -1,4 +1,4 @@
-import * as access from '#/constants/access'
+import type * as access from '#/constants/access'
 
 type Access = {
     [_ in access.Access]: boolean

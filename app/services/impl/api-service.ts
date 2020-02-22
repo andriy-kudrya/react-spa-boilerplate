@@ -2,8 +2,8 @@ import config from '#/constants/config'
 import { ajax, buildUrl, Header, AjaxResponse } from '#/utils/ajax'
 import { assign } from '#/utils/object'
 
-import ApiService from '../api-service'
-import TokenService from '../token-service'
+import type ApiService from '../api-service'
+import type TokenService from '../token-service'
 
 function factory(): ApiService & TokenService {
     return {

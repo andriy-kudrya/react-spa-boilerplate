@@ -1,4 +1,4 @@
-import { Middleware } from 'redux'
+import type { Middleware } from 'redux'
 
 const log: Middleware = _api => next => action => {
     const result = next(action)

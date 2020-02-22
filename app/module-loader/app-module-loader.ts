@@ -1,13 +1,13 @@
 import { Store, combineReducers, ReducersMapObject } from 'redux'
 import { React } from '#/facade/react'
-import AppState from '#/entities/app-state'
-import ServiceFactory from '#/services/service-factory'
+import type AppState from '#/entities/app-state'
+import type ServiceFactory from '#/services/service-factory'
 import { assign } from '#/utils/object'
 import { memoizeLatestCall } from '#/utils/function'
 import errors from '#/features/error/reducer'
 import access from '#/features/access/reducer'
 
-import { AppModule } from './types'
+import type { AppModule } from './types'
 import { registerMiddleware } from './dynamic-middleware'
 import coreModuleFactory from './app-modules/core'
 

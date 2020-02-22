@@ -1,7 +1,7 @@
 import { compose } from 'redux'
 import { useCallback } from 'react'
-import { Func } from '../function'
-import { HasActionType } from './types'
+import type { Func } from '../function'
+import type { HasActionType } from './types'
 import { useDispatch } from './context'
 
 type ActionCreator<T extends any[] = any[], R = any> = Func<T, HasActionType<any, R>>

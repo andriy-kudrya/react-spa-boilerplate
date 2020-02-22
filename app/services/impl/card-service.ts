@@ -1,7 +1,7 @@
-import { Cards, Game } from '#/entities/card'
+import type { Cards, Game } from '#/entities/card'
 
-import CardService from '../card-service'
-import ApiService from '../api-service'
+import type CardService from '../card-service'
+import type ApiService from '../api-service'
 
 function factory(api: ApiService): CardService {
     return {

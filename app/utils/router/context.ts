@@ -1,4 +1,4 @@
-import { Router } from 'router5'
+import type { Router } from 'router5'
 import { createContext, useContext, useLayoutEffect } from 'react'
 import useForceUpdate from '../react/use-force-update'
 

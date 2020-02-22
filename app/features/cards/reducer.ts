@@ -1,5 +1,5 @@
-import { Game } from '#/entities/card'
-import SortState from '#/entities/sort-state'
+import type { Game } from '#/entities/card'
+import type SortState from '#/entities/sort-state'
 import { reducer, handler } from '#/utils/redux/reducer'
 import { shallowUpdate } from '#/utils/object'
 import * as actions from './actions'

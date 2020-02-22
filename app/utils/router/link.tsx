@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Router } from 'router5'
+import type { Router } from 'router5'
 
 import { omit } from '../object'
 

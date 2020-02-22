@@ -1,4 +1,4 @@
-import Access from '#/entities/access'
+import type Access from '#/entities/access'
 
 const defaultState: Access = {
     logIn: true,

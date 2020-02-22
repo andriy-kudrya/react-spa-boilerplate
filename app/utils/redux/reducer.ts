@@ -1,8 +1,8 @@
-import { Reducer } from 'redux'
+import type { Reducer } from 'redux'
 
 import createHash from './hash'
 
-import { ActionType, HasActionType, Action, NoInfer } from './types'
+import type { ActionType, HasActionType, Action, NoInfer } from './types'
 import { isPayloadAction } from './action'
 
 // TODO: type inference doesn't work for ActionType<void> when creating reducer with *reducer* factory below

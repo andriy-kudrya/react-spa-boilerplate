@@ -1,4 +1,4 @@
-import { Cards } from '#/entities/app-state'
+import type { Cards } from '#/entities/app-state'
 
 const defaultState: Cards = {
     games: [],

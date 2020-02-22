@@ -3,7 +3,7 @@ import { Form } from 'react-final-form'
 import { React } from '#/facade/react'
 import { TextField, PasswordField, Submit, submitDisabled } from '#/components/form'
 import validate from './auth-form-validate'
-import { Credentials } from '#/entities/auth'
+import type { Credentials } from '#/entities/auth'
 
 interface OwnProps {
     onSubmit: (_: Credentials) => Promise<void>

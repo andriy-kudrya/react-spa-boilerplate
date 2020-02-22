@@ -1,5 +1,5 @@
 import * as redux from 'redux'
-import AppState from '#/entities/app-state'
+import type AppState from '#/entities/app-state'
 import { creatorFactory } from '#/utils/redux/action'
 import { noop } from '#/utils/function'
 import effectsMiddlewareFactory, { EffectsFactory, handler } from '#/utils/redux/effect'

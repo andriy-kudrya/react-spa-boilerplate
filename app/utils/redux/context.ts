@@ -1,8 +1,8 @@
-import { Store, AnyAction } from 'redux'
+import type { Store, AnyAction } from 'redux'
 import * as React from 'react'
 import { useContext } from 'react'
 import useSubscription from '../react/use-subscription'
-import { Dispatch } from './types'
+import type { Dispatch } from './types'
 
 const Context = React.createContext<Store | undefined>(undefined)
 

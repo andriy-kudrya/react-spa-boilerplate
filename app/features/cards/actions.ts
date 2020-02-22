@@ -1,7 +1,7 @@
 import { creatorFactory } from '#/utils/redux'
-import { Game } from '#/entities/card'
-import SortState from '#/entities/sort-state'
-import PaginationState from '#/entities/pagination-state'
+import type { Game } from '#/entities/card'
+import type SortState from '#/entities/sort-state'
+import type PaginationState from '#/entities/pagination-state'
 
 const creator = creatorFactory('app.cards')
 

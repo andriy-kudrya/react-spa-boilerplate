@@ -1,6 +1,6 @@
-import AuthService from './auth-service'
-import CardService from './card-service'
-import TokenService from './token-service'
+import type AuthService from './auth-service'
+import type CardService from './card-service'
+import type TokenService from './token-service'
 
 interface ServiceFactory {
     auth(): AuthService

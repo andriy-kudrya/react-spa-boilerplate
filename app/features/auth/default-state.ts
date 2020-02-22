@@ -1,4 +1,4 @@
-import { Auth } from '#/entities/app-state'
+import type { Auth } from '#/entities/app-state'
 
 const defaultState: Auth = {
     id: '',

@@ -1,4 +1,4 @@
-import { ActionType, HasActionType, Dispatch, Middleware, NoInfer } from './types'
+import type { ActionType, HasActionType, Dispatch, Middleware, NoInfer } from './types'
 import { isPayloadAction } from './action'
 
 import createHash from './hash'

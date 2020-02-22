@@ -1,9 +1,9 @@
-import { RouterState } from 'redux-router5'
-import { Game } from '#/entities/card'
-import { Auth } from '#/entities/auth'
-import Access from '#/entities/access'
-import AppError from '#/entities/app-error'
-import PaginationState from '#/entities/pagination-state'
+import type { RouterState } from 'redux-router5'
+import type { Game } from '#/entities/card'
+import type { Auth } from '#/entities/auth'
+import type Access from '#/entities/access'
+import type AppError from '#/entities/app-error'
+import type PaginationState from '#/entities/pagination-state'
 
 interface Cards {
     games: Game[]

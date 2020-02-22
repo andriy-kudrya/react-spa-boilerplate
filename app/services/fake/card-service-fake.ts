@@ -1,4 +1,4 @@
-import CardService from '../card-service'
+import type CardService from '../card-service'
 import { delay } from '#/utils/timeout'
 
 function factory(): CardService {

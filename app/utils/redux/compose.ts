@@ -1,4 +1,4 @@
-import { Dispatch as CustomDispatch, NoPayloadAction, PayloadAction } from './types'
+import type { Dispatch as CustomDispatch, NoPayloadAction, PayloadAction } from './types'
 
 export { compose } from 'redux'
 

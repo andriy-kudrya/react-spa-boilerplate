@@ -1,5 +1,5 @@
 import { hasAccess, defaultRoute } from '../helpers'
-import Middleware from './interface'
+import type Middleware from './interface'
 
 const accessMw: Middleware = (store, toState) => {
     const access = store.getState().access

@@ -1,4 +1,4 @@
-import { Route } from 'router5'
+import type { Route } from 'router5'
 
 import * as routeNames from '#/constants/routes'
 import * as access from '#/constants/access'

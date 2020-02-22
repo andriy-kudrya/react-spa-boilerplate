@@ -1,6 +1,6 @@
 import { React } from '#/facade/react'
 
-import PaginationState from '#/entities/pagination-state'
+import type PaginationState from '#/entities/pagination-state'
 import { shallowUpdate } from '#/utils/object'
 
 import { Page } from './components'

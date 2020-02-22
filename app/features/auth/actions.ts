@@ -1,6 +1,6 @@
 import { creatorFactory } from '#/utils/redux'
-import { Credentials } from '#/entities/auth'
-import { Auth } from '#/entities/app-state'
+import type { Credentials } from '#/entities/auth'
+import type { Auth } from '#/entities/app-state'
 
 const creator = creatorFactory('app.auth')
 

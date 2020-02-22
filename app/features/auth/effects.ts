@@ -1,7 +1,7 @@
 import { actions as routerActions } from 'redux-router5'
 
-import AuthService from '#/services/auth-service'
-import TokenService from '#/services/token-service'
+import type AuthService from '#/services/auth-service'
+import type TokenService from '#/services/token-service'
 import { handler, EffectsFactory } from '#/facade/effect'
 
 import { defaultRoute } from '#/features/routing/helpers'

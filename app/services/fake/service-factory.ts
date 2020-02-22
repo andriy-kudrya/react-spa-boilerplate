@@ -1,4 +1,4 @@
-import ServiceFactory from '../service-factory'
+import type ServiceFactory from '../service-factory'
 import authServiceFactory from './auth-service-fake'
 import cardServiceFactory from './card-service-fake'
 

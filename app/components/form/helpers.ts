@@ -1,4 +1,4 @@
-import { FormRenderProps, FieldRenderProps } from 'react-final-form'
+import type { FormRenderProps, FieldRenderProps } from 'react-final-form'
 import { getIn } from 'final-form'
 
 function showFieldError(meta: FieldRenderProps<unknown, HTMLElement>['meta']): boolean {

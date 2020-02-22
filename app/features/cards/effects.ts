@@ -1,4 +1,4 @@
-import CardService from '#/services/card-service'
+import type CardService from '#/services/card-service'
 import { handler, EffectsFactory } from '#/facade/effect'
 
 import * as actions from './actions'

@@ -1,10 +1,10 @@
-import ServiceFactory from '#/services/service-factory'
+import type ServiceFactory from '#/services/service-factory'
 import effectMwFactory  from '#/utils/redux/effect'
 
 import auth from '#/features/auth/reducer'
 import authEffectFactory from '#/features/auth/effects'
 
-import { AppModule } from '../types'
+import type { AppModule } from '../types'
 
 function appModuleFactory(services: ServiceFactory): AppModule {
     const middlewares = [

@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, combineReducers, ReducersMapObject } from 'redux'
 import { router5Middleware, router5Reducer } from 'redux-router5'
 
-import AppState from '#/entities/app-state'
+import type AppState from '#/entities/app-state'
 
 import logMiddleware from '#/utils/middleware/log'
 import errorMiddleware from '#/features/error/middleware'

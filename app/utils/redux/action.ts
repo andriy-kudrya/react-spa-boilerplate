@@ -1,4 +1,4 @@
-import { ActionType, Action, HasActionType } from './types'
+import type { ActionType, Action, HasActionType } from './types'
 /**
  * By default return type of dispatch function should be action itself but I see no way to declare such recursive type:
  * Action<P,

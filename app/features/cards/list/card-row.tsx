@@ -1,7 +1,7 @@
 import { React } from '#/facade/react'
 import { useMemo } from '#/facade/hooks'
 import { dateFormatter } from '#/utils/format/date'
-import { Game } from '#/entities/card'
+import type { Game } from '#/entities/card'
 
 interface OwnProps {
     game: Game

@@ -1,6 +1,6 @@
-import { Middleware } from '#/utils/redux'
-import AppState from '#/entities/app-state'
-import AppError from '#/entities/app-error'
+import type { Middleware } from '#/utils/redux'
+import type AppState from '#/entities/app-state'
+import type AppError from '#/entities/app-error'
 
 import { addError } from './actions'
 
