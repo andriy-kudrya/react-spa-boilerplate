@@ -40,6 +40,7 @@ const babelLoader = {
         loader: 'babel-loader',
         options: {
             presets: [
+                '@babel/preset-typescript',
                 ['@babel/preset-env', {
                     targets: {
                         browsers: params.debug ? ['last 2 Chrome versions'] : ['last 2 versions', 'not ie < 11'],
@@ -66,21 +67,21 @@ const babelLoader = {
 
 const rules = [
     {
-        test: /\.jsx?$/,
+        test: /\.(?:j|t)sx?$/,
         include: paths.app,
         use: [babelLoader],
     },
-    {
-        test: /\.tsx?$/,
-        include: paths.app,
-        use: [
-            babelLoader,
-            {
-                loader: 'ts-loader',
-                options: { transpileOnly: true },
-            },
-        ],
-    },
+    // {
+    //     test: /\.tsx?$/,
+    //     include: paths.app,
+    //     use: [
+    //         babelLoader,
+    //         {
+    //             loader: 'ts-loader',
+    //             options: { transpileOnly: true },
+    //         },
+    //     ],
+    // },
     {
         enforce: 'pre',
         include: paths.app,
