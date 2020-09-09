@@ -1,9 +1,9 @@
 # React sample application
-This is boilerplate code for single page applications based on React, Redux and TypeScript.
-There I am resolving common problems that I often have to deal with.
+This is a boilerplate code for single-page applications based on React, Redux and TypeScript.
+There I am solving common problems that I often have to deal with.
 
 # Warning
-This project in its current state is still far from to be ready for production usage.
+This project in its current state is still far from being ready for production usage.
 
 # Objectives
 - Consistent action types wherever they are in use
@@ -12,7 +12,7 @@ This project in its current state is still far from to be ready for production u
 - Lightweight common components, like date inputs, sort helpers, etc.
 
 ## Consistent action types
-Straightforward approach to write redux related code is as follows:
+A straightforward approach to write redux related code is as follows:
 ```ts
 const FOO = 'foo'
     , BAR = 'bar'
@@ -35,12 +35,12 @@ function reducer(state: State = defaultState, action: Action): State {
     return state
 }
 ```
-And there is a deep problem. Although TypeScript is in use it doesn't helps much in terms of type safety.
+And there is a deep problem. Although TypeScript is in use it doesn't help much in terms of type safety.
 Any time developer deals with action the burden of asserting proper action shape/type lies on him.
-Taking into account that same action may be used in several places (reducers/middlewares/views) this
-makes TypeScript hardly usable with such approach.
+Taking into account that the same action may be used in several places (reducers/middlewares/views) this
+makes TypeScript hardly usable with such an approach.
 
-Invented solution to this problem is to attach payload type to the action's *type* (that is usually supposed to be a simple string).
+The invented solution to this problem is to attach the payload type to the action's *type* (that is usually supposed to be a simple string).
 Basically this allows to come up with miscellaneous utilities that infer proper types by themselves:
 ```ts
 const FOO: ActionType<number> = 'foo'
@@ -64,14 +64,14 @@ function reducer(state: State = defaultState, action: Action): State {
     return state
 }
 ```
-So in any line of code that deals with actions it is now possible to have consistent inferred action types
-that are defined in single place.
+So in any line of code that deals with actions, it is now possible to have consistent inferred action types
+that are defined in a single place.
 
-That said, I've recently found interesting discussion with alternative approaches in the redux repo
+That said, I've recently found an interesting discussion with alternative approaches in the redux repo
 https://github.com/reduxjs/redux/issues/992
 
 ## Redux utilities
-There are currently just few of them: for reducer and simple side effects.
+There are currently just a few of them: for reducer and simple side effects.
 
 Reducer sample:
 ```ts
@@ -86,7 +86,7 @@ export default reducer(
 ...
 ```
 
-Simple side effects (pretty common case) are handled with simple wrapper around middleware:
+Simple side effects (pretty common case) are handled with a simple wrapper around middleware:
 ```ts
 ...
 const factory = (authService: AuthService): EffectsFactory => dispatch => [
@@ -106,8 +106,8 @@ const factory = (authService: AuthService): EffectsFactory => dispatch => [
 Anything more complex is supposed to use middleware directly (e.g. error handling, synchronization with sessionStorage).
 
 # Error handling
-There is error middleware that handles synchronous and asynchronous errors. In case of asynchronous it expects that other middlewares in chain,
-including effects, return promise that rejects in case of errors. In a more complex case other middleware might need to handle errors by itself.
+There is error middleware that handles synchronous and asynchronous errors. In the case of asynchronous, it expects that other middlewares in a chain,
+including effects, return a promise that rejects in case of errors. In a more complex case, other middleware might need to handle errors by itself.
 
 # Learning curve
 JavaScript basics:
