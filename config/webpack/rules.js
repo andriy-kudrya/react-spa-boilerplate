@@ -29,7 +29,9 @@ const scssRule = {
             {
                 loader: 'postcss-loader',
                 options: {
-                    plugins: () => [autoprefixer],
+                    postcssOptions: {
+                        plugins: [autoprefixer],
+                    }
                 },
             },
             { loader: 'sass-loader' },
@@ -82,22 +84,6 @@ const rules = [
     //         },
     //     ],
     // },
-    {
-        enforce: 'pre',
-        include: paths.app,
-        test: /\.jsx?$/,
-        use: [{
-            loader: 'eslint-loader',
-            options: {
-                configFile: paths.eslintConfigFile,
-                formatter: 'codeframe',
-                emitError: true,
-                failOnError: true,
-                emitWarning: false,
-                failOnWarning: false,
-            },
-        }],
-    },
     scssRule,
 ].filter(_ => _)
 

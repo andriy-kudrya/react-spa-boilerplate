@@ -4,6 +4,7 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import ESLintPlugin from 'eslint-webpack-plugin'
 
 import params from './params'
 import paths from './paths'
@@ -17,12 +18,22 @@ const plugins = [
         // chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
     }),
     new ForkTsCheckerWebpackPlugin({
-        tsconfig: paths.tsconfigFile,
         formatter: 'codeframe',
-        eslint: true,
-        eslintOptions: {
-            configFile: paths.eslintConfigFile,
+        typescript: {
+            configFile: paths.tsconfigFile,
         },
+        // eslint: {
+        //     enabled: true,
+        //     files: './**/*.{ts,tsx}',
+        //     options: {
+        //         overrideConfigFile: paths.eslintConfigFile,
+        //     }
+        // },
+    }),
+    new ESLintPlugin({
+        overrideConfigFile: paths.eslintConfigFile,
+        extensions: ['ts', 'tsx'],
+        formatter: 'codeframe',
     }),
     new webpack.DefinePlugin({
         DEBUG: JSON.stringify(params.debug),

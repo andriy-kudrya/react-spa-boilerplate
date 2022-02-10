@@ -129,18 +129,13 @@
         "semi": "off",
         "@typescript-eslint/semi": ["warn", "never"],
         "semi-spacing": ["warn"],
-        "space-before-function-paren": ["warn", {
-            "named": "never",
-            "anonymous": "always",
-            "asyncArrow ": "always"
-        }],
         "space-in-parens": ["warn"],
         "space-infix-ops": ["warn", {"int32Hint": false}],
         "space-unary-ops": ["warn"],
         "switch-colon-spacing": ["warn"],
         "template-tag-spacing": ["warn"]
     },
-    "plugins": ["@typescript-eslint", "react", "react-hooks"],
+    "plugins": ["@typescript-eslint", "react-hooks"],
     "settings": {
         "react": {
             "version": "detect"
@@ -151,13 +146,7 @@
             {"name": "Link", "linkAttribute": "routeName"}
         ]
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking",
-        "plugin:react/recommended"
-    ],
+    "extends": [],
     "env": {
     	"browser": true,
         "es6": true

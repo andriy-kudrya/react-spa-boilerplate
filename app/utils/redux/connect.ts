@@ -35,6 +35,7 @@ type ActionCreator<T extends any[] = any[], R = any> = Func<T, HasActionType<any
 // same applies to dispatchMapper above
 function useAction<T extends any[], R>(action: ActionCreator<T, R>): Func<T, R> {
     const dispatch = useDispatch()
+        // eslint-disable-next-line
         , composedDispatch = useCallback(compose(dispatch, action), [dispatch, action])
 
     return composedDispatch as any
