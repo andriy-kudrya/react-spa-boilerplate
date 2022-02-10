@@ -31,7 +31,7 @@ const config = {
     devtool: 'source-map',
     devServer,
     optimization: {
-        noEmitOnErrors: true,
+        emitOnErrors: false,
         runtimeChunk: { name: 'manifest' },
         splitChunks: {
             minSize: 0,
@@ -48,4 +48,4 @@ const config = {
     },
 }
 
-export default config
+module.exports = config
