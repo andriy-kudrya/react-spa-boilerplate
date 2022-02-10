@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config ./config/webpack --bail",
-    "dev": "webpack-dev-server --config ./config/webpack --env.debug",
+    "dev": "webpack-dev-server --config ./config/webpack --env debug",
     "serve": "webpack-dev-server --config ./config/webpack --inline=false",
     "test": "jest"
   },
@@ -51,7 +51,7 @@
     "webpack": "^5.68.0",
     "webpack-bundle-analyzer": "^3.6.1",
     "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^4.7.4"
   },
   "dependencies": {
     "bootstrap": "^4.4.1",

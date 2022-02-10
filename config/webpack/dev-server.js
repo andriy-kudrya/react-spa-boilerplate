@@ -1,7 +1,7 @@
 import paths from './paths'
 
 export default {
-    contentBase: paths.output,
+    static: paths.output,
     historyApiFallback: true,
     proxy: {
         '/data': {
