@@ -20,7 +20,7 @@
     "@babel/preset-typescript": "^7.9.0",
     "@babel/runtime": "^7.9.2",
     "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.2",
+    "@testing-library/react": "^13.0.0",
     "@types/jest": "^27.4.0",
     "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.14",
