@@ -1,5 +1,3 @@
-import { React } from '#/facade/react'
-
 import type PaginationState from '#/entities/pagination-state'
 import { shallowUpdate } from '#/utils/object'
 

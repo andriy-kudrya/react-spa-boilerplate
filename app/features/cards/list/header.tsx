@@ -1,4 +1,3 @@
-import { React } from '#/facade/react'
 import { UP_POINTING_TRIANGLE, DOWN_POINTING_TRIANGLE } from '#/constants/characters'
 
 import { useSort } from '#/utils/sort'

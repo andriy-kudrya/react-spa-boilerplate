@@ -1,4 +1,3 @@
-import { React } from '#/facade/react'
 import { useAction, useSelector } from '#/facade/hooks'
 
 import { noop } from '#/utils/function'

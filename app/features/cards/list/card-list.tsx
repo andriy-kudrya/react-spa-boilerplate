@@ -1,4 +1,3 @@
-import { React } from '#/facade/react'
 import { useEffect, useSelector, useAction } from '#/facade/hooks'
 
 import { SortContainer } from '#/utils/sort'
@@ -16,7 +15,12 @@ function CardList() {
         , cardListPageChange = useAction(actions.cardListPageChange)
         , cards = useSelector(_ => _.cards)
 
-    useEffect(() => void loadCardList(), [loadCardList])
+    useEffect(
+        () => {
+            loadCardList()
+        },
+        [loadCardList]
+    )
 
     const { start, count } = cards.pagination
         , games = cards.games.slice(start, start + count)

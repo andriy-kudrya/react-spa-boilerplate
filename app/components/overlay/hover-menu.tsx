@@ -1,4 +1,3 @@
-import { React } from '#/facade/react'
 import { useState, useEffect } from '#/facade/hooks'
 
 import * as dom from '#/utils/dom'

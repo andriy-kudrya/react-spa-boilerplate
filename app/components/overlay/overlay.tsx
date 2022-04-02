@@ -1,4 +1,3 @@
-import { React } from '#/facade/react'
 import { useLayoutEffect, useState } from '#/facade/hooks'
 import { createPortal } from 'react-dom'
 

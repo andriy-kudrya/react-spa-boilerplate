@@ -1,4 +1,4 @@
-import { React, cn } from '#/facade/react'
+import { cn } from '#/facade/react'
 import { useField } from 'react-final-form'
 import { showFieldError } from './helpers'
 

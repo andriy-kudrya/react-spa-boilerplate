@@ -1,6 +1,6 @@
 import type { State as RouterState } from 'router5'
 
-import { React } from '#/facade/react'
+import { Suspense } from 'react'
 import { useContext, useSelector } from '#/facade/hooks'
 import * as routes from '#/constants/routes'
 
@@ -17,9 +17,9 @@ const Shell = () => {
         <div>
             <Nav />
             <Errors />
-            <React.Suspense fallback={'Loading...'}>
+            <Suspense fallback={'Loading...'}>
                 {renderRoute(route, loader)}
-            </React.Suspense>
+            </Suspense>
         </div>
     )
 }

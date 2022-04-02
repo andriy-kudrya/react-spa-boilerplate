@@ -1,7 +1,7 @@
 import '#/styles/main.sass'
 
 import * as React from 'react'
-import { render } from 'react-dom'
+import * as dom from 'react-dom/client'
 
 import ReduxContext from '#/utils/redux/context'
 
@@ -14,7 +14,10 @@ import store, { appModuleLoader } from './store'
 
 router.start()
 
-render(
+// todo: remove cast to any when @types/react-dom is updated
+const root = (dom as any).createRoot(document.getElementById('app'))
+
+root.render(
     <React.StrictMode>
         <ReduxContext.Provider value={store}>
             <AppModuleLoaderContext.Provider value={appModuleLoader}>
@@ -23,6 +26,5 @@ render(
                 </RouterProvider>
             </AppModuleLoaderContext.Provider>
         </ReduxContext.Provider>
-    </React.StrictMode>,
-    document.getElementById('app')
+    </React.StrictMode>
 )

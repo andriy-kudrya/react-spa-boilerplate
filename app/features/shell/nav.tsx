@@ -1,4 +1,4 @@
-import { React, cn } from '#/facade/react'
+import { cn } from '#/facade/react'
 import { useAccess } from '#/facade/hooks'
 import * as routes from '#/constants/routes'
 import * as access from '#/constants/access'

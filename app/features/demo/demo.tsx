@@ -1,4 +1,3 @@
-import { React } from '#/facade/react'
 import { useState } from '#/facade/hooks'
 import HoverMenu from '#/components/overlay/hover-menu'
 import NumberInput from '#/utils/input/number-input'

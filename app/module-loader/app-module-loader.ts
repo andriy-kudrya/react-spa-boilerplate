@@ -1,5 +1,5 @@
 import { Store, combineReducers, ReducersMapObject } from 'redux'
-import { React } from '#/facade/react'
+import { lazy } from 'react'
 import type AppState from '#/entities/app-state'
 import type ServiceFactory from '#/services/service-factory'
 import { assign } from '#/utils/object'
@@ -31,7 +31,7 @@ function appModuleLoaderFactory(store: Store<AppState>, services: ServiceFactory
     }
 
     function loadAuth() {
-        return React.lazy(
+        return lazy(
             () => import(/* webpackChunkName: 'auth' */ './app-modules/auth')
                 .then(_ => _.default(services))
                 .then(_ => {
@@ -42,7 +42,7 @@ function appModuleLoaderFactory(store: Store<AppState>, services: ServiceFactory
     }
 
     function loadCards() {
-        return React.lazy(
+        return lazy(
             () => import(/* webpackChunkName: 'cards' */ './app-modules/cards')
                 .then(_ => _.default(services))
                 .then(_ => {
@@ -53,7 +53,7 @@ function appModuleLoaderFactory(store: Store<AppState>, services: ServiceFactory
     }
 
     function loadDemo() {
-        return React.lazy(
+        return lazy(
             () => import(/* webpackChunkName: 'demo' */ './app-modules/demo')
                 .then(_ => _.default(services))
                 .then(_ => {

@@ -51,6 +51,7 @@ const babelLoader = {
                 }],
                 ['@babel/preset-react', {
                     development: params.debug,
+                    runtime: 'automatic',
                 }],
             ].filter(_ => _),
             plugins: [

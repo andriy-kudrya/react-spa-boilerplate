@@ -1,4 +1,3 @@
-import { React } from '#/facade/react'
 import { useSelector, useAction } from '#/facade/hooks'
 import Overlay from '#/components/overlay/overlay'
 import * as actions from '#/features/error/actions'

@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { memo, forwardRef, useRef } from 'react'
 import useForceUpdate from '../react/use-force-update'
 import { omit } from '../object'

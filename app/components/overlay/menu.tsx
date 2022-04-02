@@ -1,4 +1,3 @@
-import { React } from '#/facade/react'
 import { useState, useLayoutEffect } from '#/facade/hooks'
 import Overlay from './overlay'
 

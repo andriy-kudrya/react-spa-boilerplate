@@ -8,8 +8,7 @@ const config = {
     context: paths.app,
     entry: {
         app: [
-            'promise-polyfill/src/polyfill',
-            './bootstrap/main'
+            './bootstrap/main',
         ]
     },
     output: {
