@@ -1,4 +1,4 @@
-import type { Credentials, Auth } from '#/entities/auth'
+import type { Credentials, Auth } from '_/entities/auth'
 
 interface AuthService {
     logIn(credentials: Credentials): Promise<Auth>

@@ -1,5 +1,5 @@
-import { required, FormValue, ValidationResult } from '#/components/form/validate'
-import type { Credentials } from '#/entities/auth'
+import { required, FormValue, ValidationResult } from '_/components/form/validate'
+import type { Credentials } from '_/entities/auth'
 
 export default function validate(entity: FormValue<Credentials>): ValidationResult<Credentials> {
     const login = required('Name')(entity.login)

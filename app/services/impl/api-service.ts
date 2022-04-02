@@ -1,6 +1,6 @@
-import config from '#/constants/config'
-import { ajax, buildUrl, Header, AjaxResponse } from '#/utils/ajax'
-import { assign } from '#/utils/object'
+import config from '_/constants/config'
+import { ajax, buildUrl, Header, AjaxResponse } from '_/utils/ajax'
+import { assign } from '_/utils/object'
 
 import type ApiService from '../api-service'
 import type TokenService from '../token-service'

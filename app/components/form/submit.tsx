@@ -1,4 +1,4 @@
-import { cn } from '#/facade/react'
+import { cn } from '_/facade/react'
 
 interface Props {
     disabled?: boolean

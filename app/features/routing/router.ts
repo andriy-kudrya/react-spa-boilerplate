@@ -1,8 +1,8 @@
 import createRouter from 'router5'
 import browserPlugin from 'router5/plugins/browser'
 
-import * as routeNames from '#/constants/routes'
-import { omit } from '#/utils/object'
+import * as routeNames from '_/constants/routes'
+import { omit } from '_/utils/object'
 
 import accessMw from './middlewares/access'
 import { adapter } from './middlewares/interface'

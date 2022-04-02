@@ -1,6 +1,6 @@
-import { useSelector, useAction } from '#/facade/hooks'
-import Overlay from '#/components/overlay/overlay'
-import * as actions from '#/features/error/actions'
+import { useSelector, useAction } from '_/facade/hooks'
+import Overlay from '_/components/overlay/overlay'
+import * as actions from '_/features/error/actions'
 
 const Errors = () => {
     const errors = useSelector(_ => _.errors)

@@ -1,7 +1,7 @@
 import type * as router5 from 'router5'
 
-import type AppState from '#/entities/app-state'
-import type { MiddlewareAPI } from '#/utils/redux'
+import type AppState from '_/entities/app-state'
+import type { MiddlewareAPI } from '_/utils/redux'
 
 // May not be so but I foresee store and toState to be most usable arguments
 type Middleware = (

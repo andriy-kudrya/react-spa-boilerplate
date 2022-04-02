@@ -1,5 +1,5 @@
 import type { Reducer, Middleware } from 'redux'
-import type AppState from '#/entities/app-state'
+import type AppState from '_/entities/app-state'
 
 type ReducerMap = {
     [P in keyof AppState]?: Reducer<AppState[P]>

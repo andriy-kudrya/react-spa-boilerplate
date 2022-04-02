@@ -1,6 +1,6 @@
-import { useState, useEffect } from '#/facade/hooks'
+import { useState, useEffect } from '_/facade/hooks'
 
-import * as dom from '#/utils/dom'
+import * as dom from '_/utils/dom'
 
 import Menu from './menu'
 

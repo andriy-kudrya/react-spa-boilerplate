@@ -1,4 +1,4 @@
-import type AppError from '#/entities/app-error'
+import type AppError from '_/entities/app-error'
 
 const defaultState: AppError[] = []
 

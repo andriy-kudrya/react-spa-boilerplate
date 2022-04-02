@@ -1,14 +1,14 @@
-import '#/styles/main.sass'
+import '_/styles/main.sass'
 
 import * as React from 'react'
 import * as dom from 'react-dom/client'
 
-import ReduxContext from '#/utils/redux/context'
+import ReduxContext from '_/utils/redux/context'
 
-import { RouterProvider } from '#/utils/router'
-import Shell from '#/features/shell/shell'
-import router from '#/features/routing/router'
-import AppModuleLoaderContext from '#/module-loader/context'
+import { RouterProvider } from '_/utils/router'
+import Shell from '_/features/shell/shell'
+import router from '_/features/routing/router'
+import AppModuleLoaderContext from '_/module-loader/context'
 
 import store, { appModuleLoader } from './store'
 

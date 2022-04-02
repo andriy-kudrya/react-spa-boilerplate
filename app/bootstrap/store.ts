@@ -1,21 +1,21 @@
 import { createStore, applyMiddleware, combineReducers, ReducersMapObject } from 'redux'
 import { router5Middleware, router5Reducer } from 'redux-router5'
 
-import type AppState from '#/entities/app-state'
+import type AppState from '_/entities/app-state'
 
-import logMiddleware from '#/utils/middleware/log'
-import errorMiddleware from '#/features/error/middleware'
-import router from '#/features/routing/router'
+import logMiddleware from '_/utils/middleware/log'
+import errorMiddleware from '_/features/error/middleware'
+import router from '_/features/routing/router'
 
-import createServiceFactory from '#/services/impl/service-factory'
-import appModuleLoaderFactory from '#/module-loader/app-module-loader'
-import { dynamicMiddleware } from '#/module-loader/dynamic-middleware'
+import createServiceFactory from '_/services/impl/service-factory'
+import appModuleLoaderFactory from '_/module-loader/app-module-loader'
+import { dynamicMiddleware } from '_/module-loader/dynamic-middleware'
 
-import { reducer } from '#/utils/redux/reducer'
-import errorsState from '#/features/error/default-state'
-import access from '#/features/access/default-state'
-import authState from '#/features/auth/default-state'
-import cardsState from '#/features/cards/default-state'
+import { reducer } from '_/utils/redux/reducer'
+import errorsState from '_/features/error/default-state'
+import access from '_/features/access/default-state'
+import authState from '_/features/auth/default-state'
+import cardsState from '_/features/cards/default-state'
 
 const defaultReducerMap: ReducersMapObject<AppState> = {
         errors: reducer(errorsState),

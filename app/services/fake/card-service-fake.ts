@@ -1,5 +1,5 @@
 import type CardService from '../card-service'
-import { delay } from '#/utils/timeout'
+import { delay } from '_/utils/timeout'
 
 function factory(): CardService {
     return {

@@ -1,6 +1,6 @@
 import type AuthService from '../auth-service'
-import type { Credentials, Auth } from '#/entities/auth'
-import { delay } from '#/utils/timeout'
+import type { Credentials, Auth } from '_/entities/auth'
+import { delay } from '_/utils/timeout'
 
 function factory(): AuthService {
     return {

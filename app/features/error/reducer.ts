@@ -1,4 +1,4 @@
-import { reducer, handler } from '#/utils/redux/reducer'
+import { reducer, handler } from '_/utils/redux/reducer'
 import * as actions from './actions'
 import defaultState from './default-state'
 

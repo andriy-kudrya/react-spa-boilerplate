@@ -1,4 +1,4 @@
-import type { Game } from '#/entities/card'
+import type { Game } from '_/entities/card'
 
 interface CardService {
     getAll(): Promise<Game[]>

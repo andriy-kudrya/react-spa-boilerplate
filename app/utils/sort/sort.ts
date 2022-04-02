@@ -1,4 +1,4 @@
-import type SortState from '#/entities/sort-state'
+import type SortState from '_/entities/sort-state'
 
 interface SortStateManager {
     subscribe(listener: () => void): () => void

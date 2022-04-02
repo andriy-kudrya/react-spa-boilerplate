@@ -1,6 +1,6 @@
-import { useAction, useSelector } from '#/facade/hooks'
+import { useAction, useSelector } from '_/facade/hooks'
 
-import { noop } from '#/utils/function'
+import { noop } from '_/utils/function'
 
 import * as actions from '../actions'
 import AuthForm from './auth-form'

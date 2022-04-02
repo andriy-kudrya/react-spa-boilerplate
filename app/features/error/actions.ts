@@ -1,5 +1,5 @@
-import { creatorFactory } from '#/utils/redux'
-import type AppError from '#/entities/app-error'
+import { creatorFactory } from '_/utils/redux'
+import type AppError from '_/entities/app-error'
 
 const creator = creatorFactory('app.error')
 

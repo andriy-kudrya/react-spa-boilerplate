@@ -1,4 +1,4 @@
-import type { ModuleEnum } from '#/utils/module-enum'
+import type { ModuleEnum } from '_/utils/module-enum'
 import type * as self from './access'
 
 export const LOG_IN = 'logIn'

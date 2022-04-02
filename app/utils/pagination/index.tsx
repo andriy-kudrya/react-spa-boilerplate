@@ -1,5 +1,5 @@
-import type PaginationState from '#/entities/pagination-state'
-import { shallowUpdate } from '#/utils/object'
+import type PaginationState from '_/entities/pagination-state'
+import { shallowUpdate } from '_/utils/object'
 
 import { Page } from './components'
 

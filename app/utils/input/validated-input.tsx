@@ -1,6 +1,6 @@
-import { React } from '#/facade/react'
-import { useRef } from '#/facade/hooks'
-import { omit } from '#/utils/object'
+import { React } from '_/facade/react'
+import { useRef } from '_/facade/hooks'
+import { omit } from '_/utils/object'
 
 interface InvalidState extends Omit<ValidityState, 'valid'> {}
 

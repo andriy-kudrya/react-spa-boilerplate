@@ -1,4 +1,4 @@
-import type { Cards, Game } from '#/entities/card'
+import type { Cards, Game } from '_/entities/card'
 
 import type CardService from '../card-service'
 import type ApiService from '../api-service'

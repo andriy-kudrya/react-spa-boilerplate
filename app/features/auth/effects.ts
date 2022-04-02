@@ -1,13 +1,13 @@
 import { actions as routerActions } from 'redux-router5'
 
-import type AuthService from '#/services/auth-service'
-import type TokenService from '#/services/token-service'
-import { handler, EffectsFactory } from '#/facade/effect'
+import type AuthService from '_/services/auth-service'
+import type TokenService from '_/services/token-service'
+import { handler, EffectsFactory } from '_/facade/effect'
 
-import { defaultRoute } from '#/features/routing/helpers'
+import { defaultRoute } from '_/features/routing/helpers'
 
 import * as actions from './actions'
-import { calcAccess } from '#/features/access/actions'
+import { calcAccess } from '_/features/access/actions'
 
 const factory = (authService: AuthService, tokenService: TokenService): EffectsFactory => (dispatch, getState) => [
     handler(

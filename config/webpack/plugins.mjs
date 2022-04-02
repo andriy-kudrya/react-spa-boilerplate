@@ -46,7 +46,7 @@ const plugins = [
     }),
     params.analyze && new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: false }),
     new webpack.ProvidePlugin({
-        _debug: '#/shared/debug.js',
+        _debug: '_/shared/debug.js',
     }),
     new CleanWebpackPlugin(),
 ].filter(_ => _)

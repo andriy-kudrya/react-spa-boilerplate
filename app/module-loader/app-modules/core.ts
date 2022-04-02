@@ -1,8 +1,8 @@
-import type ServiceFactory from '#/services/service-factory'
-import effectMwFactory  from '#/utils/redux/effect'
+import type ServiceFactory from '_/services/service-factory'
+import effectMwFactory  from '_/utils/redux/effect'
 
-import auth from '#/features/auth/reducer'
-import authEffectFactory from '#/features/auth/effects'
+import auth from '_/features/auth/reducer'
+import authEffectFactory from '_/features/auth/effects'
 
 import type { AppModule } from '../types'
 

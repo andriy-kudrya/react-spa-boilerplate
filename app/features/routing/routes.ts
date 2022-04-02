@@ -1,7 +1,7 @@
 import type { Route } from 'router5'
 
-import * as routeNames from '#/constants/routes'
-import * as access from '#/constants/access'
+import * as routeNames from '_/constants/routes'
+import * as access from '_/constants/access'
 
 interface AppRoute extends Route {
     access: access.Access

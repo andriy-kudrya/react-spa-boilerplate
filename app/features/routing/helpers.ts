@@ -1,6 +1,6 @@
-import type * as a from '#/constants/access'
-import * as r from '#/constants/routes'
-import type Access from '#/entities/access'
+import type * as a from '_/constants/access'
+import * as r from '_/constants/routes'
+import type Access from '_/entities/access'
 
 import routes from './routes'
 

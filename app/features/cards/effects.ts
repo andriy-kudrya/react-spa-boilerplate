@@ -1,5 +1,5 @@
-import type CardService from '#/services/card-service'
-import { handler, EffectsFactory } from '#/facade/effect'
+import type CardService from '_/services/card-service'
+import { handler, EffectsFactory } from '_/facade/effect'
 
 import * as actions from './actions'
 

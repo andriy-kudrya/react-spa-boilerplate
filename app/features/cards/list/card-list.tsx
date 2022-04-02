@@ -1,8 +1,8 @@
-import { useEffect, useSelector, useAction } from '#/facade/hooks'
+import { useEffect, useSelector, useAction } from '_/facade/hooks'
 
-import { SortContainer } from '#/utils/sort'
+import { SortContainer } from '_/utils/sort'
 
-import Pagination from '#/utils/pagination'
+import Pagination from '_/utils/pagination'
 
 import * as actions from '../actions'
 

@@ -1,5 +1,5 @@
 import type { Middleware } from 'redux'
-import { creatorFactory, actionHasType } from '#/utils/redux'
+import { creatorFactory, actionHasType } from '_/utils/redux'
 
 const creator = creatorFactory('test')
     , registerMiddleware = creator<Middleware, void>('REGISTER_MIDDLEWARE')

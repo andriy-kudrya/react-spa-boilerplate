@@ -1,8 +1,8 @@
 import { Form } from 'react-final-form'
 
-import { TextField, PasswordField, Submit, submitDisabled } from '#/components/form'
+import { TextField, PasswordField, Submit, submitDisabled } from '_/components/form'
 import validate from './auth-form-validate'
-import type { Credentials } from '#/entities/auth'
+import type { Credentials } from '_/entities/auth'
 
 interface OwnProps {
     onSubmit: (_: Credentials) => Promise<void>

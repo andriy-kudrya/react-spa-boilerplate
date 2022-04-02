@@ -1,6 +1,6 @@
-import { useMemo } from '#/facade/hooks'
-import { dateFormatter } from '#/utils/format/date'
-import type { Game } from '#/entities/card'
+import { useMemo } from '_/facade/hooks'
+import { dateFormatter } from '_/utils/format/date'
+import type { Game } from '_/entities/card'
 
 interface OwnProps {
     game: Game

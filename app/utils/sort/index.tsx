@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useContext, useState, useCallback } from 'react'
 
-import type SortState from '#/entities/sort-state'
+import type SortState from '_/entities/sort-state'
 
 import useSubscription from '../react/use-subscription'
 

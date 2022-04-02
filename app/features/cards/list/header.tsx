@@ -1,6 +1,6 @@
-import { UP_POINTING_TRIANGLE, DOWN_POINTING_TRIANGLE } from '#/constants/characters'
+import { UP_POINTING_TRIANGLE, DOWN_POINTING_TRIANGLE } from '_/constants/characters'
 
-import { useSort } from '#/utils/sort'
+import { useSort } from '_/utils/sort'
 
 const Header = ({ name, children }: { name: string, children: React.ReactNode }) => {
     const sort = useSort(name)

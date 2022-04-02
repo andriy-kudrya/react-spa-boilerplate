@@ -1,9 +1,9 @@
-import { cn } from '#/facade/react'
-import { useAccess } from '#/facade/hooks'
-import * as routes from '#/constants/routes'
-import * as access from '#/constants/access'
+import { cn } from '_/facade/react'
+import { useAccess } from '_/facade/hooks'
+import * as routes from '_/constants/routes'
+import * as access from '_/constants/access'
 
-import { Link, useRouter } from '#/utils/router'
+import { Link, useRouter } from '_/utils/router'
 
 interface NavLinkProps {
     routeName: string

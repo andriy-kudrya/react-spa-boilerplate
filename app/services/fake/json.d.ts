@@ -1,5 +1,5 @@
 declare module '*/card_data' {
-    import { Cards } from '#/entities/card'
+    import { Cards } from '_/entities/card'
 
     const content: Cards
     export default content

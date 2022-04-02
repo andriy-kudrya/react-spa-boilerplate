@@ -21,7 +21,7 @@ const config = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.local.json', '.json'],
         alias: {
-            '#': paths.app
+            '_': paths.app
         }
     },
     module: { rules },

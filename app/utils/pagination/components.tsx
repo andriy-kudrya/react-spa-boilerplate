@@ -1,4 +1,4 @@
-import { cn } from '#/facade/react'
+import { cn } from '_/facade/react'
 
 interface PageProps {
     page: number
@@ -12,7 +12,7 @@ const Page = ({ page, disabled, active, onClick, children }: PageProps) =>
     <li
         className={cn`page-item ${disabled && !active}disabled ${active}active`}>
         <a
-            href='#'
+            href='_'
             className='page-link'
             tabIndex={disabled && !active ? -1 : undefined}
             onClick={e => {

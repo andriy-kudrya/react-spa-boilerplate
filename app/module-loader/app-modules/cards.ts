@@ -1,9 +1,9 @@
-import type ServiceFactory from '#/services/service-factory'
-import effectMwFactory from '#/utils/redux/effect'
+import type ServiceFactory from '_/services/service-factory'
+import effectMwFactory from '_/utils/redux/effect'
 
-import cards from '#/features/cards/reducer'
-import cardsEffectFactory from '#/features/cards/effects'
-import Cards from '#/features/cards/list/card-list'
+import cards from '_/features/cards/reducer'
+import cardsEffectFactory from '_/features/cards/effects'
+import Cards from '_/features/cards/list/card-list'
 
 import type { AppModule } from '../types'
 
