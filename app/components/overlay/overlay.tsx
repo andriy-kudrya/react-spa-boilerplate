@@ -25,6 +25,10 @@ function useOverlayRoot() {
             document.body.appendChild(plane)
 
             setOverlayRoot(plane)
+
+            return () => {
+                document.body.removeChild(plane)
+            }
         },
         [] // eslint-disable-line react-hooks/exhaustive-deps
     )

@@ -16,13 +16,11 @@ router.start()
 const root = (dom as any).createRoot(document.getElementById('app'))
 
 root.render(
-    <React.StrictMode>
-        <ReduxContext.Provider value={store}>
-            <AppModuleLoaderContext.Provider value={appModuleLoader}>
-                <RouterProvider value={router}>
-                    <Shell />
-                </RouterProvider>
-            </AppModuleLoaderContext.Provider>
-        </ReduxContext.Provider>
-    </React.StrictMode>
+    <ReduxContext.Provider value={store}>
+        <AppModuleLoaderContext.Provider value={appModuleLoader}>
+            <RouterProvider value={router}>
+                <Shell />
+            </RouterProvider>
+        </AppModuleLoaderContext.Provider>
+    </ReduxContext.Provider>
 )
