@@ -1,25 +1,15 @@
 import autoprefixer from 'autoprefixer'
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
 import params from './params.mjs'
 import paths from './paths.mjs'
 
 const scssRule = {
         test: /\.(scss|sass)$/,
+        type: 'asset/resource',
+        generator: {
+            filename: '[name].[hash].css',
+        },
         use: [
-            // params.debug ? { loader: 'style-loader' } : MiniCssExtractPlugin.loader,
-            {
-                loader: MiniCssExtractPlugin.loader,
-                options: {
-                    esModule: true,
-                },
-            },
-            {
-                loader: 'css-loader',
-                options: {
-                    sourceMap: !params.debug,
-                },
-            },
             !params.debug && {
                 loader: 'clean-css-loader',
                 options: {

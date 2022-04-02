@@ -1,5 +1,3 @@
-import '_/styles/main.sass'
-
 import * as React from 'react'
 import * as dom from 'react-dom/client'
 
