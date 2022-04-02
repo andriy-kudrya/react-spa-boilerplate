@@ -1,4 +1,4 @@
-import paths from './paths'
+import paths from './paths.mjs'
 
 export default {
     static: paths.output,

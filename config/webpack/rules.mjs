@@ -1,8 +1,8 @@
 import autoprefixer from 'autoprefixer'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
-import params from './params'
-import paths from './paths'
+import params from './params.mjs'
+import paths from './paths.mjs'
 
 const scssRule = {
         test: /\.(scss|sass)$/,

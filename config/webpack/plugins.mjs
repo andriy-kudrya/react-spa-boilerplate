@@ -6,8 +6,8 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import ESLintPlugin from 'eslint-webpack-plugin'
 
-import params from './params'
-import paths from './paths'
+import params from './params.mjs'
+import paths from './paths.mjs'
 
 const plugins = [
     new MiniCssExtractPlugin({

@@ -1,8 +1,8 @@
-import params from './params'
-import paths from './paths'
-import plugins from './plugins'
-import rules from './rules'
-import devServer from './dev-server'
+import params from './params.mjs'
+import paths from './paths.mjs'
+import plugins from './plugins.mjs'
+import rules from './rules.mjs'
+import devServer from './dev-server.mjs'
 
 const config = {
     context: paths.app,
@@ -47,4 +47,4 @@ const config = {
     },
 }
 
-module.exports = config
+export default config
