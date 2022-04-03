@@ -5,7 +5,7 @@
         ".vscode": true,
         "node_modules": true,
     },
-    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.tsdk": "config/node_modules/typescript/lib",
     "eslint.autoFixOnSave": true,
     "eslint.options": { "configFile": "./config/eslint/prod.eslintrc.json" },
     "eslint.validate": [
