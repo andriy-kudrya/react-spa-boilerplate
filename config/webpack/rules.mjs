@@ -61,7 +61,14 @@ const babelLoader = {
 const rules = [
     {
         test: /\.(?:j|t)sx?$/,
-        include: paths.app,
+        include: [
+            {
+                and: [
+                    paths.app,
+                    { and: [{ not: [paths.app + '\\node_modules'] }] },
+                ] 
+            },            
+        ],
         use: [babelLoader],
     },
     // {
