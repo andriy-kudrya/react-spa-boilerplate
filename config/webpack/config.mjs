@@ -24,6 +24,9 @@ const config = {
             '_': paths.app
         }
     },
+    resolveLoader: {
+        modules: [paths.resolveLoader],
+    },    
     module: { rules },
     plugins,
     mode: params.debug ? 'development' : 'production',

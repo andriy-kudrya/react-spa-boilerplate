@@ -12,6 +12,7 @@ const moduleDirectory = dirname(fileURLToPath(import.meta.url))
         params.debug ? 'dev.eslintrc.json' : 'prod.eslintrc.json'
     )
     , tsconfigFile = join(root, 'tsconfig.json')
+    , resolveLoader = join(moduleDirectory, '..', 'node_modules')
 
 export default {
     root,
@@ -20,4 +21,5 @@ export default {
     assets,
     eslintConfigFile,
     tsconfigFile,
+    resolveLoader,
 }

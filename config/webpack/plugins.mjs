@@ -22,11 +22,11 @@ const plugins = [
         //     }
         // },
     }),
-    new ESLintPlugin({
-        overrideConfigFile: paths.eslintConfigFile,
-        extensions: ['ts', 'tsx'],
-        formatter: 'codeframe',
-    }),
+    // new ESLintPlugin({
+    //     overrideConfigFile: paths.eslintConfigFile,
+    //     extensions: ['ts', 'tsx'],
+    //     formatter: 'codeframe',
+    // }),
     new webpack.DefinePlugin({
         DEBUG: JSON.stringify(params.debug),
         API: JSON.stringify(params.api),
