@@ -27,30 +27,30 @@ function useSubscription<T, M = T>(
 ): M
 function useSubscription<T, M = T>(
     subscribe: (callback: () => void) => () => void,
-    getCurrentValue: () => T,
+    getState: () => T,
     equal: (one: any, two: any) => boolean = strictEqual,
-    mapValue?: (value: T) => M
+    mapState?: (value: T) => M
 ): M {
     type State = {
         currentValue: T | M
-        getCurrentValue: typeof getCurrentValue
-        mapValue: typeof mapValue
+        getState: typeof getState
+        mapState: typeof mapState
         equal: typeof equal
     }
 
     const forceUpdate = useForceUpdate()
         , stateRef = useRef<State>()
         , state = stateRef.current
-        , uncommittedValue = state?.getCurrentValue === getCurrentValue && state.mapValue === mapValue
+        , uncommittedValue = state?.getState === getState && state.mapState === mapState
             ? state.currentValue
-            : getValue(getCurrentValue, mapValue)
+            : getValue(getState, mapState)
 
     useEffect(
         () => {
             stateRef.current = {
                 currentValue: uncommittedValue,
-                getCurrentValue,
-                mapValue,
+                getState,
+                mapState,
                 equal,
             }
         }
@@ -65,7 +65,7 @@ function useSubscription<T, M = T>(
                     return
 
                 const state = stateRef.current!
-                    , nextValue = getValue(state.getCurrentValue, state.mapValue)
+                    , nextValue = getValue(state.getState, state.mapState)
 
                 if (state.equal(nextValue, state.currentValue))
                     return
