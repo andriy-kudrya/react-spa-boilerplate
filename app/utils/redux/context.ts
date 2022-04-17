@@ -15,9 +15,9 @@ function useStore<T>(): Store<T> {
     return store
 }
 
-const strictEqual = <T>(one: T, two: T) => one === two
+// const strictEqual = <T>(one: T, two: T) => one === two
 
-function useSelector<S, T>(selector: (state: S) => T, equal: (one: T, two: T) => boolean = strictEqual): T {
+function useSelector<S, T>(selector: (state: S) => T, equal?: (one: T, two: T) => boolean): T {
     const store = useStore<S>()
         , state = useSubscription(store.subscribe, store.getState, equal, selector)
 
