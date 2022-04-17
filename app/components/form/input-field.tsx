@@ -31,7 +31,7 @@ type ConcreteFieldProps = Pick<InputFieldProps, 'id' | 'name' | 'children'>
 const TextField = (props: ConcreteFieldProps) =>
         <InputField {...props} type='text' />
 
-const PasswordField: React.SFC<ConcreteFieldProps> = (props: ConcreteFieldProps) =>
+const PasswordField = (props: ConcreteFieldProps) =>
         <InputField {...props} type='password' />
 
 export { TextField, PasswordField }
