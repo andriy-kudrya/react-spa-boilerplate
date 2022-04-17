@@ -1,4 +1,3 @@
-import * as React from 'react'
 import * as dom from 'react-dom/client'
 
 import ReduxContext from '_/utils/redux/context'
@@ -12,8 +11,7 @@ import store, { appModuleLoader } from './store'
 
 router.start()
 
-// todo: remove cast to any when @types/react-dom is updated
-const root = (dom as any).createRoot(document.getElementById('app'))
+const root = dom.createRoot(document.getElementById('app')!)
 
 root.render(
     <ReduxContext.Provider value={store}>
