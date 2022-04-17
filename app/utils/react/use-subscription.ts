@@ -40,7 +40,7 @@ function useSubscription<T, M = T>(
     const forceUpdate = useForceUpdate()
         , stateRef = useRef<State>()
         , state = stateRef.current
-        , uncommittedValue = state && state.getCurrentValue === getCurrentValue && state.mapValue === mapValue
+        , uncommittedValue = state?.getCurrentValue === getCurrentValue && state.mapValue === mapValue
             ? state.currentValue
             : mapValue
                 ? mapValue(getCurrentValue())
@@ -61,7 +61,7 @@ function useSubscription<T, M = T>(
         () => {
             let disposed = false
 
-            const handleChange = () => {
+            function handleChange() {
                 if (disposed)
                     return
 
