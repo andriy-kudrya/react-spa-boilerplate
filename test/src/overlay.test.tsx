@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
-import Overlay from '../../app/components/overlay/overlay'
+import Overlay from '_/components/overlay/overlay'
 
 describe('overlay', function () {
     it('is positioned at exact point', function () {

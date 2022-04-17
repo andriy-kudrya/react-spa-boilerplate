@@ -1,13 +1,13 @@
-import * as redux from '../../app/node_modules/redux'
+import * as redux from '_/node_modules/redux'
 import type AppState from '_/entities/app-state'
 import { creatorFactory } from '_/utils/redux/action'
 import { noop } from '_/utils/function'
 import effectsMiddlewareFactory, { EffectsFactory, handler } from '_/utils/redux/effect'
 import { delay } from '_/utils/timeout'
 
-import errorMw from '../../app/features/error/middleware'
-import errors from '../../app/features/error/reducer'
-import { removeError } from '../../app/features/error/actions'
+import errorMw from '_/features/error/middleware'
+import errors from '_/features/error/reducer'
+import { removeError } from '_/features/error/actions'
 
 describe('error', function () {
     function createStore(...effects: EffectsFactory<AppState>[]) {

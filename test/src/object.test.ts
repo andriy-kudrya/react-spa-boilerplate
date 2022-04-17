@@ -1,4 +1,4 @@
-import { omit } from '../../app/utils/object'
+import { omit } from '_/utils/object'
 
 describe('object utils', function () {
     describe('dropFields', function () {

@@ -1,10 +1,10 @@
-import * as redux from '../../app/node_modules/redux'
+import * as redux from '_/node_modules/redux'
 
-import { shallowUpdate } from '../../app/utils/object'
-import { noop } from '../../app/utils/function'
-import { creatorFactory } from '../../app/utils/redux/action'
-import { reducer, handler } from '../../app/utils/redux/reducer'
-import effectsMiddlewareFactory, { EffectsFactory, handler as effectHandler } from '../../app/utils/redux/effect'
+import { shallowUpdate } from '_/utils/object'
+import { noop } from '_/utils/function'
+import { creatorFactory } from '_/utils/redux/action'
+import { reducer, handler } from '_/utils/redux/reducer'
+import effectsMiddlewareFactory, { EffectsFactory, handler as effectHandler } from '_/utils/redux/effect'
 
 describe('redux', function () {
     const creator = creatorFactory('test')
