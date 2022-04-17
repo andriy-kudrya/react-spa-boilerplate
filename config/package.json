@@ -6,8 +6,7 @@
   "scripts": {
     "build": "webpack --config ./webpack/index.mjs --bail",
     "dev": "webpack-dev-server --config ./webpack/index.mjs --env debug",
-    "serve": "webpack-dev-server --config ./webpack/index.mjs --inline=false",
-    "test": "jest"
+    "serve": "webpack-dev-server --config ./webpack/index.mjs --inline=false"
   },
   "author": "andriy.kudrya",
   "dependencies": {
@@ -19,11 +18,6 @@
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.9.0",
     "@babel/runtime": "^7.17.8",
-    "@testing-library/jest-dom": "^5.16.3",
-    "@testing-library/react": "^13.0.0",
-    "@types/jest": "^27.4.1",
-    "@types/react": "^17.0.43",
-    "@types/react-dom": "^17.0.14",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "autoprefixer": "^10.4.4",
@@ -36,11 +30,9 @@
     "eslint-webpack-plugin": "^3.1.1",
     "fork-ts-checker-webpack-plugin": "^7.2.1",
     "html-webpack-plugin": "^5.5.0",
-    "jest": "^27.5.1",
     "node-sass": "^7.0.1",
     "postcss-loader": "^6.2.1",
     "sass-loader": "^12.6.0",
-    "ts-jest": "^27.1.4",
     "typescript": "^4.6.3",
     "webpack": "^5.71.0",
     "webpack-bundle-analyzer": "^4.5.0",
