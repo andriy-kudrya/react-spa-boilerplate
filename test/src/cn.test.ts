@@ -1,4 +1,4 @@
-import cn from '../cn'
+import cn from '../../app/utils/react/cn'
 
 describe('cn', () => {
     it('returns undefined for empty classes', () => {

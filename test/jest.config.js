@@ -65,7 +65,7 @@ module.exports = {
         ignoreCodes: [151001],
       },
 
-      tsconfig: "<rootDir>/config/jest/tsconfig.json"
+      tsconfig: "<rootDir>/tsconfig.json"
     },
   },
 
@@ -74,9 +74,10 @@ module.exports = {
 
   testEnvironment: 'jsdom',
   // An array of directory names to be searched recursively up from the requiring module's location
-  // moduleDirectories: [
-  //   "node_modules"
-  // ],
+  moduleDirectories: [
+    "node_modules",
+    "<rootDir>/../app/node_modules"
+  ],
 
   // An array of file extensions your modules use
   // moduleFileExtensions: [
@@ -90,7 +91,7 @@ module.exports = {
 
   // A map from regular expressions to module names that allow to stub out resources with a single module
   moduleNameMapper: {
-    "^_/(.*)$": "<rootDir>/app/$1"
+    "^_/(.*)$": "<rootDir>/../app/$1"
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -128,7 +129,7 @@ module.exports = {
 
   // A list of paths to directories that Jest should use to search for files in
   roots: [
-    "<rootDir>/app"
+    "<rootDir>/src"
   ],
 
   // Allows you to use a custom runner instead of Jest's default test runner

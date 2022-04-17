@@ -1,0 +1,11 @@
+{
+    "include": ["**/*.test.*"],
+    "extends": "../tsconfig",
+    "compilerOptions": {
+        "jsx": "react-jsxdev",
+        "typeRoots": [
+            "./node_modules/@types/",
+            "../app/node_modules/@types/"
+        ]
+    }
+}
