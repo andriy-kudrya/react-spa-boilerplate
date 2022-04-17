@@ -13,23 +13,20 @@ const strictEqual = <T>(one: T, two: T) => one === two
  * @param subscribe
  * @param equal
  */
-function useSubscription<S, T>(
-    subject: S,
-    subscribe: (subject: S, callback: () => void) => () => void,
-    getCurrentValue: (subject: S) => T,
+function useSubscription<T>(
+    subscribe: (callback: () => void) => () => void,
+    getCurrentValue: () => T,
     equal?: (one: any, two: any) => boolean,
 ): T
-function useSubscription<S, T, M = T>(
-    subject: S,
-    subscribe: (subject: S, callback: () => void) => () => void,
-    getCurrentValue: (subject: S) => T,
+function useSubscription<T, M = T>(
+    subscribe: (callback: () => void) => () => void,
+    getCurrentValue: () => T,
     equal?: (one: any, two: any) => boolean,
     mapValue?: (value: T) => M
 ): M
-function useSubscription<S, T, M = T>(
-    subject: S,
-    subscribe: (subject: S, callback: () => void) => () => void,
-    getCurrentValue: (subject: S) => T,
+function useSubscription<T, M = T>(
+    subscribe: (callback: () => void) => () => void,
+    getCurrentValue: () => T,
     equal: (one: any, two: any) => boolean = strictEqual,
     mapValue?: (value: T) => M
 ): M {
@@ -46,8 +43,8 @@ function useSubscription<S, T, M = T>(
         , uncommittedValue = state && state.getCurrentValue === getCurrentValue && state.mapValue === mapValue
             ? state.currentValue
             : mapValue
-                ? mapValue(getCurrentValue(subject))
-                : getCurrentValue(subject)
+                ? mapValue(getCurrentValue())
+                : getCurrentValue()
 
     useEffect(
         () => {
@@ -69,7 +66,7 @@ function useSubscription<S, T, M = T>(
                     return
 
                 const state = stateRef.current!
-                    , nextValue = state.mapValue ? state.mapValue(state.getCurrentValue(subject)) : state.getCurrentValue(subject)
+                    , nextValue = state.mapValue ? state.mapValue(state.getCurrentValue()) : state.getCurrentValue()
 
                 if (state.equal(nextValue, state.currentValue))
                     return
@@ -80,14 +77,14 @@ function useSubscription<S, T, M = T>(
 
             handleChange()
 
-            const dispose = subscribe(subject, handleChange)
+            const dispose = subscribe(handleChange)
             return () => {
                 disposed = true
                 dispose()
             }
         },
         // no need to include 'forceUpdate' dependency but eslint is complaining
-        [subject, subscribe, forceUpdate]
+        [subscribe, forceUpdate]
     )
 
     return uncommittedValue as any

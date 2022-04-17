@@ -20,8 +20,7 @@ function SortContainer(props: SortContainerProps) {
     return <Context.Provider value={state} children={props.children}/>
 }
 
-const subscribe = (state: SortStateManager, callback: () => void) => state.subscribe(callback)
-    , stateEqual = (one: FieldState, two: FieldState) => one.ascending === two.ascending && one.sorted === two.sorted
+const stateEqual = (one: FieldState, two: FieldState) => one.ascending === two.ascending && one.sorted === two.sorted
 
 function useSort(name: string) {
     const state = useContext(Context)
@@ -30,10 +29,10 @@ function useSort(name: string) {
             [state, name]
         )
         , getSortState = useCallback(
-            (state: SortStateManager) => state.getState(name),
-            [name]
+            () => state.getState(name),
+            [state, name]
         )
-        , sortState = useSubscription(state, subscribe, getSortState, stateEqual)
+        , sortState = useSubscription(state.subscribe, getSortState, stateEqual)
 
     return { onClick, ...sortState }
 }

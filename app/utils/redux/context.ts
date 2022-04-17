@@ -1,4 +1,4 @@
-import type { Store, AnyAction } from 'redux'
+import type { Store } from 'redux'
 import * as React from 'react'
 import { useContext } from 'react'
 import useSubscription from '../react/use-subscription'
@@ -16,12 +16,10 @@ function useStore<T>(): Store<T> {
 }
 
 const strictEqual = <T>(one: T, two: T) => one === two
-    , subscribe = <S>(store: Store<S, AnyAction>, callback: () => void) => store.subscribe(callback)
-    , getState = <S>(store: Store<S, AnyAction>) => store.getState()
 
 function useSelector<S, T>(selector: (state: S) => T, equal: (one: T, two: T) => boolean = strictEqual): T {
     const store = useStore<S>()
-        , state = useSubscription(store, subscribe, getState, equal, selector)
+        , state = useSubscription(store.subscribe, store.getState, equal, selector)
 
     return state
 }
