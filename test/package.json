@@ -4,9 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config ./webpack/index.mjs --bail",
-    "dev": "webpack-dev-server --config ./webpack/index.mjs --env debug",
-    "serve": "webpack-dev-server --config ./webpack/index.mjs --inline=false",
     "test": "jest"
   },
   "author": "andriy.kudrya",
