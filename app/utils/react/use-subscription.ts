@@ -38,7 +38,7 @@ function useSubscription<T, M = T>(
             if (!prevValue.current)
                 prevValue.current = { value }
 
-            if (equal(value, prevValue.current.value))
+            if (equal(prevValue.current.value, value))
                 return prevValue.current.value
 
             prevValue.current.value = value
