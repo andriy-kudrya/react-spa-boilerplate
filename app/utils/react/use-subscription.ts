@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import useForceUpdate from './use-force-update'
 
 const strictEqual = <T>(one: T, two: T) => one === two
+    , getValue = <T, M = T>(get: () => T, map?: (value: T) => M): M => map ? map(get()) : get as any
 
 /**
  * Tracks changes to subscribed value
@@ -42,9 +43,7 @@ function useSubscription<T, M = T>(
         , state = stateRef.current
         , uncommittedValue = state?.getCurrentValue === getCurrentValue && state.mapValue === mapValue
             ? state.currentValue
-            : mapValue
-                ? mapValue(getCurrentValue())
-                : getCurrentValue()
+            : getValue(getCurrentValue, mapValue)
 
     useEffect(
         () => {
@@ -66,7 +65,7 @@ function useSubscription<T, M = T>(
                     return
 
                 const state = stateRef.current!
-                    , nextValue = state.mapValue ? state.mapValue(state.getCurrentValue()) : state.getCurrentValue()
+                    , nextValue = getValue(state.getCurrentValue, state.mapValue)
 
                 if (state.equal(nextValue, state.currentValue))
                     return
