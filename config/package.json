@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "author": "andriy.kudrya",
-  "devDependencies": {
+  "dependencies": {
     "@babel/core": "^7.17.8",
     "@babel/plugin-transform-react-constant-elements": "^7.17.6",
     "@babel/plugin-transform-react-inline-elements": "^7.9.0",
