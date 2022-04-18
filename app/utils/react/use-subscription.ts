@@ -21,7 +21,7 @@ function useSubscription<T, M = T>(
     subscribe: (callback: () => void) => () => void,
     getCurrentValue: () => T,
     equal?: (one: any, two: any) => boolean,
-    mapValue?: (value: T) => M
+    mapState?: (value: T) => M
 ): M
 function useSubscription<T, M = T>(
     subscribe: (callback: () => void) => () => void,
