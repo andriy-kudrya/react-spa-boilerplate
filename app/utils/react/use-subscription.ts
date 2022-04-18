@@ -2,6 +2,12 @@ import { useCallback, useRef, useSyncExternalStore } from 'react'
 
 const getValue = <T, M = T>(get: () => T, map?: (value: T) => M): M => map ? map(get()) : get() as any
 
+type Cache<T> = { init: false, value: null } | { init: true, value: T }
+function assignCache<T>(cache: Cache<T>, value: T) {
+    cache.init = true
+    cache.value = value
+}
+
 /**
  * Tracks changes to subscribed value
  * Something in-between of:
@@ -29,26 +35,24 @@ function useSubscription<T, M = T>(
     equal: (one: any, two: any) => boolean = Object.is,
     mapState?: (value: T) => M
 ): M {
-    type MemoValue = { init: false, value: null } | { init: true, value: M }
-
-    const prevValueRef = useRef<MemoValue>()
-    prevValueRef.current ||= { init: false, value: null }
-    const prevValue = prevValueRef.current
+    const valueCacheRef = useRef<Cache<M>>()
+    valueCacheRef.current ||= { init: false, value: null }
+    const valueCache = valueCacheRef.current
 
     const getSnapshot = useCallback(
         () => {
             const value = getValue(getState, mapState)
 
-            if (prevValue.init && equal(prevValue.value, value))
-                return prevValue.value
+            if (valueCache.init && equal(valueCache.value, value))
+                return valueCache.value
 
             // note: typescript doesn't check correctnes of field-by-field asignment for union type
-            prevValue.init = true
-            prevValue.value = value
+            valueCache.init = true
+            valueCache.value = value
 
             return value
         },
-        [getState, mapState, equal, prevValue]
+        [getState, mapState, equal, valueCache]
     )
 
     return useSyncExternalStore(subscribe, getSnapshot)
