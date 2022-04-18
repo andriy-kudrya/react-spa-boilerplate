@@ -4,6 +4,7 @@ const getValue = <T, M = T>(get: () => T, map?: (value: T) => M): M => map ? map
 
 type Cache<T> = { init: false, value: null } | { init: true, value: T }
 function assignCache<T>(cache: Cache<T>, value: T) {
+    // note: typescript doesn't check correctnes of field-by-field asignment for union type
     cache.init = true
     cache.value = value
 }
@@ -46,9 +47,7 @@ function useSubscription<T, M = T>(
             if (valueCache.init && equal(valueCache.value, value))
                 return valueCache.value
 
-            // note: typescript doesn't check correctnes of field-by-field asignment for union type
-            valueCache.init = true
-            valueCache.value = value
+            assignCache(valueCache, value)
 
             return value
         },
