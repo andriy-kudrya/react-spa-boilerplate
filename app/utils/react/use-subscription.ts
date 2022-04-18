@@ -1,6 +1,4 @@
-import { useCallback, useRef, useSyncExternalStore } from 'react'
-
-const getValue = <T, M = T>(get: () => T, map?: (value: T) => M): M => map ? map(get()) : get() as any
+import { useMemo, useRef, useSyncExternalStore } from 'react'
 
 type Cache<T> = { init: false, value: null } | { init: true, value: T }
 function assignCache<T>(cache: Cache<T>, value: T) {
@@ -40,16 +38,27 @@ function useSubscription<T, M = T>(
     valueCacheRef.current ||= { init: false, value: null }
     const valueCache = valueCacheRef.current
 
-    const getSnapshot = useCallback(
+    const getSnapshot = useMemo(
         () => {
-            const value = getValue(getState, mapState)
+            const stateCache: Cache<T> = { init: false, value: null }
 
-            if (valueCache.init && equal(valueCache.value, value))
-                return valueCache.value
+            return () => {
+                const state = getState()
+                // typescript 4.6.3 has some bug, so it infers stateCache to have type 'never'
+                if (valueCache.init && stateCache.init && Object.is((stateCache as Cache<T>).value, state))
+                    return valueCache.value
 
-            assignCache(valueCache, value)
+                const value = mapState ? mapState(state) : state as any as M
 
-            return value
+                if (valueCache.init && equal(valueCache.value, value)) {
+                    assignCache(stateCache, state)
+                    return valueCache.value
+                }
+
+                assignCache(stateCache, state)
+                assignCache(valueCache, value)
+                return value
+            }
         },
         [getState, mapState, equal, valueCache]
     )
