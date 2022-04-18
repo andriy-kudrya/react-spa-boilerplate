@@ -2,16 +2,14 @@ import { useMemo, useRef, useSyncExternalStore } from 'react'
 
 type Cache<T> = { init: false, value: null } | { init: true, value: T }
 function assignCache<T>(cache: Cache<T>, value: T) {
-    // note: typescript doesn't check correctnes of field-by-field asignment for union type
+    // Note: typescript doesn't check correctnes of field-by-field asignment for union type
     cache.init = true
     cache.value = value
 }
 
 /**
  * Tracks changes to subscribed value
- * Something in-between of:
- * - https://github.com/facebook/react/blob/master/packages/use-subscription/src/useSubscription.js
- * - https://github.com/reduxjs/react-redux/blob/2eac86163be2bd5627dab3e33e8b4e0926895442/src/hooks/useSelector.js
+ * Consider as alternative useSyncExternalStoreWithSelector by react
  * @param subject
  * @param getCurrentValue
  * @param subscribe
@@ -40,6 +38,8 @@ function useSubscription<T, M = T>(
 
     const getSnapshot = useMemo(
         () => {
+            // State caching idea to avoid mapping & equality checking is inspired by
+            // https://github.com/facebook/react/blob/6bce035/packages/use-sync-external-store/src/useSyncExternalStoreWithSelector.js
             const stateCache: Cache<T> = { init: false, value: null }
 
             return () => {
@@ -64,62 +64,6 @@ function useSubscription<T, M = T>(
     )
 
     return useSyncExternalStore(subscribe, getSnapshot)
-    // type State = {
-    //     currentValue: T | M
-    //     getState: typeof getState
-    //     mapState: typeof mapState
-    //     equal: typeof equal
-    // }
-
-    // const forceUpdate = useForceUpdate()
-    //     , stateRef = useRef<State>()
-    //     , state = stateRef.current
-    //     , uncommittedValue = state?.getState === getState && state.mapState === mapState
-    //         ? state.currentValue
-    //         : getValue(getState, mapState)
-
-    // useEffect(
-    //     () => {
-    //         stateRef.current = {
-    //             currentValue: uncommittedValue,
-    //             getState,
-    //             mapState,
-    //             equal,
-    //         }
-    //     }
-    // )
-
-    // useEffect(
-    //     () => {
-    //         let disposed = false
-
-    //         function handleChange() {
-    //             if (disposed)
-    //                 return
-
-    //             const state = stateRef.current!
-    //                 , nextValue = getValue(state.getState, state.mapState)
-
-    //             if (state.equal(nextValue, state.currentValue))
-    //                 return
-
-    //             state.currentValue = nextValue
-    //             forceUpdate()
-    //         }
-
-    //         handleChange()
-
-    //         const dispose = subscribe(handleChange)
-    //         return () => {
-    //             disposed = true
-    //             dispose()
-    //         }
-    //     },
-    //     // no need to include 'forceUpdate' dependency but eslint is complaining
-    //     [subscribe, forceUpdate]
-    // )
-
-    // return uncommittedValue as any
 }
 
 export default useSubscription
