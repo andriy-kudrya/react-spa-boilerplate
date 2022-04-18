@@ -20,8 +20,8 @@ function useSubscription<T>(
 function useSubscription<T, M = T>(
     subscribe: (callback: () => void) => () => void,
     getCurrentValue: () => T,
-    equal?: (one: any, two: any) => boolean,
-    mapState?: (value: T) => M
+    equal: ((one: any, two: any) => boolean) | undefined,
+    mapState: (value: T) => M
 ): M
 function useSubscription<T, M = T>(
     subscribe: (callback: () => void) => () => void,
@@ -35,13 +35,13 @@ function useSubscription<T, M = T>(
         () => {
             const value = getValue(getState, mapState)
 
-            if (!prevValue.current)
-                prevValue.current = { value }
-
-            if (equal(prevValue.current.value, value))
+            if (prevValue.current && equal(prevValue.current.value, value))
                 return prevValue.current.value
 
-            prevValue.current.value = value
+            if (prevValue.current)
+                prevValue.current.value = value
+            else
+                prevValue.current = { value }
 
             return value
         },
