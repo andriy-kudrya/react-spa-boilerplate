@@ -29,23 +29,26 @@ function useSubscription<T, M = T>(
     equal: (one: any, two: any) => boolean = Object.is,
     mapState?: (value: T) => M
 ): M {
-    const prevValue = useRef<{ value: M }>()
+    type MemoValue = { init: false, value: null } | { init: true, value: M }
+
+    const prevValueRef = useRef<MemoValue>()
+    prevValueRef.current ||= { init: false, value: null }
+    const prevValue = prevValueRef.current
 
     const getSnapshot = useCallback(
         () => {
             const value = getValue(getState, mapState)
 
-            if (prevValue.current && equal(prevValue.current.value, value))
-                return prevValue.current.value
+            if (prevValue.init && equal(prevValue.value, value))
+                return prevValue.value
 
-            if (prevValue.current)
-                prevValue.current.value = value
-            else
-                prevValue.current = { value }
+            // note: typescript doesn't check correctnes of field-by-field asignment for union type
+            prevValue.init = true
+            prevValue.value = value
 
             return value
         },
-        [getState, mapState, equal]
+        [getState, mapState, equal, prevValue]
     )
 
     return useSyncExternalStore(subscribe, getSnapshot)
