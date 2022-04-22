@@ -18,7 +18,7 @@ const InputField = (props: InputFieldProps) => {
         return (
             <div className='form-group'>
                 <label htmlFor={props.id} children={props.children}/>
-                <input className={cn`form-control ${showError}is-invalid`} id={props.id} {...field.input} />
+                <input className={cn('form-control', showError && 'is-invalid')} id={props.id} {...field.input} />
                 {showError && <span className='invalid-feedback'>{field.meta.error}</span>}
             </div>
         )

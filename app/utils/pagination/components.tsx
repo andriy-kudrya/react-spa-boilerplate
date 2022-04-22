@@ -10,7 +10,7 @@ interface PageProps {
 
 const Page = ({ page, disabled, active, onClick, children }: PageProps) =>
     <li
-        className={cn`page-item ${disabled && !active}disabled ${active}active`}>
+        className={cn('page-item', disabled && !active && 'disabled', active && 'active')}>
         <a
             href='_'
             className='page-link'

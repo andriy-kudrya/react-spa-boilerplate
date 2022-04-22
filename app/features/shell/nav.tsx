@@ -20,7 +20,7 @@ function NavLink(props: NavLinkProps) {
         return null
 
     return (
-        <li className={cn`nav-item ${active}active`}>
+        <li className={cn('nav-item', active && 'active')}>
             <Link className='nav-link' routeName={props.routeName}>
                 {props.children} {active && <span className='sr-only'>(current)</span>}
             </Link>
