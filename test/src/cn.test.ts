@@ -17,7 +17,7 @@ describe('cn', () => {
     })
 
     it('handles mixed conditions', () => {
-        const result = cn(true && 'foo' , false && 'omit', true && 'bar')
+        const result = cn(true && 'foo', false && 'omit', true && 'bar')
         expect(result).toBe('foo bar')
     })
 })
