@@ -5,7 +5,7 @@ import { omit } from '../object'
 
 import { useRouter } from './context'
 
-interface Props extends Omit<React.HTMLAttributes<HTMLAnchorElement>, 'href'> {
+interface Props extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
     routeName: string
     routeParams?: any
 }

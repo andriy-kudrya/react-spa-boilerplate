@@ -111,7 +111,6 @@ including effects, return a promise that rejects in case of errors. In a more co
 
 # Learning curve
 JavaScript basics:
-- http://learn.javascript.ru/
 - JavaScript: The Good Parts. Douglas Crockford
 
 JavaScript frequently used API:
